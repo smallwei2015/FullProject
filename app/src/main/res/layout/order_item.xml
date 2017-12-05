@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:id="@+id/order_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:layout_marginTop="@dimen/dp10">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10">
+        
+        <TextView
+            style="@style/order_black_text"
+            android:text="订单号："
+            />
+
+        <TextView
+            style="@style/order_black_text"
+            android:text="ADADKADA5787"
+            android:layout_weight="1"
+            android:id="@+id/order_number"
+            />
+        <TextView
+            style="@style/order_red_text"
+            android:text="未付款"
+            android:id="@+id/order_state"/>
+        
+    </LinearLayout>
+
+
+    <com.blue.rchina.views.ListViewForScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/order_list"
+        />
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/bg_color_light"
+        android:padding="@dimen/dp10">
+        
+        <ImageView
+            android:layout_width="@dimen/dp100"
+            android:layout_height="@dimen/dp100"
+            android:src="@color/middle_gray"
+            android:id="@+id/order_img"
+            />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp10">
+
+            <TextView
+                style="@style/order_black_text"
+                android:lines="4"
+                android:text="踢死XUtils的网络请求方法和一些网络请求框架的用法非常类似，我进行了一些简单的封装。
+封装一共有3个文件，分别是网络请求工具类XUtil,请求响应数据的解析类，还有一个就是一个请求成功的一个接口回调类。 "
+                android:id="@+id/order_des"
+                />
+
+            <TextView
+                style="@style/order_red_text"
+                android:layout_alignParentBottom="true"
+                android:text="￥10（x1）"
+                android:id="@+id/order_count"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true">
+                <TextView
+                    style="@style/order_black_text"
+                    android:text="总价："/>
+                <TextView
+                    style="@style/order_red_text"
+                    android:id="@+id/order_price"
+                    android:text="￥10"
+                    />
+            </LinearLayout>
+
+        </RelativeLayout>
+        
+    </LinearLayout>-->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/order_black_text"
+            android:text="订单金额："
+            />
+        <TextView
+            style="@style/order_red_text"
+            android:layout_weight="1"
+            android:id="@+id/order_totalPrice"
+            android:text="￥100"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp14"
+            android:padding="@dimen/dp5"
+            android:textColor="@color/dark_gray"
+            android:layout_marginRight="@dimen/dp5"
+            android:text="删除订单"
+            android:id="@+id/order_delete"/>
+        <TextView
+            style="@style/small_btn"
+            android:text="去付款"
+            android:id="@+id/order_handler"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

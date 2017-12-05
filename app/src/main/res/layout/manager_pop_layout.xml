@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle_white_dp10"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="我的管理"
+            android:gravity="center"
+            android:padding="@dimen/dp10"
+            android:textSize="@dimen/sp15"
+            />
+
+        <View
+            style="@style/normal_divieder_style"
+            />
+        <TextView
+            style="@style/pop_text_style"
+            android:text="社区管理"
+            android:id="@+id/pop_community"
+            />
+        <View
+            style="@style/normal_divieder_style"
+            />
+
+        <TextView
+            style="@style/pop_text_style"
+            android:text="商品管理"
+            android:id="@+id/pop_goods"
+            />
+        <View
+            style="@style/normal_divieder_style"
+            />
+
+        <TextView
+            style="@style/pop_text_style"
+            android:text="景点管理"
+            android:id="@+id/pop_landscape"
+            />
+        <View
+            style="@style/normal_divieder_style"
+            />
+        <TextView
+            style="@style/pop_text_style"
+            android:text="频道管理"
+            android:id="@+id/pop_channel"
+            />
+
+    </LinearLayout>
+
+
+
+    <TextView
+        style="@style/pop_text_style"
+        android:layout_marginTop="@dimen/dp10"
+        android:text="取消"
+        android:textSize="@dimen/sp17"
+        android:id="@+id/pop_cancel"
+        android:background="@drawable/circle_white_dp10"/>
+</LinearLayout>

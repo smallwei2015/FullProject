@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/all_btn_bg"
+    android:layout_marginBottom="1dp"
+    android:gravity="center_vertical"
+    >
+
+    <ImageView
+        style="@style/normal_icon_style_xbig"
+        android:id="@+id/interact_agree_icon"/>
+
+    <TextView
+        style="@style/interact_name_style"
+        android:id="@+id/interact_agree_name"
+        android:layout_marginLeft="@dimen/dp10"
+
+        />
+
+</LinearLayout>

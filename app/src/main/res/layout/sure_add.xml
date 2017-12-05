@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp10"
+    android:background="@drawable/circle_white_dp10"
+    >
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp5"
+        >
+
+
+        <ImageView
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:src="@color/bg_color"
+            android:id="@+id/icon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/title"
+            android:textSize="@dimen/sp16"
+            android:textColor="@color/dark_gray"
+            android:layout_marginLeft="@dimen/dp10"
+            />
+    </LinearLayout>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/sp14"
+        android:text="加酒时间"
+        android:padding="@dimen/dp5"
+        android:id="@+id/date"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:background="@color/bg_color"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp16"
+        android:textColor="@color/middle_gray"
+        android:minLines="5"
+        android:maxLines="10"
+        android:padding="@dimen/dp5"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginBottom="@dimen/dp10"
+        android:id="@+id/content"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:background="@color/bg_color"
+        android:visibility="gone"/>
+
+    <TextView
+        android:text="确定"
+        android:id="@+id/sure"
+        style="@style/login_btn"
+        android:layout_margin="@dimen/dp10"
+        />
+
+
+
+</LinearLayout>

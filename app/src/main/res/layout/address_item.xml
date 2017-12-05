@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp5"
+    android:layout_marginBottom="@dimen/dp10"
+    android:background="@color/white">
+
+
+    <LinearLayout
+        style="@style/linear_address_style"
+        >
+        <ImageView
+            android:layout_width="@dimen/dp25"
+            android:layout_height="@dimen/dp25"
+            android:layout_marginRight="@dimen/dp5"
+            android:src="@mipmap/address_icon" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dark_gray"
+            android:id="@+id/address"
+            android:textSize="@dimen/sp15"
+            android:text="北京市场天天公寓"
+            android:singleLine="true"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/dp10"
+        android:paddingBottom="@dimen/dp10"
+        android:paddingLeft="@dimen/dp5"
+        android:paddingRight="@dimen/dp5">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/name"
+            android:singleLine="true"
+            android:text="联系人：vode"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/phone"
+            android:text="联系电话：18201402222"/>
+    </LinearLayout>
+
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:background="@color/bg_color"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp5"
+        >
+
+        <ImageView
+            style="@style/info_setting_img"
+            android:src="@drawable/goods_select"
+            android:id="@+id/address_normal"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/address_normal"
+            android:text="默认地址"
+            android:textColor="@color/lightGray"
+            android:layout_centerVertical="true"/>
+        <TextView
+            style="@style/small_btn"
+            android:id="@+id/address_delete"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:text="删除"/>
+
+        <TextView
+            style="@style/small_btn"
+            android:layout_toLeftOf="@+id/address_delete"
+            android:layout_marginRight="@dimen/dp10"
+            android:clickable="true"
+            android:id="@+id/address_edit"
+            android:layout_centerVertical="true"
+            android:text="编辑"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_order_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_color">
+
+
+    <include layout="@layout/top"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+            <!--<android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/trans_rec"/>-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <WebView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/trans_web"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="@dimen/dp10"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/order_black_text"
+                        android:text="运单号："
+                        />
+
+                    <TextView
+                        style="@style/order_black_text"
+                        android:text="暂无订单号"
+                        android:layout_weight="1"
+                        android:id="@+id/order_number"
+                        android:layout_marginTop="@dimen/dp5"
+                        android:layout_marginBottom="@dimen/dp5"
+                        />
+                    <TextView
+                        style="@style/order_red_text"
+                        android:text="运输中"
+                        android:id="@+id/order_state"/>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+
+
+        <include layout="@layout/no_data"/>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

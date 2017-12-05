@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dp5"
+    android:layout_marginBottom="1dp"
+    android:background="@color/white"
+    android:descendantFocusability="blocksDescendants">
+    <TextView
+        style="@style/news_title_style"
+        android:id="@+id/news_muti_title"
+        android:padding="@dimen/dp5"
+        />
+
+    <com.blue.rchina.views.NoScrollGridView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp5"
+        android:id="@+id/news_muti_grid"/>
+</LinearLayout>

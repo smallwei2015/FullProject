@@ -1,0 +1,93 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    /*aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false*/
+
+    defaultConfig {
+        applicationId "com.blue.rchina"
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 89
+        versionName "2.1.9"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+
+        ndk { //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "arm64-v8a", "x86_64"
+        }
+
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "2403445341c981cd7109cd88", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL: "developer-default", //用户渠道统计的渠道名称
+        ]
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    signingConfigs {
+        release {
+            storeFile file("f:/blue_keystore")
+            storePassword "1234567890bpt"
+            keyAlias "blueapp"
+            keyPassword "1234567890bpt"
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    compile files('libs/AMap_Location_V3.3.0_20170118.jar')
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'cn.finalteam:galleryfinal:1.4.8.4'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support:gridlayout-v7:25.3.1'
+    compile 'org.xutils:xutils:3.3.42'
+    compile 'cn.jiguang.sdk:jpush:3.0.9'
+    compile 'cn.jiguang.sdk:jcore:1.1.7'
+    compile 'com.alibaba:fastjson:1.2.28'
+    compile 'in.srain.cube:ultra-ptr:1.0.11'
+    compile 'net.wujingchao.android.view:simple-tag-imageview:1.0.1'
+    compile 'com.zhy:flowlayout-lib:1.0.3'
+    compile 'com.caption:360updatelibrary:0.0.2'
+    testCompile 'junit:junit:4.12'
+}

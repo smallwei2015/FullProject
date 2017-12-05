@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_trave_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.blue.rchina.activity.TraveDetailActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp200"
+        android:src="@mipmap/demo"
+        android:scaleType="centerCrop"
+        android:transitionName="@string/trave_transition"
+        />
+    <ImageView
+        android:layout_width="@dimen/dp30"
+        android:layout_height="@dimen/dp30"
+        android:src="@mipmap/left_round"
+        android:id="@+id/trave_back"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp10"/>
+
+
+
+
+
+    <include layout="@layout/no_data"/>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:id="@+id/phone"
+            android:background="@drawable/normal_text_bg"
+            android:clickable="true"
+            android:padding="@dimen/dp5">
+
+            <ImageView
+                style="@style/info_setting_img_nopadding"
+                android:src="@mipmap/trave_phone"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp13"
+                android:text="电话"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/dp0.5"
+            android:layout_height="match_parent"
+            android:background="@color/bg_color"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:id="@+id/collect"
+            android:background="@drawable/normal_text_bg"
+            android:clickable="true"
+            android:padding="@dimen/dp5">
+
+            <ImageView
+                style="@style/info_setting_img_nopadding"
+                android:src="@mipmap/trave_star"
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp13"
+                android:text="收藏"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="6"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp20"
+            android:background="@drawable/trave_order_bg"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp18"
+            android:paddingTop="@dimen/dp5"
+            android:paddingBottom="@dimen/dp5"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingRight="@dimen/dp10"
+            android:clickable="true"
+            android:id="@+id/order"
+            android:text="立即预订"/>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

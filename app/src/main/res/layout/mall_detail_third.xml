@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginBottom="@dimen/dp10">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp16"
+        android:textColor="@color/middle_gray"
+        android:padding="@dimen/dp5"
+        android:text="产品详情"
+        android:id="@+id/mall_title"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:background="@color/bg_color"/>
+    <TextView
+        android:id="@+id/mall_text"
+        style="@style/mall_text"
+        android:text="GalleryFinal是一个图片选择（单选/多选）、拍照、编辑、裁剪及旋转为一身的图片选择器。使用方便，功能可自己配置，GalleryFinal还可以根据开发者的喜好来选择主题，当然也支持自定义主题。而且GalleryFinal自身并没有强制绑定某个ImageLoader，开发者可以根据自己项目给GalleryFinal配置图片加载器。GalleryFinal还放弃了startActivityForResult+onActivityResult来获取选择结果，而是采用事件回调的机制。（我觉得startActivityForResult+onActivityResult太麻烦了，同意的点个赞吧，呵呵~）。GalleryFinal经过三四个月的版本迭代，修复bug,优化需求,已经处于稳定的状态。"
+        />
+
+</LinearLayout>

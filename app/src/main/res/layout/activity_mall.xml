@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_mall"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.blue.rchina.activity.MallActivity">
+
+    <include layout="@layout/top"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbarSize"
+        android:padding="@dimen/dp5">
+        <RelativeLayout
+            android:layout_width="@dimen/dp35"
+            android:layout_height="@dimen/toolbarSize"
+            android:layout_alignParentRight="true"
+            android:id="@+id/top_mall"
+            >
+
+            <ImageView
+                android:id="@+id/top_mall_right"
+                style="@style/normal_icon_style"
+                android:src="@mipmap/shopping_cart" />
+
+            <TextView
+                android:layout_width="@dimen/dp15"
+                android:layout_height="@dimen/dp15"
+                android:layout_alignParentRight="true"
+                android:text="99"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp10"
+                android:gravity="center"
+                android:id="@+id/top_mall_count"
+                android:background="@drawable/circle_red"
+                android:visibility="gone"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/fragment"
+        class="com.blue.rchina.fragment.MallFragment"/>
+
+</RelativeLayout>

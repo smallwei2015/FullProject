@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pic_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
+    <FrameLayout
+        style="@style/send_interact_item_style"
+        android:layout_margin="@dimen/dp5">
+    <ImageView
+        style="@style/grid_item"
+        android:id="@+id/pic_img"/>
+    <ImageView
+        style="@style/send_delete_style"
+        android:id="@+id/pic_delete"
+        android:visibility="visible"
+        />
+    </FrameLayout>
+</FrameLayout>

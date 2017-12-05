@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_user_center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp200"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_edit_infor_bg"/>
+        <ImageView
+            android:id="@+id/icon_image"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/image"
+            android:translationY="@dimen/dp040"
+            android:onClick="setUserIcon"
+            android:layout_width="@dimen/dp80"
+            android:layout_height="@dimen/dp80"
+            />
+    </RelativeLayout>
+    <include layout="@layout/top" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_layout"
+        android:id="@+id/info"
+        android:orientation="horizontal"
+        android:background="@color/bg_color_light"
+        android:padding="@dimen/dp0.5"
+        android:layout_marginTop="@dimen/dp020"
+        >
+
+
+        <LinearLayout
+            style="@style/user_info"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="阅读"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="25"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/user_info"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分享"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/user_info"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="推荐"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"/>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/user_info"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="社区"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/info"
+        >
+
+    <RelativeLayout
+        android:id="@+id/user_nickname"
+
+        style="@style/user_item_style">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="修改昵称"
+            android:textSize="@dimen/middle_text" />
+
+        <ImageView
+            style="@style/info_setting_img_nopadding"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/arr_right_gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/user_password"
+        style="@style/user_item_style">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="修改密码"
+            android:textSize="@dimen/middle_text" />
+
+        <ImageView
+            style="@style/info_setting_img_nopadding"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/arr_right_gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/user_phone"
+        style="@style/user_item_style"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="修改手机"
+            android:textSize="@dimen/middle_text" />
+
+        <ImageView
+            style="@style/info_setting_img_nopadding"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/arr_right_gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20"
+        android:background="@drawable/all_btn_bg"
+        android:padding="@dimen/dp10"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="修改性别"
+            android:textSize="@dimen/middle_text" />
+
+        <RadioGroup
+            android:id="@+id/user_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp25"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/man"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:button="@drawable/man_bg"
+                android:text=" 男" />
+
+            <RadioButton
+                android:id="@+id/woman"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/middle_padding"
+                android:button="@drawable/woman_bg"
+                android:text=" 女" />
+        </RadioGroup>
+
+    </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>

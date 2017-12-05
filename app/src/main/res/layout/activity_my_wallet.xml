@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_my_wallet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context="com.blue.rchina.activity.MyWalletActivity">
+
+    <include layout="@layout/top"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/wallet_top"
+        android:background="@color/white"
+        android:layout_marginBottom="@dimen/dp1">
+
+
+        <LinearLayout
+            style="@style/wallet_top_item"
+            android:id="@+id/score"
+            >
+
+            <ImageView
+                style="@style/normal_icon_style_xbig"
+                android:src="@mipmap/score"
+                />
+
+            <TextView
+                style="@style/wallet_top_text_style"
+                android:text="积分"/>
+
+
+            <TextView
+                style="@style/wallet_item_smalltext_style"
+                android:text="0"
+                android:id="@+id/score_text"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/wallet_top_item"
+            android:id="@+id/balance"
+            >
+
+            <ImageView
+                style="@style/normal_icon_style_xbig"
+                android:src="@mipmap/balance"
+                />
+
+            <TextView
+                style="@style/wallet_top_text_style"
+                android:text="余额"/>
+
+
+            <TextView
+                style="@style/wallet_item_smalltext_style"
+                android:text="0.00"
+                android:id="@+id/balance_text"/>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/wallet_top_item"
+            android:id="@+id/coupon"
+            >
+            <ImageView
+                style="@style/normal_icon_style_xbig"
+                android:src="@mipmap/free"
+                />
+
+            <TextView
+                style="@style/wallet_top_text_style"
+                android:text="优惠"/>
+
+
+            <TextView
+                style="@style/wallet_item_smalltext_style"
+                android:text="0"
+                android:id="@+id/coupon_text"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/wallet_item_style"
+        android:layout_below="@+id/wallet_top"
+        android:id="@+id/wallet_exchange_score"
+        >
+        <ImageView
+            style="@style/normal_icon_style"
+            android:src="@mipmap/exchange_icon"/>
+
+        <TextView
+            style="@style/wallet_item_text_style"
+            android:text="积分兑换"/>
+
+        <ImageView
+            style="@style/normal_icon_style_small"
+            android:src="@mipmap/arr_right_gray"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/wallet_item_style"
+        android:layout_below="@+id/wallet_exchange_score"
+        android:id="@+id/wallet_charge"
+        >
+        <ImageView
+            style="@style/normal_icon_style"
+            android:src="@mipmap/charge_icon"/>
+
+        <TextView
+            style="@style/wallet_item_text_style"
+            android:text="费用充值"/>
+
+        <ImageView
+
+            style="@style/normal_icon_style_small"
+            android:src="@mipmap/arr_right_gray"/>
+    </LinearLayout>
+
+    <include layout="@layout/no_data"/>
+
+</RelativeLayout>

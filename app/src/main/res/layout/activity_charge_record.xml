@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_charge_record"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.blue.rchina.activity.ChargeRecordActivity">
+
+    <include layout="@layout/top"/>
+
+
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbarSize"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabTextColor="@color/middle_gray"
+        app:tabIndicatorHeight="0dp"
+        app:tabTextAppearance="@style/my_tab_text"
+        android:id="@+id/tab"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/bg_color_light"/>
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tab"
+        android:id="@+id/pager"/>
+</RelativeLayout>

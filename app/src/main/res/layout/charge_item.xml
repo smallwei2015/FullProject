@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp5"
+    android:layout_marginBottom="@dimen/dp1"
+    android:background="@color/white">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="订单号：hhhhhh"
+        style="@style/interact_content_style"
+        android:id="@+id/order_number"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="@dimen/dp5"
+        android:textSize="@dimen/sp13"
+        android:textColor="@color/middle_gray"
+        android:id="@+id/order_date"
+        android:text="2017.11.11"/>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/order_number"
+        android:layout_marginTop="@dimen/dp10"
+        android:id="@+id/order_balance"
+        android:text="金额：200"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp5"
+        android:paddingBottom="@dimen/dp5"
+        android:paddingLeft="@dimen/dp8"
+        android:paddingRight="@dimen/dp8"
+        android:textSize="@dimen/sp12"
+        android:text="去支付"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/order_balance"
+        android:id="@+id/order_state"
+        android:background="@drawable/charge_order_bg"
+        android:layout_marginRight="@dimen/dp5"
+        />
+</RelativeLayout>

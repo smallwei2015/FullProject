@@ -1,0 +1,58 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.blue.rchina.fragment.MallFragment">
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp200"
+        android:id="@+id/mall_cycle"
+        android:visibility="gone"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_color">
+
+        <!--
+                <com.tmall.ultraviewpager.UltraViewPager
+                    android:id="@+id/ultra_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp200"
+                    android:background="@android:color/darker_gray" />
+        -->
+
+        <in.srain.cube.views.ptr.PtrFrameLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/framelayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:ptr_duration_to_close="200"
+            app:ptr_duration_to_close_header="300"
+            app:ptr_keep_header_when_refresh="true"
+            app:ptr_pull_to_fresh="false"
+            app:ptr_ratio_of_header_height_to_refresh="1.2"
+            app:ptr_resistance="1.9"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:background="@color/bg_color_light"
+                    android:id="@+id/mall_rec"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+            </LinearLayout>
+        </in.srain.cube.views.ptr.PtrFrameLayout>
+
+
+        <include layout="@layout/no_data" />
+
+    </RelativeLayout>
+
+</FrameLayout>

@@ -1,0 +1,25 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <in.srain.cube.views.ptr.PtrFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fresh_frame"
+        android:background="@color/bg_color"
+        app:ptr_duration_to_close="200"
+        app:ptr_duration_to_close_header="1000"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recycler"
+            android:background="@color/divider_gray"/>
+    </in.srain.cube.views.ptr.PtrFrameLayout>
+
+    <include layout="@layout/no_data"/>
+
+
+</FrameLayout>

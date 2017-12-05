@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/circle_white_dp10">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimaryTra"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp10"
+            android:textSize="@dimen/sp18"
+            android:textColor="@color/white"
+            android:id="@+id/title"
+            android:text="提示"/>
+
+        <ImageView
+            style="@style/normal_icon_style_small"
+            android:src="@mipmap/x_white"
+            android:id="@+id/cancel"
+            />
+    </LinearLayout>
+
+
+
+    <TextView
+        android:layout_width="@dimen/dp200"
+        android:layout_height="@dimen/dp200"
+        android:gravity="center"
+        android:textSize="@dimen/sp16"
+        android:id="@+id/message"
+        android:layout_margin="@dimen/dp10"
+        android:text="message"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="不再提示"
+            android:gravity="center"
+            android:id="@+id/never_notify"
+            />
+        <TextView
+            style="@style/login_btn_primary_color"
+            android:id="@+id/sure"
+            android:text="确定"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

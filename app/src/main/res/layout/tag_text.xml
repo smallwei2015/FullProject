@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp5"
+    android:layout_margin="@dimen/dp10"
+    android:textSize="@dimen/sp18"
+    android:text="hhhh"
+    android:textColor="@drawable/tab_tc"
+    android:background="@drawable/tag_bg"/>

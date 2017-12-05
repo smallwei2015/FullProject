@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_about"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp200"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/about_bg" />
+
+    <include layout="@layout/top" />
+
+
+    <LinearLayout
+        android:id="@+id/operate_parent"
+        style="@style/normal_linear_style"
+        android:layout_below="@id/icon">
+        <ImageView
+            style="@style/normal_icon_style_small"
+            android:src="@mipmap/about_team" />
+        <TextView
+            android:id="@+id/operate"
+            style="@style/about_text_style"
+            android:layout_below="@+id/icon"
+            android:text="指导单位：北京融城互联科技有限公司" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/support_parent"
+        style="@style/normal_linear_style"
+        android:layout_below="@+id/operate_parent">
+        <ImageView
+            style="@style/normal_icon_style_small"
+            android:src="@mipmap/about_support" />
+        <TextView
+            android:id="@+id/support"
+            style="@style/about_text_style"
+            android:text="平台支持：北京融城互联科技有限公司" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/right_parent"
+        style="@style/normal_linear_style"
+        android:layout_below="@+id/support_parent">
+        <ImageView
+            style="@style/normal_icon_style_small"
+            android:src="@mipmap/about_right" />
+        <TextView
+            android:id="@+id/right"
+            style="@style/about_text_style"
+            android:layout_below="@+id/support"
+            android:text="技术支持：北京蓝太平洋科技股份有限公司" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/version_parent"
+        style="@style/normal_linear_style"
+        android:layout_below="@+id/right_parent">
+
+        <ImageView
+            style="@style/normal_icon_style_small"
+            android:src="@mipmap/version" />
+
+        <TextView
+            android:id="@+id/about_version"
+            style="@style/about_text_style" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/version_parent"
+        android:layout_marginTop="@dimen/dp10"
+        android:padding="@dimen/dp10"
+        android:text="融城中国二维码（长按识别）"
+        android:textSize="@dimen/sp15" />
+
+    <ImageView
+        android:id="@+id/qrcode"
+        android:layout_width="@dimen/dp100"
+        android:layout_height="@dimen/dp100"
+        android:layout_below="@+id/version_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp60"
+        android:src="@mipmap/qrcode" />
+
+
+</RelativeLayout>

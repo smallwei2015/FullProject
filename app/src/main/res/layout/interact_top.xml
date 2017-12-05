@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/top_news"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/top"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/dp5"
+    android:layout_marginBottom="@dimen/dp5">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/interact_top_content"
+        android:textColor="@color/dark_gray"
+        android:text="立足于满足大众消费人群的核心住宿需求：秉承让顾客天天睡好觉的愿景，致力为会员提供干净、舒适、快乐的住宿环境和氛围。"
+        android:textSize="@dimen/sp15"
+        android:ellipsize="end"
+        android:maxLines="4"
+        android:minLines="2"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp5"
+        android:layout_marginTop="@dimen/dp10"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/top_news_bg"
+            android:paddingBottom="@dimen/dp2"
+            android:paddingLeft="@dimen/dp5"
+            android:paddingRight="@dimen/dp5"
+            android:paddingTop="@dimen/dp2"
+            android:text="置顶"
+            android:textColor="@color/primaryColor"
+            android:textSize="@dimen/sp12" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/interact_top_name"
+            android:layout_marginLeft="@dimen/dp10"
+            android:lines="1"
+            android:text="七天连锁酒店"
+            android:textColor="@color/primaryColor"
+            android:textSize="@dimen/sp13"
+            android:textStyle="bold"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/menu_bg"
+    android:onClick="onMenuClick"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/menu_top_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_toolbarSize" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_toolbarSize"
+        >
+
+        <TextView
+            android:id="@+id/tv_appname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp20"
+            android:text="智慧中国"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp22"
+            android:singleLine="true"
+            />
+
+        <TextView
+            android:id="@+id/tv_cityname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp20"
+            android:text="北京市"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp20"
+            android:singleLine="true"
+            android:visibility="gone"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_toRightOf="@+id/tv_cityname"
+            android:id="@+id/change_city"
+            android:layout_marginLeft="@dimen/dp20"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="切换城市"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp16"
+                />
+
+            <ImageView
+                style="@style/normal_icon_style_small"
+                android:src="@mipmap/down"
+                android:layout_toRightOf="@+id/tv_change"
+                android:layout_centerVertical="true"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp10"
+        android:id="@+id/menu_weather"
+
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dp50"
+                android:layout_height="@dimen/dp50"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/cloudy_icon"
+                android:id="@+id/iv_weather_icon"
+                />
+
+            <TextView
+                android:id="@+id/tv_weaher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp18"
+                android:text="晴"/>
+
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="@dimen/dp1"
+            android:layout_height="@dimen/dp80"
+            android:layout_margin="@dimen/dp10"
+            android:background="@color/colorPrimary"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/menu_date"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp17"
+                android:text="9月8号"
+                />
+
+            <TextView
+                android:id="@+id/tv_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="正在获取天气"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp18"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_menu"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:cacheColorHint="#00000000"
+        android:divider="#23272C"
+        android:dividerHeight="0dp"/>
+
+
+    <RelativeLayout
+        android:id="@+id/lv_profit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp5"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/hongbao" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/image"
+            android:background="@color/transparent"
+            android:text="盈赚"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp20" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/menu_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp10"
+            android:padding="@dimen/dp10"
+
+            android:orientation="horizontal">
+
+            <ImageView
+                style="@style/normal_icon_style_small"
+                android:src="@drawable/shezhi" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设置"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp15"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menu_night"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:padding="@dimen/dp10"
+            android:layout_toRightOf="@+id/menu_setting"
+            android:orientation="horizontal">
+
+            <ImageView
+                style="@style/normal_icon_style_small"
+                android:src="@mipmap/moon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="夜间模式"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp15"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.blue.rchina.fragment.NewsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#F4F4F4"
+        android:id="@+id/top"
+        >
+
+        <android.support.design.widget.TabLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/tabSize"
+            android:layout_weight="1"
+            android:id="@+id/news_tab"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextColor="@color/middle_gray"
+            app:tabIndicatorHeight="0dp"
+            app:tabTextAppearance="@style/my_tab_text"
+            />
+
+        <ImageView
+            style="@style/normal_icon_style"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/more"
+            android:layout_marginRight="2dp"
+            android:id="@+id/news_plus"
+            android:elevation="5dp"
+            />
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frame"
+        android:layout_below="@+id/top">
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/news_pager"/>
+    </FrameLayout>
+
+    <include layout="@layout/no_data"/>
+</RelativeLayout>

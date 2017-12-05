@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/goods_parent"
+    android:layout_marginBottom="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:layout_marginBottom="1dp"
+        android:padding="@dimen/dp10">
+
+
+        <ImageView
+            android:layout_width="@dimen/dp30"
+            android:layout_height="@dimen/dp30"
+            android:padding="@dimen/dp5"
+            android:layout_marginRight="@dimen/dp5"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/goods_select"
+            android:id="@+id/goods_select"/>
+
+        <ImageView
+            android:layout_width="@dimen/dp80"
+            android:layout_height="@dimen/dp80"
+            android:src="@color/middle_gray"
+            android:id="@+id/order_img"
+            />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp10">
+
+            <TextView
+                style="@style/order_black_text"
+                android:lines="4"
+                android:text="踢死XUtils的网络请求方法和一些网络请求框架的用法非常类似，我进行了一些简单的封装。
+封装一共有3个文件，分别是网络请求工具类XUtil,请求响应数据的解析类，还有一个就是一个请求成功的一个接口回调类。 "
+                android:id="@+id/order_des"
+                android:ellipsize="end"
+                />
+
+            <TextView
+                style="@style/order_red_text"
+                android:layout_alignParentBottom="true"
+                android:text="￥10（x1）"
+                android:id="@+id/goods_price"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true">
+                <TextView
+                    style="@style/order_black_text"
+                    android:text="总价："/>
+                <TextView
+                    style="@style/order_red_text"
+                    android:id="@+id/goods_total_price"
+                    android:text="￥10"
+                    />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="@color/bg_color_light"
+        android:id="@+id/cart_bottom"
+        android:padding="@dimen/dp5">
+
+        <TextView
+            style="@style/small_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp10"
+            android:id="@+id/goods_delete"
+            android:text="删除"/>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <ImageView
+            style="@style/goods_add_btn_style"
+            android:src="@mipmap/minus_goods"
+            android:id="@+id/goods_minus"/>
+        <TextView
+            android:layout_width="@dimen/dp50"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/dp5"
+            android:gravity="center"
+            android:text="1"
+            android:id="@+id/goods_count"/>
+
+        <ImageView
+            style="@style/goods_add_btn_style"
+            android:src="@mipmap/add_goods"
+            android:id="@+id/goods_add"/>
+    </LinearLayout>
+</LinearLayout>

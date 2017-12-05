@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_balance_charge"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.blue.rchina.activity.BalanceChargeActivity"
+    android:background="@color/bg_color">
+
+    <include layout="@layout/top"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp100"
+        android:layout_marginBottom="@dimen/dp100"
+        android:background="@color/bg_color_light"
+        android:id="@+id/balance"
+        android:singleLine="true"
+        android:hint="请输入您要充值的金额"
+        android:textColorHint="@color/xxlight_gray"
+        android:textSize="@dimen/sp15"
+        />
+
+    <TextView
+        android:layout_below="@+id/balance"
+        android:id="@+id/sure"
+        android:text="充值"
+        style="@style/login_btn"/>
+</RelativeLayout>

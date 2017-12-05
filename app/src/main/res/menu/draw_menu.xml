@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/abc_btn_radio_material"
+            android:title="Toolbar" />
+        <item
+            android:id="@+id/nav_favorite"
+            android:icon="@drawable/abc_btn_radio_material"
+            android:title="CardView" />
+        <item
+            android:id="@+id/nav_followers"
+            android:icon="@drawable/abc_btn_radio_material"
+            android:title="Palette" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/abc_btn_radio_material"
+            android:title="仿稀土" />
+        <item
+            android:id="@+id/nav_style"
+            android:icon="@drawable/abc_btn_radio_material"
+            android:title="主题style" />
+        <item
+            android:id="@+id/night"
+            android:icon="@drawable/abc_btn_radio_material"
+            android:title="模式切换" />
+
+        <item
+            android:id="@+id/night1"
+            android:icon="@drawable/abc_btn_radio_material"
+            android:title="模式切换" />
+        <item
+            android:id="@+id/night2"
+            android:icon="@drawable/abc_btn_radio_material"
+            android:title="模式切换" />
+        <item
+            android:id="@+id/night3"
+            android:icon="@drawable/abc_btn_radio_material"
+            android:title="模式切换" />
+        <item
+            android:id="@+id/night4"
+            android:icon="@drawable/abc_btn_radio_material"
+            android:title="模式切换" />
+        <item
+            android:id="@+id/night5"
+            android:icon="@drawable/abc_btn_radio_material"
+            android:title="模式切换" />
+    </group> <!-- <item android:title="分享和反馈"> <menu> <item android:id="@+id/nav_share" android:icon="@drawable/nav_icon_settings" android:title="分享"/> <item android:id="@+id/nav_feedback" android:icon="@drawable/nav_icon_settings" android:title="意见反馈"/> </menu> </item>-->
+</menu>

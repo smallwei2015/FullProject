@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_city_select_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:fitsSystemWindows="true"
+    tools:context="com.blue.rchina.activity.CitySelectListActivity">
+
+    <View
+        android:id="@+id/top_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_color" />
+
+    <include layout="@layout/top" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/city_rec"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        />
+
+    <com.zhy.view.flowlayout.FlowLayout
+        android:id="@+id/flow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_color_light"
+        android:layout_below="@+id/toolbar"
+        android:visibility="gone"
+        android:padding="@dimen/dp5"
+        />
+
+    <include layout="@layout/no_data" />
+
+</RelativeLayout>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/top_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_toolbarSize" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_toolbarSize"
+            android:background="?attr/colorPrimary"
+            android:visibility="gone"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_toolbarSize"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp5">
+
+            <ImageView
+                android:id="@+id/icon"
+                style="@style/normal_icon_style_big"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/menu_white" />
+
+            <RelativeLayout
+                android:id="@+id/top_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/icon"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:padding="@dimen/dp5">
+
+                <EditText
+                    android:id="@+id/top_search_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/circle_white_dp5"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:lines="1"
+                    android:paddingLeft="@dimen/dp40"
+                    android:textColor="@color/middle_gray" />
+
+                <ImageView
+                    style="@style/normal_icon_style_small"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/searchicon" />
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/top_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp20" />
+
+
+            <ImageView
+                android:id="@+id/top_right"
+                style="@style/normal_icon_style"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/address_icon"
+                />
+
+            <RelativeLayout
+                android:layout_width="@dimen/dp35"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/top_mall"
+                >
+
+                <ImageView
+                    android:id="@+id/top_mall_right"
+                    style="@style/normal_icon_style"
+                    android:src="@mipmap/address_icon" />
+
+                <TextView
+                    android:layout_width="@dimen/dp15"
+                    android:layout_height="@dimen/dp15"
+                    android:layout_alignParentRight="true"
+                    android:text="99"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp10"
+                    android:gravity="center"
+                    android:id="@+id/top_mall_count"
+                    android:background="@drawable/circle_red"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <FrameLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <include layout="@layout/no_data"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp0.5"
+        android:background="#CECECE" />
+
+    <LinearLayout
+        android:id="@+id/bottom_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/middle_padding"
+        android:paddingRight="@dimen/middle_padding">
+
+        <!--<include layout="@layout/bottom_button"
+            android:id="@+id/news"
+            />
+        <include layout="@layout/bottom_button"
+            android:id="@+id/life"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+        <include layout="@layout/bottom_button"
+            android:id="@+id/interact"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+        <include layout="@layout/bottom_button"
+            android:id="@+id/vip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+        <include layout="@layout/bottom_button"
+            android:id="@+id/mall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />-->
+    </LinearLayout>
+
+</LinearLayout>

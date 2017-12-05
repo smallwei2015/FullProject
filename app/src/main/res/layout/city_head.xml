@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/city_parent"
+    android:gravity="center"
+    android:padding="@dimen/dp10"
+    android:background="@color/bg_color_light">
+
+
+    <ImageView
+        style="@style/normal_icon_style"
+        android:src="@mipmap/current_city_icon"
+        android:id="@+id/city_icon"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/city_icon"
+        android:textSize="@dimen/sp16"
+        android:layout_centerInParent="true"
+        android:textColor="@color/colorPrimary"
+        android:id="@+id/city_name"
+        />
+
+</RelativeLayout>

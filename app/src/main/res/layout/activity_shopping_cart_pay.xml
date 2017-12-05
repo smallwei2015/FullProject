@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_shopping_cart"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/top" />
+
+
+    <LinearLayout style="@style/barrel_linear_style"
+        android:background="@drawable/all_btn_bg"
+        android:id="@+id/cart_no_address"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/dp25"
+            android:layout_height="@dimen/dp25"
+            android:layout_marginRight="@dimen/dp5"
+            android:src="@mipmap/address_icon" />
+
+        <TextView
+            style="@style/order_black_text"
+            android:text="请先设置收货地址"
+            android:layout_weight="1"/>
+
+
+        <ImageView
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:src="@mipmap/right" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cart_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/linear_address_style"
+            >
+            <ImageView
+                android:layout_width="@dimen/dp25"
+                android:layout_height="@dimen/dp25"
+                android:layout_marginRight="@dimen/dp5"
+                android:src="@mipmap/address_icon" />
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="请选择收货地址"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/sp15" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp10"
+            android:paddingLeft="@dimen/dp5"
+            android:paddingRight="@dimen/dp5"
+            android:paddingTop="@dimen/dp10">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="联系人：" />
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="联系电话：" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/bg_color">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/cart_rec"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/cart_all_coupon"
+        style="@style/barrel_linear_style"
+        android:background="@drawable/all_btn_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="优惠券"
+            android:textSize="@dimen/sp16" />
+
+        <TextView
+            android:id="@+id/cart_coupon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="不使用优惠券"
+            android:textColor="@color/xxlight_gray"
+            android:textSize="@dimen/sp12" />
+
+        <ImageView
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:src="@mipmap/right" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_color"
+        android:padding="@dimen/dp5">
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                style="@style/login_image_style"
+                android:src="@mipmap/shopping_cart_gray" />
+
+            <TextView
+                android:id="@+id/cart_goods_count"
+                android:layout_width="@dimen/dp15"
+                android:layout_height="@dimen/dp15"
+                android:layout_gravity="right"
+                android:layout_margin="@dimen/dp5"
+                android:background="@drawable/circle_red"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp10" />
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/cart_buy"
+            style="@style/cart_text_style"
+            android:layout_alignParentRight="true"
+            android:onClick="btn_buy"
+            android:text="去支付" />
+
+        <TextView
+            android:id="@+id/cart_price"
+            style="@style/cart_text_style"
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_toLeftOf="@+id/cart_buy"
+            android:background="@color/transparent"
+            android:text="￥0.00"
+            android:textColor="@color/price_red"
+            android:textSize="@dimen/sp16" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/cart_price"
+            android:text="总价："
+            android:textColor="@color/price_red"
+            android:textSize="@dimen/sp16" />
+    </RelativeLayout>
+
+
+</LinearLayout>

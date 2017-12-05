@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_setting"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/top" />
+
+    <LinearLayout
+        android:id="@+id/setting_change"
+        style="@style/info_setting_linear_style"
+        >
+
+        <ImageView
+            style="@style/normal_icon_style_small"
+            android:src="@mipmap/chengshi"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="切换城市"
+            android:textSize="@dimen/middle_text"
+            />
+
+        <ImageView
+            style="@style/info_setting_img"
+            android:src="@mipmap/arr_right_gray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/setting_auto"
+        style="@style/info_setting_linear_style"
+        >
+
+        <ImageView
+            style="@style/normal_icon_style_small"
+            android:src="@mipmap/auto"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="自动切换城市"
+            android:textSize="@dimen/middle_text"
+            />
+        
+        <ImageView
+            android:layout_height="@dimen/dp30"
+            android:layout_width="wrap_content"
+            android:id="@+id/switch_btn"
+            android:src="@drawable/switch_bg" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/setting_size"
+        style="@style/info_setting_linear_style"
+        >
+        <ImageView
+            style="@style/normal_icon_style_small"
+            android:src="@mipmap/lianxi"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="联系我们"
+            android:textSize="@dimen/middle_text" />
+
+        <ImageView
+            style="@style/info_setting_img"
+            android:src="@mipmap/arr_right_gray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/setting_clear"
+        style="@style/info_setting_linear_style">
+        <ImageView
+            style="@style/normal_icon_style_small"
+            android:src="@mipmap/qingchu"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="清除缓存"
+            android:textSize="@dimen/middle_text" />
+
+        <ImageView
+            style="@style/info_setting_img"
+
+            android:src="@mipmap/arr_right_gray" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/setting_upload"
+        style="@style/info_setting_linear_style">
+
+        <ImageView
+            style="@style/normal_icon_style_small"
+            android:src="@mipmap/dizhi"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="检查更新"
+            android:textSize="@dimen/middle_text" />
+
+        <ImageView
+            style="@style/info_setting_img"
+
+            android:src="@mipmap/arr_right_gray" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/info_setting_linear_style"
+        android:id="@+id/setting_recommend">
+
+        <ImageView
+            style="@style/normal_icon_style_small"
+            android:src="@mipmap/tuijian"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="分享应用"
+            android:textSize="@dimen/middle_text" />
+
+        <ImageView
+            style="@style/info_setting_img"
+            android:src="@mipmap/arr_right_gray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/setting_about"
+        style="@style/info_setting_linear_style"
+        android:layout_marginBottom="@dimen/dp50"
+        >
+
+        <ImageView
+            style="@style/normal_icon_style_small"
+            android:src="@mipmap/guanyu"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="关于"
+            android:textSize="@dimen/middle_text" />
+
+        <ImageView
+            style="@style/info_setting_img"
+
+            android:src="@mipmap/arr_right_gray" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/info_setting_linear_style"
+        android:id="@+id/setting_contact"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/dp40">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="用户设置"
+            android:textSize="@dimen/middle_text" />
+
+        <ImageView
+            style="@style/info_setting_img"
+            android:src="@mipmap/arr_right_gray" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/loginOut"
+        style="@style/login_btn"
+        android:text="退出登录"
+        />
+
+</LinearLayout>

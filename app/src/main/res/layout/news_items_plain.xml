@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginBottom="1dp"
+    android:padding="@dimen/small_padding">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/small_padding"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/news_title_style"
+            android:layout_weight="1"
+            android:id="@+id/news_single_title"
+            android:maxLines="3"
+            android:minLines="2"
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/middle_padding"
+            >
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="right"
+                style="@style/news_small_text"
+                android:text="新龙岩"
+                android:id="@+id/news_single_from"/>
+            <TextView
+                style="@style/news_small_text"
+                android:layout_marginLeft="@dimen/dp10"
+                android:text="0浏览"
+                android:id="@+id/news_single_comment"
+                />
+            <TextView
+                style="@style/news_small_text"
+                android:layout_marginLeft="@dimen/dp10"
+                android:id="@+id/news_single_time"
+                android:text="刚刚"/>
+
+            <TextView
+                style="@style/small_text"
+                android:textSize="@dimen/middle_text"
+                android:textColor="@color/news_selected_color"
+                android:id="@+id/news_single_kind"
+                android:visibility="gone"
+                android:text="置顶"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

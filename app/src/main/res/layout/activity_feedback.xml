@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_feedback"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/top" />
+
+
+    <EditText
+        android:id="@+id/feedback_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/middle_padding"
+        android:background="@color/white"
+        android:gravity="start"
+        android:hint="请留下您的宝贵意见，我们会做的更好"
+        android:lines="8"
+        android:padding="@dimen/middle_padding"
+        android:textColor="@color/light_gray"
+        android:textColorHint="@color/light_gray"
+        android:textSize="@dimen/small_text" />
+
+    <TextView
+        android:id="@+id/feedback_commit"
+        style="@style/login_btn"
+        android:text="提交" />
+
+</LinearLayout>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_margin="@dimen/dp1"
+    >
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@color/white"
+        android:id="@+id/goods_img"
+        android:layout_margin="@dimen/dp5"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/dp5"
+        android:paddingRight="@dimen/dp5"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp15"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textColor="@color/dark_gray"
+            android:text="7月10日上午，万达商业与融创中国联合发出公告，两者在酒店、文旅方面达成了一笔高达631.7亿元的交易"
+            android:layout_weight="1"
+            android:id="@+id/goods_title"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp5"
+            android:layout_marginBottom="@dimen/dp5"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="库存量"
+                android:textSize="@dimen/sp12"
+                android:textColor="@color/light_gray"
+                android:id="@+id/mall_sale_count"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp16"
+                android:textColor="@color/price_red"
+                android:layout_below="@+id/mall_sale_count"
+                android:text="12$"
+                android:id="@+id/mall_goods_price"/>
+
+
+            <ImageView
+                android:layout_width="@dimen/dp30"
+                android:layout_height="@dimen/dp30"
+                android:background="@drawable/circle_red"
+                android:layout_alignParentRight="true"
+                android:padding="@dimen/dp8"
+                android:src="@mipmap/shopping_cart"
+                android:layout_centerVertical="true"
+                android:id="@+id/mall_add"/>
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

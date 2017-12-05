@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_my_address"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_color_light"
+    >
+
+    <include layout="@layout/top"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+        <in.srain.cube.views.ptr.PtrClassicFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/address_ptr">
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/address_rec"/>
+        </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+
+        <include layout="@layout/no_data"/>
+
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_centerInParent="true"
+            android:id="@+id/address_bar"/>
+    </RelativeLayout>
+
+
+
+    <TextView
+        style="@style/login_btn"
+        android:text="新建收货地址"
+        android:onClick="btn_addAddress"/>
+
+</LinearLayout>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp5"
+    android:background="@color/white"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+    <RelativeLayout style="@style/interact_top_style">
+
+        <ImageView
+            android:id="@+id/interact_icon"
+            style="@style/interact_icon_style" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_toRightOf="@+id/interact_icon"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/interact_head_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/interact_name_style"
+                    android:id="@+id/interact_nickname"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/gender"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/interact_content"
+                style="@style/interact_content_style"
+                android:text="this is content" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/interact_date"
+            style="@style/interact_day_style"
+            android:layout_alignParentRight="true"
+            android:text="this is date" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp5">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <ImageView
+                style="@style/normal_icon_style_xsmall"
+                android:src="@mipmap/icon_locate" />
+
+            <TextView
+                style="@style/interact_day_style"
+                android:id="@+id/interact_location"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="未知位置"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/interact_distance"
+            style="@style/interact_day_style"
+            android:text="200m"
+            />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp0.5"
+        android:background="@color/bg_color"/>
+
+    <LinearLayout
+        android:id="@+id/interact_bottom_kind1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/middle_padding">
+
+        <LinearLayout
+            android:id="@+id/interact_agree_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/interact_agree_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:src="@drawable/interact_agree" />
+
+            <TextView
+                android:id="@+id/interact_agree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="赞(0)" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="20dp"
+            android:background="@color/xxxlight_gray" />
+
+        <LinearLayout
+            android:id="@+id/interact_comment_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@mipmap/interact_comment" />
+
+            <TextView
+                android:id="@+id/interact_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="评论(0)" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="20dp"
+            android:background="@color/xxxlight_gray" />
+
+        <LinearLayout
+            android:id="@+id/interact_report_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@mipmap/interact_report" />
+
+            <TextView
+                android:id="@+id/interact_report"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="举报" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/interact_bottom_kind2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/small_padding">
+
+        <LinearLayout
+            android:id="@+id/interact_icon_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <com.blue.rchina.views.CircleImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="@dimen/small_padding"
+                android:src="@mipmap/demo"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/interact_agree_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:padding="@dimen/small_padding"
+            android:text="10个人点赞 >" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,73 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="toolbarSize">40dp</dimen>
+    <dimen name="sp14">14sp</dimen>
+    <dimen name="sp15">15sp</dimen>
+    <dimen name="sp16">16sp</dimen>
+    <dimen name="sp18">18sp</dimen>
+    <dimen name="sp20">20sp</dimen>
+    <dimen name="dp50">50dp</dimen>
+    <dimen name="dp1">1dp</dimen>
+    <dimen name="dp5">5dp</dimen>
+    <dimen name="dp40">40dp</dimen>
+    <dimen name="dp200">200dp</dimen>
+    <dimen name="sp24">24sp</dimen>
+    <dimen name="sp22">22sp</dimen>
+    <dimen name="dp80">80dp</dimen>
+    <dimen name="dp10">10dp</dimen>
+    <dimen name="dp81">81dp</dimen>
+    <dimen name="dp82">82dp</dimen>
+    <dimen name="dp300">300dp</dimen>
+    <dimen name="dp20">20dp</dimen>
+    <dimen name="middle_padding">10dp</dimen>
+    <dimen name="dp30">30dp</dimen>
+    <dimen name="small_padding">5dp</dimen>
+    <dimen name="large_text">18sp</dimen>
+    <dimen name="middle_text">16sp</dimen>
+    <dimen name="small_text">14sp</dimen>
+    <dimen name="dp100">100dp</dimen>
+    <dimen name="dp25">25dp</dimen>
+    <dimen name="dp160">160dp</dimen>
+    <dimen name="dp40p">-40dp</dimen>
+    <dimen name="sp40">40sp</dimen>
+    <dimen name="dp15">15dp</dimen>
+    <dimen name="sp10">10sp</dimen>
+    <dimen name="dp8">8dp</dimen>
+    <dimen name="sp12">12sp</dimen>
+    <dimen name="dp20p">-20dp</dimen>
+    <dimen name="dp180">180dp</dimen>
+    <dimen name="dp35">35dp</dimen>
+    <dimen name="dp400">400dp</dimen>
+    <dimen name="dp340">340dp</dimen>
+    <dimen name="sp30">30sp</dimen>
+    <dimen name="dp60">60dp</dimen>
+    <dimen name="dp2">2dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="dp16">16dp</dimen>
+    <dimen name="sp17">17sp</dimen>
+    <dimen name="dp22">22dp</dimen>
+    <dimen name="xsmall_text">12sp</dimen>
+    <dimen name="main_toolbarSize">50dp</dimen>
+    <dimen name="topview_size">24dp</dimen>
+    <dimen name="tabSize">42dp</dimen>
+    <dimen name="dp45">45dp</dimen>
+    <dimen name="dp0.5">0.5dp</dimen>
+    <dimen name="dp48">48dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="dp4">4dp</dimen>
+    <dimen name="dp250">250dp</dimen>
+    <dimen name="dp050">-50dp</dimen>
+    <dimen name="dp040">-40dp</dimen>
+    <dimen name="dp020">-20dp</dimen>
+    <dimen name="dp035">-35dp</dimen>
+    <dimen name="dp015">-15dp</dimen>
+    <dimen name="dp025">-25dp</dimen>
+    <dimen name="dp030">-30dp</dimen>
+
+</resources>

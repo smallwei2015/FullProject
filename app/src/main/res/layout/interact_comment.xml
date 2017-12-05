@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginBottom="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            style="@style/normal_icon_style_xbig"
+            android:id="@+id/comment_icon"
+            android:src="@mipmap/icon_person"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="@dimen/dp5"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/comment_name"
+                android:text="@string/app_name"
+                android:textSize="@dimen/small_text"
+                android:textColor="@color/middle_gray"
+                />
+
+            <TextView
+                style="@style/interact_day_style"
+                android:textSize="@dimen/sp10"
+                android:id="@+id/comment_date"
+                android:text="2017.1.2"/>
+        </LinearLayout>
+
+        <TextView
+            style="@style/interact_day_style"
+            android:textSize="@dimen/sp12"
+            android:id="@+id/comment_reply"
+            android:layout_margin="@dimen/dp5"
+            android:text="已收到10条回复"/>
+    </LinearLayout>
+
+
+    <TextView
+        style="@style/interact_content_style"
+        android:layout_marginLeft="@dimen/dp50"
+        android:layout_marginBottom="@dimen/dp5"
+        android:id="@+id/comment_content"
+        android:textSize="@dimen/sp14"
+        android:text="this is content"/>
+</LinearLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_color_light"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp10"
+    android:layout_marginBottom="@dimen/dp1">
+
+    <ImageView
+        android:id="@+id/order_img"
+        android:scaleType="centerCrop"
+        android:layout_width="@dimen/dp80"
+        android:layout_height="@dimen/dp80"
+        android:src="@color/middle_gray" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp10">
+
+        <TextView
+            android:id="@+id/order_des"
+            style="@style/order_black_text"
+            android:lines="4"
+            android:ellipsize="end"
+            android:text="踢死XUtils的网络请求方法和一些网络请求框架的用法非常类似，我进行了一些简单的封装。
+封装一共有3个文件，分别是网络请求工具类XUtil,请求响应数据的解析类，还有一个就是一个请求成功的一个接口回调类。 " />
+
+        <TextView
+            android:id="@+id/order_count"
+            style="@style/order_red_text"
+            android:layout_alignParentBottom="true"
+            android:text="￥10（x1）" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/order_black_text"
+                android:text="总价：" />
+
+            <TextView
+                android:id="@+id/order_price"
+                style="@style/order_red_text"
+                android:text="￥10" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

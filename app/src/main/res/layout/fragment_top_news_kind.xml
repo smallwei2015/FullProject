@@ -1,0 +1,25 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.blue.rchina.fragment.TopNewsKindFragment">
+
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_color"
+        android:id="@+id/top_news_ptr">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/top_news_rec"/>
+
+
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+
+
+
+    <include layout="@layout/no_data"/>
+
+</FrameLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginTop="@dimen/dp5"
+    android:layout_marginBottom="@dimen/dp0.5">
+
+
+    <TextView
+        style="@style/search_text_style.title"
+        android:text="搜索历史"
+        android:id="@+id/search_title_tv"/>
+
+</LinearLayout>

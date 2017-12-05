@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingLeft="@dimen/small_padding"
+    android:paddingTop="2dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@mipmap/icon_person"
+        android:id="@+id/comment_icon"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="0dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/middle_padding"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/comment_name"
+            android:textSize="@dimen/xsmall_text"
+            android:textColor="@color/middle_gray"
+            android:text="name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/comment_date"
+            android:textSize="@dimen/xsmall_text"
+            android:textColor="@color/light_gray"
+            android:text="this is date"
+            />
+
+
+    </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="this is content"
+        android:id="@+id/comment_content"
+        android:textSize="@dimen/small_text"
+        android:textColor="@color/middle_gray"
+        android:layout_marginLeft="45dp"
+        android:layout_marginBottom="2dp"/>
+</LinearLayout>

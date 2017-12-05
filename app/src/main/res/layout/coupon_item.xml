@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:simple="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <net.wujingchao.android.view.SimpleTagImageView
+        android:id="@+id/coupon_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp10"
+        android:scaleType="fitXY"
+        android:src="@drawable/coupon"
+        simple:simple_corner_distance="30dp"
+        simple:simple_tag_background_color="#27CDC0"
+        simple:simple_tag_enable="true"
+        simple:simple_tag_orientation="right_top"
+        simple:simple_tag_round_radius="0dp"
+        simple:simple_tag_text="未使用"
+        simple:simple_tag_textColor="@android:color/white"
+        simple:simple_tag_textSize="@dimen/sp14"
+        simple:simple_tag_width="@dimen/dp20" />
+
+    <LinearLayout
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center">
+
+
+            <ImageView
+                android:id="@+id/money_icon"
+                android:layout_width="@dimen/dp20"
+                android:layout_height="@dimen/dp20"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/dp5"
+                android:src="@mipmap/money" />
+
+            <TextView
+                android:id="@+id/money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/money_icon"
+                android:text="5.00"
+                android:textColor="@color/money"
+                android:textSize="@dimen/sp30" />
+
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+
+            android:background="@color/bg_color" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1.5"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/kind"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp10"
+                android:text="全平台红包"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/sp18" />
+
+            <TextView
+                android:id="@+id/condition1"
+                style="@style/coupon_text"
+                android:text=". 呵呵哈哈哈" />
+
+            <TextView
+                android:id="@+id/condition2"
+                style="@style/coupon_text"
+                android:text=". 呵呵哈哈哈" />
+
+            <TextView
+                android:id="@+id/deadline"
+                style="@style/coupon_text"
+                android:text=". 呵呵哈哈哈" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

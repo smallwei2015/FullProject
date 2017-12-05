@@ -1,0 +1,36 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+
+    <in.srain.cube.views.ptr.PtrFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fresh_frame"
+        android:background="@color/bg_color"
+        app:ptr_duration_to_close="200"
+        app:ptr_duration_to_close_header="1000"
+        >
+
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/news_web"/>
+    </in.srain.cube.views.ptr.PtrFrameLayout>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@mipmap/left_white"
+        android:padding="5dp"
+        android:id="@+id/back"
+        android:visibility="gone"/>
+
+
+
+    <include layout="@layout/no_data"/>
+
+</FrameLayout>

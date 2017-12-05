@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp10"
+    android:background="@drawable/normal_text_bg"
+    android:layout_marginBottom="@dimen/dp1"
+    android:clickable="true"
+    >
+
+    <ImageView
+        style="@style/normal_icon_style_small"
+        android:layout_gravity="center_vertical"
+        android:src="@mipmap/arr_right_gray"
+        android:id="@+id/wea_icon"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="@dimen/middle_text"
+        android:textColor="@color/middle_gray"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/wea_day"
+        android:text="monday"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:id="@+id/wea_temp"
+            android:textSize="@dimen/xsmall_text"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:id="@+id/wea_wea"
+            android:textSize="@dimen/xsmall_text"/>
+    </LinearLayout>
+</LinearLayout>

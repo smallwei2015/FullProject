@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp5"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:descendantFocusability="blocksDescendants">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp180">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/demo"
+            android:scaleType="centerCrop"
+            android:layout_margin="@dimen/dp2"
+            android:id="@+id/img"
+            android:transitionName="@string/trave_transition"/>
+
+
+
+        <TextView
+            style="@style/trave_price_style"
+            android:id="@+id/price"
+            />
+        <com.blue.rchina.views.DeleteTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/price"
+            android:layout_alignBaseline="@+id/price"
+            android:textColor="@color/xlightGray"
+            android:padding="@dimen/dp5"
+            android:text="原价1988"/>
+    </RelativeLayout>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        android:text="北京“欢迎”你？"
+        android:padding="@dimen/dp5"
+        />
+
+
+</LinearLayout>

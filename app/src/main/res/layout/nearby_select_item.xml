@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/normal_text_bg"
+    android:layout_marginBottom="@dimen/dp1"
+    android:padding="@dimen/dp5"
+    >
+
+
+
+    <ImageView
+        android:layout_width="@dimen/dp100"
+        android:layout_height="@dimen/dp80"
+        android:layout_margin="@dimen/dp5"
+        android:id="@+id/icon"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp18"
+        android:id="@+id/title"
+        android:layout_toRightOf="@+id/icon"
+        android:lines="2"
+        android:text="小区"
+        android:textColor="@color/colorPrimary"
+        android:layout_margin="@dimen/dp5"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp5"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/sp13"
+        android:id="@+id/distance"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/icon"
+        android:layout_alignBottom="@+id/icon"
+        android:textSize="@dimen/sp14"
+        android:textColor="@color/middle_gray"
+        android:layout_marginLeft="@dimen/dp5"
+        android:id="@+id/des"
+        android:text="描述"/>
+</RelativeLayout>

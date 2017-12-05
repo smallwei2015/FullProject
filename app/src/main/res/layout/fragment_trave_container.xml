@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.blue.rchina.fragment.MallContainerFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbarSize"
+        android:orientation="horizontal"
+
+        >
+
+        <TextView
+            style="@style/mall_tab_style"
+            android:id="@+id/tab_local"
+            android:text="本地旅游"
+            />
+        <View
+            android:layout_width="@dimen/dp0.5"
+            android:layout_height="match_parent"
+            android:background="@color/xxxlight_gray"
+            android:layout_marginTop="@dimen/dp5"
+            android:layout_marginBottom="@dimen/dp5"/>
+
+        <TextView
+            style="@style/mall_tab_style"
+            android:id="@+id/tab_all"
+            android:text="区域旅游"/>
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mall_contain"
+        android:background="@color/white"/>
+
+</LinearLayout>

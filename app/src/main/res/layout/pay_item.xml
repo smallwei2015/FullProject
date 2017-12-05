@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:id="@+id/pay_parent"
+    android:paddingTop="@dimen/dp5"
+    android:paddingRight="@dimen/dp10"
+    android:paddingLeft="@dimen/dp10"
+    android:paddingBottom="@dimen/dp5"
+    android:background="@drawable/all_btn_bg"
+    android:layout_marginBottom="1dp"
+    android:clickable="true">
+
+
+    <ImageView
+        style="@style/normal_icon_style"
+        android:id="@+id/pay_icon"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/pay_name"
+        android:textSize="@dimen/sp16"
+        android:padding="@dimen/dp10"
+        android:text="zhifubao"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pay_check"/>
+
+</LinearLayout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    android:background="@color/middle_gray">
+
+    <LinearLayout
+        style="@style/pop_info_linear_style"
+        android:id="@+id/delete"
+        >
+        <ImageView
+            style="@style/info_setting_img"
+            android:src="@mipmap/clear" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp10"
+            android:text="删除"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/pop_info_linear_style"
+        android:id="@+id/collect">
+        <ImageView
+            style="@style/info_setting_img"
+            android:src="@mipmap/collect_white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp10"
+            android:text="收藏"/>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        style="@style/pop_info_linear_style"
+        android:id="@+id/share">
+        <ImageView
+            style="@style/info_setting_img"
+            android:src="@mipmap/share_white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp10"
+            android:text="分享"/>
+    </LinearLayout>
+
+</LinearLayout>

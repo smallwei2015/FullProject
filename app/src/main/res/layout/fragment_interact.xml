@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bg_color_light"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/top"
+        android:padding="@dimen/dp5"
+        android:gravity="center_vertical"
+        android:background="@color/bg_color">
+
+        <ImageView
+            style="@style/normal_icon_style"
+            android:src="@mipmap/attention"
+             />
+        <com.blue.rchina.views.MarqueeTextViewIgnoreLength
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp16"
+            android:textColor="@color/darkGray"
+            android:id="@+id/marque"
+            />
+    </LinearLayout>
+
+
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        android:id="@+id/fresh_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ptr_duration_to_close="200"
+        app:ptr_duration_to_close_header="1000"
+        android:layout_below="@+id/top"
+        >
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recycler"
+            />
+
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+
+    <include layout="@layout/no_data"/>
+
+
+</RelativeLayout>
