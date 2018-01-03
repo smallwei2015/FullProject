@@ -16,6 +16,7 @@ public class OrderGoods implements Serializable {
     private double price;
     private String title;
 
+
     public int getCount() {
         return count;
     }

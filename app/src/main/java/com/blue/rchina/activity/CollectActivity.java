@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -15,7 +14,6 @@ import com.blue.rchina.bean.Article;
 import com.blue.rchina.bean.DataWrap;
 import com.blue.rchina.bean.NetData;
 import com.blue.rchina.manager.UserManager;
-import com.blue.rchina.utils.UIUtils;
 import com.blue.rchina.utils.UrlUtils;
 
 import org.xutils.common.Callback;
@@ -86,45 +84,13 @@ public class CollectActivity extends BaseActivity {
 
                         break;
                     case 1:
-                        if (id==R.id.news_single_icon) {
-                            intent=new Intent(CollectActivity.this, NewsKindImageActivity.class);
-                            startActivity(intent);
-                        }else {
-                            intent = new Intent(CollectActivity.this, NewsKindDetailActivty.class);
-                            intent.putExtra("data", ((Article) dataWrap.getData()));
-                            startActivity(intent);
-                        }
-                        break;
                     case 2:
-                        intent = new Intent(CollectActivity.this, NewsKindDetailActivty.class);
-                        intent.putExtra("data", ((Article) dataWrap.getData()));
-                        startActivity(intent);
-                        break;
                     case 3:
-                        if (id==R.id.news_triple_icon1){
-                            UIUtils.showToast("picture1");
-                        }else if (id==R.id.news_triple_icon2){
-                            UIUtils.showToast("picture2");
-
-                        }else if (id==R.id.news_triple_icon3){
-                            UIUtils.showToast("picture3");
-
-                        }else {
-                            intent = new Intent(CollectActivity.this, NewsKindDetailActivty.class);
-                            intent.putExtra("data", dataWrap);
-                            startActivity(intent);
-                        }
-                        break;
                     case 5:
-
-                        intent = new Intent(CollectActivity.this, NewsKindDetailActivty.class);
-                        intent.putExtra("data", ((Article) dataWrap.getData()));
-                        startActivity(intent);
-                        break;
                     case 6:
                         intent = new Intent(CollectActivity.this, NewsKindDetailActivty.class);
                         intent.putExtra("data", ((Article) dataWrap.getData()));
-                        startActivity(intent);
+                        startActivityForResult(intent,3001);
                         break;
                 }
             }
@@ -137,6 +103,8 @@ public class CollectActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
+
+
         fresh();
     }
 
@@ -155,8 +123,6 @@ public class CollectActivity extends BaseActivity {
         x.http().post(entity, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-
-                Log.w("4444",result);
 
                 NetData netData = JSON.parseObject(result, NetData.class);
 
@@ -221,5 +187,13 @@ public class CollectActivity extends BaseActivity {
 
         initView();
         initData();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==3001){
+            fresh();
+        }
     }
 }

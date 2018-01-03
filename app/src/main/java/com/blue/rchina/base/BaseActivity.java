@@ -145,18 +145,12 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseUICo
     @Override
     protected void onResume() {
         super.onResume();
-        /*if (SystemBrightUtils.isAutoBrightness(mActivity)) {
-            SystemBrightUtils.stopAutoBrightness(mActivity);
-        }
-        int bright = SPUtils.getSP().getInt("bright", -1);
-        Log.w("33333",bright+"bright");
-        if (bright!=-1){
-            UIUtils.setBrightness(bright,mActivity);
-            Log.w("33333",bright+"set");
-        }*/
-
     }
 
+
+    public void initPermission(){
+
+    }
     public void initData() {
     }
 
@@ -165,6 +159,14 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseUICo
         nodata = view.findViewById(R.id.no_data);
         if (nodata != null) {
             nodata.setVisibility(View.GONE);
+        }
+        serverDie=view.findViewById(R.id.server_die);
+        if (serverDie != null) {
+            serverDie.setVisibility(View.GONE);
+        }
+        loading = (ContentLoadingProgressBar)view.findViewById(R.id.loading);
+        if (loading != null) {
+            loading.setVisibility(View.GONE);
         }
     }
 
@@ -203,6 +205,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseUICo
             lp.screenBrightness = (brightValue <= 0 ? -1.0f : brightValue / 255f);
             getWindow().setAttributes(lp);
         }
+
+        initPermission();
     }
 
     public void registerNetReceiver() {
@@ -347,6 +351,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseUICo
                 } else {
                     right_text.setText(rightStr);
                 }
+                right_text.setTextColor(getResources().getColor(textColor));
                 right_text.setOnClickListener(ToolbarListener);
 
             }

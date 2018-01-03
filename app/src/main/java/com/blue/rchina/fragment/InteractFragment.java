@@ -37,6 +37,7 @@ import com.blue.rchina.bean.DataWrap;
 import com.blue.rchina.bean.NetData;
 import com.blue.rchina.bean.Report;
 import com.blue.rchina.manager.UserManager;
+import com.blue.rchina.utils.SPUtils;
 import com.blue.rchina.utils.UIUtils;
 import com.blue.rchina.utils.UrlUtils;
 import com.blue.rchina.views.MarqueeTextViewIgnoreLength;
@@ -115,7 +116,7 @@ public class InteractFragment extends BaseFragment {
     public void initView(View view) {
         super.initView(view);
 
-        isHideLoading(false);
+
         marque = ((MarqueeTextViewIgnoreLength) view.findViewById(R.id.marque));
         marque.setText("蓝太平洋舆情监测系统(BiRadar)利用互联网信息采集技术、信息智能处理技术和全文检索技术，对境内外网络中的新闻网页、论坛、贴吧、博客、微博、新闻评论等网络资源进行全网采集、定向采集和智能分析，提供舆情信息检索、热点信息的发现、热点跟踪定位、敏感信息监测、辅助决策支持…… ");
         marque.setOnClickListener(new View.OnClickListener() {
@@ -185,6 +186,43 @@ public class InteractFragment extends BaseFragment {
             channel = (Channel) arguments.getSerializable("channel");
         }
         items = new ArrayList<>();
+        /*加载缓存数据*/
+        String interact = SPUtils.getCacheSp().getString("interact", "");
+
+        NetData netData = JSON.parseObject(interact, NetData.class);
+        if (netData != null) {
+            JSONObject jsonInfo = JSON.parseObject(netData.getInfo());
+
+            List<Report> reports = JSON.parseArray(jsonInfo.getString("report"), Report.class);
+
+
+            for (int i = 0; i < reports.size(); i++) {
+                DataWrap e = new DataWrap();
+                int size = reports.get(i).getManyPic().size();
+                if (size == 1) {
+                    e.setType(4);
+                } else if (size == 2) {
+                    e.setType(5);
+                } else if (size == 0) {
+                    e.setType(6);
+                } else {
+                    e.setType(0);
+                }
+                e.setData(reports.get(i));
+                items.add(e);
+            }
+
+            List<Alliance> near = JSON.parseArray(jsonInfo.getString("near"), Alliance.class);
+
+            if (near!=null&&near.size()>0) {
+                DataWrap e1 = new DataWrap();
+                e1.setType(7);
+                e1.setData(near.get(0));
+                items.add(0,e1);
+            }
+        }
+
+
         if (location != null) {
             fresh();
         } else {
@@ -216,7 +254,6 @@ public class InteractFragment extends BaseFragment {
 
 
                         if (UserManager.isLogin()) {
-                            v.findViewById(R.id.interact_agree_icon).setSelected(true);
                             agree(position);
                         } else {
                             intent = new Intent(getActivity(), LoginActivity.class);
@@ -260,6 +297,10 @@ public class InteractFragment extends BaseFragment {
         adapter.setListener(listener);
 
         recycler.setAdapter(adapter);
+
+        if (items.size()==0){
+            isHideLoading(false);
+        }
 
     }
 
@@ -496,6 +537,8 @@ public class InteractFragment extends BaseFragment {
                         items.clear();
                         /*刷新情况*/
 
+                        SPUtils.getCacheSp().edit().putString("interact",result).commit();
+
                         JSONObject jsonInfo = JSON.parseObject(object.getString("info"));
 
                         List<Report> reports = JSON.parseArray(jsonInfo.getString("report"), Report.class);
@@ -584,10 +627,10 @@ public class InteractFragment extends BaseFragment {
         });
     }
 
-    private void handleReport(int position, final int flag) {
+    private void handleReport(final int position, final int flag) {
 
-        DataWrap dataWrap = items.get(position);
-        Report data = (Report) dataWrap.getData();
+        final DataWrap dataWrap = items.get(position);
+        final Report data = (Report) dataWrap.getData();
 
         RequestParams entity = new RequestParams(UrlUtils.N_handleReport);
         entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
@@ -602,7 +645,13 @@ public class InteractFragment extends BaseFragment {
                     UIUtils.showToast("举报成功");
                 } else if (code == 202) {
                     UIUtils.showToast("点赞成功");
-                    fresh();
+                    /*设置已点赞，点赞数量加1*/
+                    data.setPraiseState(1);
+                    data.setPraiseCount(data.getPraiseCount()+1);
+                    items.remove(position);
+                    items.add(position,dataWrap);
+                    adapter.notifyDataSetChanged();
+                    //fresh();
                 } else if (code == 501) {
                     UIUtils.showToast("不可重复举报");
                 } else if (code == 502) {

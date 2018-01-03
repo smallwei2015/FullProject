@@ -66,8 +66,8 @@
 	<Wechat
 		Id="2"
 		SortId="2"
-		AppId="wxf628b3cbbfa778d2"
-		AppSecret="2c7655b171a10862029a2cca8d136f15"
+		AppId="wx028ab07dde83c8f2"
+		AppSecret="62982a3236c04175c3e21d7aa337c4c4"
 		BypassApproval="false"
 		Enable="true" />
 
@@ -90,16 +90,16 @@
 	<WechatMoments
 		Id="5"
 		SortId="5"
-		AppId="wxf628b3cbbfa778d2"
-		AppSecret="2c7655b171a10862029a2cca8d136f15"
+		AppId="wx028ab07dde83c8f2"
+		AppSecret="62982a3236c04175c3e21d7aa337c4c4"
 		BypassApproval="false"
 		Enable="true" />
 
 	<WechatFavorite
 		Id="6"
 		SortId="6"
-		AppId="wxf628b3cbbfa778d2"
-		AppSecret="2c7655b171a10862029a2cca8d136f15"
+		AppId="wx028ab07dde83c8f2"
+		AppSecret="62982a3236c04175c3e21d7aa337c4c4"
 		Enable="true" />
 	<TencentWeibo
 		Id="7"

@@ -3,7 +3,6 @@ package com.blue.rchina.wxapi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.blue.rchina.R;
 import com.blue.rchina.utils.UIUtils;
@@ -42,25 +41,16 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
     public void onResp(BaseResp baseResp) {
-        Log.i("fyy","微信支付回调结果为="+baseResp.errCode+"-----"+baseResp.errStr);
-//        String result;
-//        if (baseResp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-//            if (baseResp.errCode == 0) {//支付成功
-//                result = "success";
-//                ToastUtils.showToast(WXPayEntryActivity.this, "支付成功");
-//            } else {
-//                ToastUtils.showToast(WXPayEntryActivity.this, "支付失败");
-//                result = "fail";
-//            }
-//            finish();
-//        }
         if (baseResp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if (baseResp.errCode == 0) { //支付成功
-                sendBroadcast(new Intent().setAction("rchina_PAY_SUCCESS"));
+                sendBroadcast(new Intent().setAction("rcchina_PAY_SUCCESS"));
                 UIUtils.showToast("支付成功");
-            } else {
-                sendBroadcast(new Intent().setAction("rchina_PAY_FAILD"));
+            } else if (baseResp.errCode==-1){
+                sendBroadcast(new Intent().setAction("rcchina_PAY_FAILD"));
                 UIUtils.showToast("支付失败");
+            }else {
+                sendBroadcast(new Intent().setAction("rcchina_PAY_CANCEL"));
+                UIUtils.showToast("用户取消支付");
             }
             finish();
         }

@@ -6,13 +6,116 @@
     android:layout_height="match_parent"
     tools:context="com.blue.rchina.activity.TraveDetailActivity">
 
-    <ImageView
+
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp200"
-        android:src="@mipmap/demo"
-        android:scaleType="centerCrop"
-        android:transitionName="@string/trave_transition"
-        />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp250"
+                android:id="@+id/trave_detail_top">
+
+                <android.support.v4.view.ViewPager
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp250"
+                    android:src="@mipmap/demo"
+                    android:scaleType="centerCrop"
+                    android:transitionName="@string/trave_transition"
+                    android:id="@+id/trave_detail_pager"
+                    android:background="@color/bg_color"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/trave_count_bg"
+                    android:text="1/1"
+                    android:textSize="@dimen/sp14"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="@dimen/dp10"
+                    android:clickable="true"
+                    android:textColor="@color/white"
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/trave_tag"
+                    />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/trave_detail_top"
+                android:padding="@dimen/dp5"
+                android:gravity="center_vertical"
+                android:id="@+id/trave_detail_name">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/sp16"
+                    android:padding="@dimen/dp5"
+                    android:id="@+id/trave_detail_title"
+                    android:text="北京欢迎你？"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:textSize="@dimen/sp16"
+                    android:textColor="@color/white"
+                    android:id="@+id/trave_detail_price"
+                    android:background="@drawable/trave_price_bg"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dp5"
+                android:layout_below="@+id/trave_detail_name">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp14"
+                    android:textColor="@color/dark_gray"
+                    android:padding="@dimen/dp5"
+                    android:id="@+id/trave_detail_address"
+                    android:text="地址：北京市还定去康德大厦"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp14"
+                    android:textColor="@color/dark_gray"
+                    android:padding="@dimen/dp5"
+                    android:id="@+id/trave_detail_time"
+                    android:text="开放时间：123456778"/>
+
+                <com.blue.rchina.views.JustifyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="@dimen/sp14"
+                    android:lineSpacingMultiplier="1.5"
+                    android:id="@+id/trave_detail_des"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:layout_marginBottom="@dimen/dp5"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
     <ImageView
         android:layout_width="@dimen/dp30"
         android:layout_height="@dimen/dp30"
@@ -22,12 +125,16 @@
         android:layout_marginLeft="@dimen/dp10"/>
 
 
-
-
-
-    <include layout="@layout/no_data"/>
-
-
+    <ImageView
+        android:layout_width="@dimen/dp30"
+        android:layout_height="@dimen/dp30"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:src="@mipmap/share_round"
+        android:layout_alignParentRight="true"
+        android:alpha="0.9"
+        android:id="@+id/trave_share"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,6 +142,7 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
+        android:id="@+id/bottom"
         >
 
         <LinearLayout
@@ -77,8 +185,7 @@
 
             <ImageView
                 style="@style/info_setting_img_nopadding"
-                android:src="@mipmap/trave_star"
-
+                android:src="@drawable/news_detail_collect"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -107,6 +214,7 @@
             android:text="立即预订"/>
     </LinearLayout>
 
+    <include layout="@layout/no_data"/>
 
 
 </RelativeLayout>

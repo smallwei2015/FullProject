@@ -28,6 +28,7 @@ import com.blue.rchina.utils.FileUtils;
 import com.blue.rchina.utils.UIUtils;
 import com.blue.rchina.utils.UrlUtils;
 import com.blue.rchina.views.ImagePicView;
+import com.yanzhenjie.permission.AndPermission;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -423,6 +424,7 @@ public class SendInteractActivity extends BaseActivity {
                 } else {
                     //用户授权拒绝之后，友情提示一下就可以了
                     UIUtils.showToast("拍照权限被拒绝系统将不能正常使用");
+                    AndPermission.defaultSettingDialog(mActivity, 400).show();
                 }
                 break;
 

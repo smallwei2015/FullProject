@@ -2,8 +2,11 @@ package com.blue.rchina.activity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -54,7 +57,12 @@ public class PayActivity extends BaseActivity {
     TextView tv_number;
 
     public static int SDK_PAY_FLAG = 100;
-    public static final String WEIXID = "wxf628b3cbbfa778d2";
+    public static final String WEIXID = "wx028ab07dde83c8f2";
+
+    /*API密钥：BLUEPACIFICFORRONGCHENGCHINA1515
+
+    AppID: wx028ab07dde83c8f2
+    AppSecret: 62982a3236c04175c3e21d7aa337c4c4*/
 
     public static final int PLUGIN_NOT_INSTALLED = -1;
     public static final int PLUGIN_NEED_UPGRADE = 2;
@@ -71,7 +79,9 @@ public class PayActivity extends BaseActivity {
     public int cPay = -1;
     public double money;
     private IWXAPI msgApi;
+    /*1余额充值2旅游门票购买3商品购买*/
     public int payFlag;
+    public BroadcastReceiver receiver;
 
 
     @Override
@@ -105,6 +115,7 @@ public class PayActivity extends BaseActivity {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         int pos = (int) buttonView.getTag();
                         if (isChecked) {
+                            /*根据位置判断选择支付方式*/
                             update(pos);
                         } else {
                             if (data.isChecked()) {
@@ -159,8 +170,35 @@ public class PayActivity extends BaseActivity {
         datas.add(new ItemData("微信", R.mipmap.weixin));
         datas.add(new ItemData("支付宝", R.mipmap.zhifubao));
         datas.add(new ItemData("银联", R.mipmap.yinglian));
+        datas.add(new ItemData("余额",R.mipmap.yue));
 
         adapter.notifyDataSetChanged();
+
+
+        registerWXReciver();
+
+    }
+
+    private void registerWXReciver() {
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("rcchina_PAY_SUCCESS");
+        filter.addAction("rcchina_PAY_FAILD");
+        filter.addAction("rcchina_PAY_CANCEL");
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String wxAction = intent.getAction();
+                if (wxAction.equals("rcchina_PAY_SUCCESS")){
+                    finish();
+                }else if (wxAction.equals("rcchina_PAY_FAILD")){
+
+                }else {
+
+                }
+            }
+        };
+        registerReceiver(receiver, filter);
 
     }
 
@@ -193,11 +231,9 @@ public class PayActivity extends BaseActivity {
          * 支付控件返回字符串:success、fail、cancel 分别代表支付成功，支付失败，支付取消
 		 */
         String str = data.getExtras().getString("pay_result");
-//        String oderresult = "http://202.85.214.120/xixi/login.do?method=updateOrder&orderno=20150519190244&state=success&type=1";
         if (str.equalsIgnoreCase("success")) {
             msg = "支付成功！";
             result = "success";
-            //sendBroadcast(new Intent("XINGUI_PAY_SUCCESS"));
 
         } else if (str.equalsIgnoreCase("fail")) {
             msg = "支付失败！";
@@ -305,21 +341,19 @@ public class PayActivity extends BaseActivity {
                 Map<String, String> result = (Map<String, String>) msg.obj;
 
                 String resultStatus = result.get("resultStatus");
-
-                               /*9000 	订单支付成功
-8000 	正在处理中，支付结果未知（有可能已经支付成功），请查询商户订单列表中订单的支付状态
-4000 	订单支付失败
-5000 	重复请求
-6001 	用户中途取消
-6002 	网络连接出错
-6004*/
+                /*9000 	订单支付成功
+                8000 	正在处理中，支付结果未知（有可能已经支付成功），请查询商户订单列表中订单的支付状态
+                4000 	订单支付失败
+                5000 	重复请求
+                6001 	用户中途取消
+                6002 	网络连接出错
+                6004*/
 
                 String msgS="";
 
                 if (resultStatus.equalsIgnoreCase("9000")) {
                     msgS = "支付成功！";
-                    //sendBroadcast(new Intent("XINGUI_PAY_SUCCESS"));
-                    //finish();
+                    finish();
                 } else if (resultStatus.equalsIgnoreCase("8000")) {
                     msgS = "支付处理中";
 
@@ -379,11 +413,18 @@ public class PayActivity extends BaseActivity {
 
         if (payFlag==1){
             balancePay(type,orderNumer,dialog);
+        }if (payFlag==2){
+            travePay(type,orderNumer,dialog);
         }else {
             goodsPay(type, orderNumer, dialog);
         }
     }
 
+    private void travePay(int type, String orderNumer, ProgressDialog dialog) {
+        goodsPay(type,orderNumer,dialog);
+    }
+
+    /*余额充值*/
     private void balancePay(final int type, String orderNumer, final ProgressDialog dialog) {
         RequestParams entity = new RequestParams(UrlUtils.N_recharge);
 
@@ -441,6 +482,7 @@ public class PayActivity extends BaseActivity {
             @Override
             public void onSuccess(String result) {
 
+
                 JSONObject object = JSON.parseObject(result);
 
                 if (object.getInteger("result") == 200) {
@@ -461,6 +503,7 @@ public class PayActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+
                 UIUtils.showToast("订单生成失败");
             }
 
@@ -486,9 +529,19 @@ public class PayActivity extends BaseActivity {
             pay(2, idNumber, 0);
         } else if (cPay == 2) {
             pay(0, idNumber, 0);
+        }else if (cPay==3){
+            UIUtils.showToast("暂不支持余额购买");
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (receiver != null) {
+            unregisterReceiver(receiver);
+        }
+
+    }
 
     class Holder extends RecyclerView.ViewHolder {
 

@@ -189,6 +189,7 @@
         android:id="@+id/loginOut"
         style="@style/login_btn"
         android:text="退出登录"
+        android:background="@drawable/login_out_bg"
         />
 
 </LinearLayout>

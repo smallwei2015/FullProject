@@ -15,7 +15,7 @@
         <TextView
             style="@style/mall_tab_style"
             android:id="@+id/tab_local"
-            android:text="本地旅游"
+            android:text="本地景点"
             />
         <View
             android:layout_width="@dimen/dp0.5"
@@ -27,14 +27,14 @@
         <TextView
             style="@style/mall_tab_style"
             android:id="@+id/tab_all"
-            android:text="区域旅游"/>
+            android:text="区域景点"/>
     </LinearLayout>
 
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/mall_contain"
+        android:id="@+id/trave_contain"
         android:background="@color/white"/>
 
 </LinearLayout>

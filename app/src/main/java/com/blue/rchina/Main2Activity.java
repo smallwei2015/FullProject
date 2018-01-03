@@ -1,5 +1,6 @@
 package com.blue.rchina;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -45,6 +46,7 @@ import com.blue.rchina.activity.FragmentHolderActivity;
 import com.blue.rchina.activity.InfoActivity;
 import com.blue.rchina.activity.MyInteractActivity;
 import com.blue.rchina.activity.MyWalletActivity;
+import com.blue.rchina.activity.NearbyActivity;
 import com.blue.rchina.activity.NearbySelectListActivity;
 import com.blue.rchina.activity.OrderActivity;
 import com.blue.rchina.activity.SearchActivity;
@@ -60,6 +62,7 @@ import com.blue.rchina.bean.AreaInfo;
 import com.blue.rchina.bean.Channel;
 import com.blue.rchina.bean.MenuItem;
 import com.blue.rchina.bean.NetData;
+import com.blue.rchina.bean.Uninon;
 import com.blue.rchina.bean.Weather;
 import com.blue.rchina.fragment.InteractFragment;
 import com.blue.rchina.fragment.LifeFragment;
@@ -72,6 +75,9 @@ import com.blue.rchina.manager.LocationInteface;
 import com.blue.rchina.manager.LocationManager;
 import com.blue.rchina.manager.UserInterface;
 import com.blue.rchina.manager.UserManager;
+import com.blue.rchina.utils.FileUtils;
+import com.blue.rchina.utils.GPSUtils;
+import com.blue.rchina.utils.RightUtils;
 import com.blue.rchina.utils.SPUtils;
 import com.blue.rchina.utils.SystemBrightUtils;
 import com.blue.rchina.utils.UIDUtils;
@@ -80,6 +86,12 @@ import com.blue.rchina.utils.UrlUtils;
 import com.blue.rchina.utils.WeatherUtils;
 import com.blue.rchina.views.ProDialog;
 import com.caption.update.UpdateUtils;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionListener;
+import com.yanzhenjie.permission.PermissionNo;
+import com.yanzhenjie.permission.PermissionYes;
+import com.yanzhenjie.permission.Rationale;
+import com.yanzhenjie.permission.RationaleListener;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -93,8 +105,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static android.Manifest.permission.LOCATION_HARDWARE;
-import static com.blue.rchina.activity.FragmentHolderActivity.FLAG_NEARBY;
+import static com.alibaba.fastjson.JSON.parseObject;
 import static com.blue.rchina.manager.UserManager.action_cityChange;
 
 public class Main2Activity extends BaseActivity {
@@ -239,51 +250,61 @@ public class Main2Activity extends BaseActivity {
             menuHeadPadding.setVisibility(View.GONE);
         }
         navi.setVisibility(View.GONE);
-        //透明状态栏
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 
-
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-            //getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            //透明导航栏
-            //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-
-            //沉浸后用来占位的视图显示
-            headPadding.setVisibility(View.VISIBLE);
-            int statusBarHeight = UIUtils.getStatusBarHeight(mActivity);
-            if (statusBarHeight>0){
-                headPadding.getLayoutParams().height=statusBarHeight;
-            }
-
-
-            menuHeadPadding.setVisibility(View.VISIBLE);
-            if (statusBarHeight>0){
-                menuHeadPadding.getLayoutParams().height=statusBarHeight;
-            }
-
-
-            //Log.w("33333",UIUtils.hasNavigationBar(mActivity)+"/"+UIUtils.hasNavigationBar2(mActivity));
-
-
-
-        }else {
-            //这里做的是不支持沉浸式的适配
-            headPadding.setVisibility(View.GONE);
-            menuHeadPadding.setVisibility(View.GONE);
-        }*/
-
-
-        // NavigationView ,侧边栏
-        //navigationView = (NavigationView) findViewById(R.id.nav_view);
-        //getData();
         initData();
         initView();
 
         init();
         initBright();
         UpdateUtils.getInit().update(mActivity, 1);
+
     }
+
+    @Override
+    public void initPermission() {
+        super.initPermission();
+
+        /*申请权限*/
+        AndPermission.with(this)
+                .requestCode(200)
+                .permission(Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .rationale(new RationaleListener() {
+                    @Override
+                    public void showRequestPermissionRationale(int requestCode, Rationale rationale) {
+
+                        if (!AndPermission.hasPermission(mActivity,Manifest.permission.READ_PHONE_STATE)) {
+                            AndPermission.defaultSettingDialog(mActivity, 2001).show();
+                        }else if (!AndPermission.hasPermission(mActivity,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                            AndPermission.defaultSettingDialog(mActivity, 2002).show();
+                        }
+                    }
+                }).callback(this).start();
+    }
+
+    @PermissionYes(200)
+    private void getPermissionYes(List<String> grantedPermissions) {
+        // TODO 申请权限成功。
+        if (grantedPermissions.contains(Manifest.permission.READ_PHONE_STATE)) {
+            openApp();
+        }
+
+        if (grantedPermissions.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+            FileUtils.creatImgFromAsset(getApplicationContext(),"qrCode.png");
+            FileUtils.creatImgFromAsset(getApplicationContext(),"logo.png");
+        }
+    }
+    @PermissionNo(200)
+    private void getPermissionNo(List<String> deniedPermissions) {
+        // TODO 申请权限失败。
+        if (deniedPermissions.contains(Manifest.permission.READ_PHONE_STATE)) {
+            AndPermission.defaultSettingDialog(this, 2001).show();
+        }
+
+        if (deniedPermissions.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            AndPermission.defaultSettingDialog(this, 2002).show();
+        }
+    }
+
 
     @Override
     public void initView() {
@@ -314,18 +335,6 @@ public class Main2Activity extends BaseActivity {
         });
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        //clearStruture();
-
-    }
-
     private void initBright() {
 
 
@@ -334,46 +343,12 @@ public class Main2Activity extends BaseActivity {
         if (isNightMode) {
             UIUtils.showToast("当前处于夜间模式");
         }
-        /*if (SystemBrightUtils.isAutoBrightness(mActivity)) {
-            SystemBrightUtils.stopAutoBrightness(mActivity);
-        }*/
         try {
             systemBright = SystemBrightUtils.getSystemBright(mActivity);
         } catch (Settings.SettingNotFoundException e) {
             e.printStackTrace();
         }
 
-       /* boolean isNightMode = SPUtils.getSP().getBoolean("isNightMode", false);
-
-        *//*app存储了亮度，那么就去设置app的亮度*//*
-        if (isNightMode) {
-            SystemBrightUtils.setSystemBright(mActivity, systemBright/2);
-        }*/
-
-
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //navi.getLayoutParams().height = UIUtils.getNavigationBarHeight(mActivity);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onWindowAttributesChanged(WindowManager.LayoutParams params) {
-        super.onWindowAttributesChanged(params);
-        /*if (height != params.height) {
-            height = params.height;
-            if (navi != null) {
-                navi.getLayoutParams().height = UIUtils.getNavigationBarHeight(mActivity);
-            }
-        }*/
 
     }
 
@@ -398,13 +373,49 @@ public class Main2Activity extends BaseActivity {
 
     private void init() { //向系统设置
 
+
+
         /*请求权利*/
-        if (!hasPermission(LOCATION_HARDWARE)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{"android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"}, 200);
+        /*判断是否有定位模块，没有就去显示北京*/
+        if (GPSUtils.hasGPSDevice(mActivity)) {
+            if (!AndPermission.hasPermission(mActivity,Manifest.permission.ACCESS_FINE_LOCATION)) {
+                AndPermission.with(this)
+                        .requestCode(300)
+                        .permission(Manifest.permission.ACCESS_FINE_LOCATION)
+                        .rationale(new RationaleListener() {
+                            @Override
+                            public void showRequestPermissionRationale(int requestCode, Rationale rationale) {
+                                AndPermission.defaultSettingDialog(mActivity, 3001).show();
+                            }
+                        }).callback(new PermissionListener() {
+                    @Override
+                    public void onSucceed(int requestCode, List<String> grantedPermissions) {
+                        // 和onActivityResult()的requestCode一样，用来区分多个不同的请求。
+
+                        initLocation();
+
+                    }
+
+                    @Override
+                    public void onFailed(int requestCode, List<String> deniedPermissions) {
+                        // 权限申请失败回调。
+
+                        AndPermission.defaultSettingDialog(mActivity, 3001).show();
+
+                        boolean firstOpen = SPUtils.getSP().getBoolean("firstOpen", true);
+                        if (firstOpen) {
+                            changeToLocation("北京市");
+                        }
+                    }
+                }).start();
+            } else {
+                initLocation();
             }
-        } else {
-            initLocation();
+        }else {
+            boolean firstOpen = SPUtils.getSP().getBoolean("firstOpen", true);
+            if (firstOpen) {
+                changeToLocation("北京市");
+            }
         }
 
         setSupportActionBar(toolbar); //设置线性管理器
@@ -436,16 +447,13 @@ public class Main2Activity extends BaseActivity {
         drawer.addDrawerListener(toggle); //该方法会自动和actionBar关联, 将开关的图片显示在了action上，如果不设置，也可以有抽屉的效果，不过是默认的图标
         toggle.syncState(); //为侧边栏的每一个子item设置监听
 
-        //navigationView.setNavigationItemSelectedListener(this); //为NavigationView设置头布局
-        //View headerView = navigationView.inflateHeaderView(R.layout.header_layout);
-
-
         curCity = null;
         String area = SPUtils.getSP().getString("area", null);
         if (!TextUtils.isEmpty(area)) {
-            AreaInfo areaInfo = JSON.parseObject(area, AreaInfo.class);
+            AreaInfo areaInfo = parseObject(area, Uninon.class);
             curCity = areaInfo;
         }
+
         defaultCity = curCity != null ? curCity.getAreaName() : "北京市";
         defaultCapital = curCity != null ? curCity.getProvinceCapital() : "北京市";
         initMain(defaultCity);
@@ -469,8 +477,6 @@ public class Main2Activity extends BaseActivity {
             }
         });
 
-        openApp();
-
     }
 
     private void initLocation() {
@@ -483,29 +489,34 @@ public class Main2Activity extends BaseActivity {
                 /*自动切换是否打开*/
                 boolean agreeAutoChange = SPUtils.getSP().getBoolean("agreeAutoChange", false);
                 if (firstOpen) {
-                /*Intent intent = new Intent(mActivity, CitySelectListActivity.class);
-                startActivity(intent);*/
+                    /*第一次打开就切换到当前定位城市*/
                     changeToLocation(location.getCity());
-                }
-                if (agreeAutoChange) {
-                    changeToLocation(location.getCity());
-                } else {
+                    return;
+                }else {
+
+
+                    String area = SPUtils.getSP().getString("area", "");
+
+                    Uninon areaInfo = JSON.parseObject(area, Uninon.class);
+                    if (areaInfo != null&&!TextUtils.isEmpty(areaInfo.getUnionName())) {
+                        /*当前若为联盟就不去切换城市*/
+                        return;
+                    }
 
                     /*当前选择城市不为定位城市，提示*/
                     if (location != null && curCity != null && !location.getCity().equals(curCity.getProvinceCapital())) {
-                    /*boolean shouldOpenCityLocation = SPUtils.getSP().getBoolean("shouldOpenCityLocation", false);
-                    if (!shouldOpenCityLocation) {
-                        getAreaByLocation(location.getCity());
-                    }else {
-                        Log.w("44444","用户取消了定位提示");
-                    }*/
 
-                        String lastLocationCity = SPUtils.getSP().getString("lastLocationCity", "");
+                        if (agreeAutoChange) {
+                            /*自动切换打开也切换到当前定位城市*/
+                            changeToLocation(location.getCity());
+                        }else {
+                            String lastLocationCity = SPUtils.getSP().getString("lastLocationCity", "");
 
-                        if (location.getCity().equals(lastLocationCity)) {
-                            Log.w("44444", "用户取消了当前城市定位提示");
-                        } else {
-                            getAreaByLocation(location.getCity());
+                            if (location.getCity().equals(lastLocationCity)) {
+                                Log.w("44444", "用户取消了当前城市定位提示");
+                            } else {
+                                getAreaByLocation(location.getCity());
+                            }
                         }
                     }
                 }
@@ -572,6 +583,7 @@ public class Main2Activity extends BaseActivity {
             @Override
             public void onSuccess(String result) {
 
+
                 NetData data = JSON.parseObject(result, NetData.class);
                 if (data.getResult() == 200) {
 
@@ -594,7 +606,6 @@ public class Main2Activity extends BaseActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
                 changeToLocation("北京市");
             }
 
@@ -617,7 +628,7 @@ public class Main2Activity extends BaseActivity {
             @Override
             public void onSuccess(String result) {
 
-                NetData data = JSON.parseObject(result, NetData.class);
+                NetData data = parseObject(result, NetData.class);
                 if (data.getResult() == 200) {
 
                     List<AreaInfo> areaInfos = JSON.parseArray(data.getInfo(), AreaInfo.class);
@@ -662,7 +673,7 @@ public class Main2Activity extends BaseActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.w("44444", ex.getMessage());
+
             }
 
             @Override
@@ -728,11 +739,12 @@ public class Main2Activity extends BaseActivity {
             @Override
             public void onSuccess(String result) {
 
-                NetData data = JSON.parseObject(result, NetData.class);
+                NetData data = parseObject(result, NetData.class);
                 if (data.getResult() == 200) {
                     /*城市切换成功就存储起来*/
                     if (area != null) {
                         String str = JSON.toJSONString(area);
+                        Log.w("4444",str);
                         SPUtils.getSP().edit().putString("area", str).putBoolean("firstOpen", false).apply();
                     }
                     isServerDie(false);
@@ -927,8 +939,8 @@ public class Main2Activity extends BaseActivity {
                         intent = new Intent(mActivity, NearbySelectListActivity.class);
                         startActivity(intent);
                     } else {
-                        //intent = new Intent(mActivity, NearbyActivity.class);
-                        getNearbyStruct();
+                        intent = new Intent(mActivity, NearbyActivity.class);
+                        startActivity(intent);
                     }
 
                 } else if (itemName.equals("我的收藏")) {
@@ -1094,10 +1106,10 @@ public class Main2Activity extends BaseActivity {
         });
 
         List<String> names = new ArrayList<>();
-        names.add("首页");
+        /*names.add("首页");
         names.add("动态");
         names.add("服务");
-        names.add("政务");
+        names.add("政务");*/
         //names.add("商城");
         initFragmentAndBottom(names);
 
@@ -1254,14 +1266,19 @@ public class Main2Activity extends BaseActivity {
             title.setVisibility(View.VISIBLE);
             title.setText(!(curCity == null) ? curCity.getApplicationName() : "融城中国");
 
-            right.setVisibility(View.GONE);
+            right.setVisibility(View.VISIBLE);
             right.setImageResource(R.mipmap.search_white);
             right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mActivity, SearchActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+                    if (UserManager.isLogin()) {
+                        Intent intent = new Intent(mActivity, SearchActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }else {
+                        UserManager.toLogin();
+                    }
+
                 }
             });
             mall.setVisibility(View.GONE);
@@ -1359,7 +1376,7 @@ public class Main2Activity extends BaseActivity {
                 @Override
                 public void onSuccess(String result) {
 
-                    Weather weather = JSON.parseObject(result, Weather.class);
+                    Weather weather = parseObject(result, Weather.class);
                     if (weather != null && weather.getResults() != null && weather.getResults().size() > 0) {
                         Weather.ResultsBean.WeatherDataBean weatherDataBean = weather.getResults().get(0).getWeather_data().get(0);
 
@@ -1408,55 +1425,6 @@ public class Main2Activity extends BaseActivity {
 
     }
 
-    private void getNearbyStruct() {
-
-        final ProgressDialog dialog = new ProgressDialog(mActivity);
-        dialog.setMessage("加载中...");
-        dialog.show();
-
-        RequestParams entity = new RequestParams(UrlUtils.N_achieveAppuserCommunity);
-        entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
-        x.http().post(entity, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-
-                NetData netData = JSON.parseObject(result, NetData.class);
-
-                if (netData.getResult() == 200) {
-                    List<Channel> channels = JSON.parseArray(netData.getInfo(), Channel.class);
-
-                    if (channels != null && channels.size() > 0) {
-                        Intent intent = new Intent(mActivity, FragmentHolderActivity.class);
-                        intent.putExtra("data", channels.get(0));
-                        intent.putExtra("flag", FLAG_NEARBY);
-                        intent.putExtra("title", "我的社区");
-
-                        startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(mActivity, NearbySelectListActivity.class);
-                        startActivity(intent);
-                    }
-                } else {
-                    UIUtils.showToast(netData.getMessage());
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                UIUtils.showToast("网络连接失败");
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-                dialog.dismiss();
-            }
-        });
-    }
 
     @Override
     public void onBackPressed() {
@@ -1479,24 +1447,48 @@ public class Main2Activity extends BaseActivity {
 
     @Override
     public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults) {
-
+        boolean hasRight = true;
+        for (int i = 0; i < grantResults.length; i++) {
+            hasRight = (grantResults[0] == PackageManager.PERMISSION_GRANTED);
+        }
         switch (permsRequestCode) {
 
             case 200:
-                boolean hasRight = true;
-                for (int i = 0; i < grantResults.length; i++) {
-                    hasRight = (grantResults[0] == PackageManager.PERMISSION_GRANTED);
-                }
-
                 if (hasRight) {
                     initLocation();
                 } else {
-                    //用户授权拒绝之后，友情提示一下就可以了
-                    //UIUtils.showToast("定位被拒绝系统将不能正常使用");
+                    //用户授权拒绝之后
 
-                    /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        requestPermissions(new String[]{LOCATION_HARDWARE},200);
-                    }*/
+                    RightUtils.getAppDetailSettingIntent(mActivity);
+                }
+                break;
+            case 300:
+                if (hasRight) {
+                    openApp();
+                } else {
+                    //用户授权拒绝之后
+                    RightUtils.getAppDetailSettingIntent(mActivity);
+                }
+                break;
+
+            case 400:
+
+                if (hasRight) {
+                    FileUtils.creatImgFromAsset(getApplicationContext(),"qrCode.png");
+                    FileUtils.creatImgFromAsset(getApplicationContext(),"logo.png");
+                } else {
+                    //用户授权拒绝之后
+                    RightUtils.getAppDetailSettingIntent(mActivity);
+                }
+
+
+                break;
+            default:
+                if (hasRight) {
+
+                } else {
+                    //用户授权拒绝之后，友情提示一下就可以了
+                    RightUtils.getAppDetailSettingIntent(mActivity);
                 }
                 break;
 
@@ -1504,12 +1496,36 @@ public class Main2Activity extends BaseActivity {
 
     }
 
-    private boolean hasPermission(String permission) {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+            case 2001:
+                if (AndPermission.hasPermission(mActivity, Manifest.permission.READ_PHONE_STATE)) {
+                    openApp();
+                }else {
+                    AndPermission.defaultSettingDialog(mActivity, 2001).show();
+                }
+
+                break;
+            case 2002:
+                if (AndPermission.hasPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    FileUtils.creatImgFromAsset(getApplicationContext(),"qrCode.png");
+                    FileUtils.creatImgFromAsset(getApplicationContext(),"logo.png");
+                }else {
+                    AndPermission.defaultSettingDialog(mActivity, 2002).show();
+                }
+                break;
+            case 3001:
+                if (AndPermission.hasPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    initLocation();
+                }else {
+                    AndPermission.defaultSettingDialog(mActivity, 3001).show();
+                }
+
+                break;
         }
-        return false;
-
     }
 }

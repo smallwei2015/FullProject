@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/no_data"
+        android:background="@color/bg_color"
         android:id="@+id/news_big_image"/>
 
     <TextView

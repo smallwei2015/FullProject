@@ -188,4 +188,9 @@ public class OrderFragment extends BaseFragment {
         orderType = getArguments().getInt("type");
         fresh();
     }
+
+    public void freshData(int orderType){
+        fresh();
+        isHideLoading(false);
+    }
 }

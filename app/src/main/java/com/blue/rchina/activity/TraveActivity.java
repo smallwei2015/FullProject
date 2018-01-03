@@ -35,6 +35,10 @@ public class TraveActivity extends BaseActivity {
         initTop(R.mipmap.left_white,data.getAreaName(),-1);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         fragment = new TraveFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("data",data);
+        fragment.setArguments(args);
         transaction.replace(R.id.fra, fragment);
+        transaction.commit();
     }
 }

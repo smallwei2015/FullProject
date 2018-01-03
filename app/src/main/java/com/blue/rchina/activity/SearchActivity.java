@@ -1,9 +1,11 @@
 package com.blue.rchina.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +16,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.blue.rchina.R;
 import com.blue.rchina.base.BaseActivity;
+import com.blue.rchina.bean.NetData;
 import com.blue.rchina.bean.SearchItem;
+import com.blue.rchina.manager.UserManager;
 import com.blue.rchina.utils.UIUtils;
+import com.blue.rchina.utils.UrlUtils;
 
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -81,47 +89,71 @@ public class SearchActivity extends BaseActivity {
 
         datas = new ArrayList<>();
 
-        SearchItem e = new SearchItem();
-        e.setType(0);
-        e.setContent("热点搜索");
-        datas.add(e);
-
-        for (int i = 0; i < 7; i++) {
-            SearchItem e1 = new SearchItem();
-            e1.setType(1);
-            e1.setContent("hot"+i);
-            datas.add(e1);
-        }
-
-
-        SearchItem e2 = new SearchItem();
-        e2.setType(0);
-        e2.setContent("搜索历史");
-        datas.add(e2);
-
-        for (int i = 0; i < 6; i++) {
-            SearchItem e1 = new SearchItem();
-            e1.setType(1);
-            e1.setContent("history"+i);
-            datas.add(e1);
-        }
-
+        initHistory();
 
         listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SearchItem vTag = (SearchItem) v.getTag();
 
-
                 switch (v.getId()) {
                     case R.id.search_item_tv:
-                        seachNews(vTag.getContent());
+                        seachNews(vTag.getTitle());
                         break;
                 }
 
 
             }
         };
+    }
+
+    private void initHistory() {
+        RequestParams entity = new RequestParams(UrlUtils.N_achieveSearchRecord);
+        entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId()+"");
+        x.http().post(entity, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+
+                NetData netData = JSON.parseObject(result, NetData.class);
+                if (netData.getResult()==200){
+                    datas.clear();
+
+                    String hot = JSON.parseObject(netData.getInfo()).getString("hot");
+                    String list = JSON.parseObject(netData.getInfo()).getString("list");
+                    SearchItem e = new SearchItem();
+                    e.setType(0);
+                    e.setTitle("热点搜索");
+                    datas.add(0,e);
+
+                    List<SearchItem> hotItems = JSON.parseArray(hot, SearchItem.class);
+                    datas.addAll(1,hotItems);
+
+                    SearchItem e2 = new SearchItem();
+                    e2.setType(0);
+                    e2.setTitle("搜索历史");
+                    datas.add(e2);
+                    List<SearchItem> listItems = JSON.parseArray(list, SearchItem.class);
+                    datas.addAll(listItems);
+
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                UIUtils.showToast("网络请求失败");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 
     @Override
@@ -200,11 +232,12 @@ public class SearchActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 searchStr = edit.getText().toString();
-
                 seachNews(searchStr);
 
             }
         });
+
+
         edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -274,12 +307,12 @@ public class SearchActivity extends BaseActivity {
                 switch (type) {
                     case 0:
                         holder.title_tv.setTag(searchItem);
-                        holder.title_tv.setText(searchItem.getContent());
+                        holder.title_tv.setText(searchItem.getTitle());
                         holder.title_tv.setOnClickListener(listener);
                         break;
                     case 1:
                         holder.item_tv.setTag(searchItem);
-                        holder.item_tv.setText(searchItem.getContent());
+                        holder.item_tv.setText(searchItem.getTitle());
                         holder.item_tv.setOnClickListener(listener);
                         break;
 
@@ -306,7 +339,17 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void seachNews(String searchStr) {
-        ///UIUtils.showPro(mActivity);
+
+        if (TextUtils.isEmpty(searchStr)){
+            UIUtils.showToast("请输入要搜索的内容");
+            return;
+        }else {
+            Intent intent=new Intent(mActivity,SearchDetailActivity.class);
+            intent.putExtra("flag",1);
+            intent.putExtra("title",searchStr);
+            startActivityForResult(intent,200);
+        }
+
     }
 
 
@@ -328,6 +371,15 @@ public class SearchActivity extends BaseActivity {
                     item_tv = (TextView) view.findViewById(R.id.search_item_tv);
                     break;
             }
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==200){
+            initHistory();
         }
     }
 }

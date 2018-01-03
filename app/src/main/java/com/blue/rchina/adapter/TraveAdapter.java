@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.blue.rchina.R;
 import com.blue.rchina.activity.TraveDetailActivity;
 import com.blue.rchina.bean.Trave;
+import com.blue.rchina.utils.xUtilsImageUtils;
 
 import java.util.List;
 
@@ -51,17 +52,19 @@ public class TraveAdapter extends RecyclerView.Adapter<TraveAdapter.Holder>{
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, int position) {
+    public void onBindViewHolder(final Holder holder, int position) {
+        final Trave trave = datas.get(position);
         //holder.price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.price.setText("现价只要998");
+        holder.price.setText("￥"+trave.getPrice());
+        holder.title.setText(trave.getTitle());
+        holder.time.setText("月销量："+trave.getMonthSales());
+        xUtilsImageUtils.display(holder.img,trave.getPicsrc());
 
-        /*if (listener != null) {
-            holder.parent.setOnClickListener(listener);
-        }*/
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(), TraveDetailActivity.class);
+                intent.putExtra("data",trave);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(),v,"trave").toBundle());
                 }else {
@@ -83,7 +86,7 @@ public class TraveAdapter extends RecyclerView.Adapter<TraveAdapter.Holder>{
     class Holder extends RecyclerView.ViewHolder{
 
 
-        public TextView title;
+        public TextView title,time;
         public TextView price;
         public View parent;
         public ImageView img;
@@ -95,6 +98,9 @@ public class TraveAdapter extends RecyclerView.Adapter<TraveAdapter.Holder>{
             title = ((TextView) itemView.findViewById(R.id.title));
             price = ((TextView) itemView.findViewById(R.id.price));
             img = ((ImageView) itemView.findViewById(R.id.img));
+            time = ((TextView) itemView.findViewById(R.id.time));
         }
     }
+
+
 }

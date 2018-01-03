@@ -7,7 +7,6 @@ import com.blue.rchina.adapter.xUtilsImageLoad;
 import com.blue.rchina.bean.User;
 import com.blue.rchina.manager.MyCrashHandler;
 import com.blue.rchina.manager.UserManager;
-import com.blue.rchina.utils.FileUtils;
 import com.blue.rchina.utils.SPUtils;
 import com.blue.rchina.utils.UIUtils;
 import com.mob.MobApplication;
@@ -78,6 +77,9 @@ public class BaseApplication extends MobApplication {
                     }
                 }else {
                     UIUtils.showToast("登录超时请重新登录");
+                    /*登录超时删除用户*/
+                    UserManager.loginOutWithoutDelay();
+                    SPUtils.getSP().edit().putInt("userFlag",0).apply();
                 }
             }
         } catch (DbException e) {
@@ -163,8 +165,6 @@ public class BaseApplication extends MobApplication {
         /*初始化shareSDK*/
         //3.x不需要这一步
 
-        FileUtils.creatImgFromAsset(getApplicationContext(),"qrCode.png");
-        FileUtils.creatImgFromAsset(getApplicationContext(),"logo.png");
 
     }
 

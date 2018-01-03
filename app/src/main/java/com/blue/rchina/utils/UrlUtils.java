@@ -97,6 +97,8 @@ public class UrlUtils {
 	public static final String N_findArticleCommentList=N_base+"findArticleCommentList";
 	public static final String N_collectArticle=N_base+"collectArticle";
 	public static final String N_cancelCollectArticle=N_base+"cancelCollectArticle";
+	public static final String N_achieveSearchData=N_base+"achieveSearchData";
+	public static final String N_achieveSearchRecord=N_base+"achieveSearchRecord";
 
 
 	public static final String N_report=N_base+"report";
@@ -141,4 +143,17 @@ public class UrlUtils {
 	public static final String N_SHARE="http://smartcity.blueapp.com.cn:8088/smartchina/plug-in-ui/project/download/index.html";
 
 
+	/*旅游*/
+	public static final String N_getLocalScenicList=N_base+"getLocalScenicList";
+	public static final String N_getAreaScenicList=N_base+"getAreaScenicList";
+	public static final String N_getScenicInfo=N_base+"getScenicInfo";
+	public static final String N_getTicketOrderId=N_base+"getTicketOrderId";
+	public static final String N_getTicketOrderInfoByAppuser=N_base+"getTicketOrderInfoByAppuser";
+	public static final String N_collectScenic=N_base+"collectScenic";
+	public static final String N_deleteTicket=N_base+"deleteTicket";
+	public static final String N_achieveUnionList=N_base+"achieveUnionList";
+	public static final String N_achieveCommonAreaAndUnion=N_base+"achieveCommonAreaAndUnion";
+	public static final String N_addCommon=N_base+"addCommon";
+	public static final String N_delCommon=N_base+"delCommon";
+	public static final String N_checkTicket=N_base+"checkTicket";
 }

@@ -10,30 +10,10 @@
 
     <include layout="@layout/top"/>
 
-
-    <android.support.design.widget.TabLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabSelectedTextColor="@color/money"
-        app:tabTextColor="@color/middle_gray"
-        app:tabIndicatorColor="@color/money"
-
-        app:tabMode="scrollable"
-        android:id="@+id/order_tab">
-
-    </android.support.design.widget.TabLayout>
-
-
-    <android.support.v4.view.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:id="@+id/order_pager"/>
-
-
-
-
-
+        android:layout_height="match_parent"
+        android:id="@+id/order_container"/>
 
 
 </LinearLayout>

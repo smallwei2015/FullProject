@@ -119,7 +119,10 @@
                 android:background="@drawable/news_detail_input"
                 android:hint="请输入你的内容"
                 android:maxLines="3"
-                android:padding="@dimen/small_padding"
+                android:paddingTop="@dimen/dp5"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingRight="@dimen/dp5"
                 android:textSize="@dimen/middle_text" />
 
             <TextView

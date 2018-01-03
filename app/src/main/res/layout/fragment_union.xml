@@ -1,13 +1,28 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_color"
     tools:context="com.blue.rchina.fragment.UnionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rec"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_above="@+id/add"
+        android:background="@color/bg_color_light"
+        android:padding="@dimen/dp5"
+        android:layout_marginBottom="@dimen/dp10"/>
 
-</FrameLayout>
+
+    <TextView
+        android:id="@+id/add"
+        android:layout_alignParentBottom="true"
+        style="@style/login_btn"
+        android:layout_width="match_parent"
+        android:text="添加" />
+
+
+    <include layout="@layout/no_data" />
+
+</RelativeLayout>

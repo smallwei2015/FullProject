@@ -49,6 +49,7 @@
                 android:paddingLeft="@dimen/dp40"
                 android:textColor="@color/middle_gray"
                 android:textColorHint="@color/xxlight_gray"
+                android:textSize="@dimen/sp16"
                 android:imeOptions="actionSearch"
                 android:singleLine="true"/>
 

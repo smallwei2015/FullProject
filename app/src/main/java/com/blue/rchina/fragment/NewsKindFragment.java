@@ -21,6 +21,7 @@ import com.blue.rchina.bean.Channel;
 import com.blue.rchina.bean.DataWrap;
 import com.blue.rchina.bean.NetData;
 import com.blue.rchina.manager.UserManager;
+import com.blue.rchina.utils.SPUtils;
 import com.blue.rchina.utils.UIUtils;
 import com.blue.rchina.utils.UrlUtils;
 
@@ -183,7 +184,38 @@ public class NewsKindFragment extends BaseFragment {
 
             if (channel != null) {
                 int channelid = channel.getId();
+
                 fresh(channelid);
+
+                /*加载缓存数据*/
+                String cacheStr = SPUtils.getCacheSp().getString("" + channelid, "");
+                NetData netData = JSON.parseObject(cacheStr, NetData.class);
+                if (netData != null) {
+                    if (netData.getResult()==200){
+                        JSONObject object = JSON.parseObject(netData.getInfo());
+                        List<Article> articles = JSON.parseArray(object.getString("list"), Article.class);
+                        List<Article> hots = JSON.parseArray(object.getString("top"), Article.class);
+
+                        if (hots != null && hots.size() > 0) {
+                            DataWrap e1 = new DataWrap();
+                            e1.setType(0);
+                            e1.setData(hots);
+                            items.add(e1);
+                        }
+                        for (int i = 0; i < articles.size(); i++) {
+                            DataWrap e = new DataWrap();
+                            Article article = articles.get(i);
+                            e.setData(article);
+                            e.setType(article.getDisplayType());
+                            items.add(e);
+                        }
+                    }
+                }
+
+
+                if (items.size()==0) {
+                    isHideLoading(false);
+                }
             }
         }
 
@@ -191,7 +223,7 @@ public class NewsKindFragment extends BaseFragment {
         adapter.notifyDataSetChanged();
     }
 
-    private void fresh(int channelid) {
+    private void fresh(final int channelid) {
 
 
         RequestParams entity = new RequestParams(UrlUtils.N_achieveChannelData);
@@ -207,6 +239,9 @@ public class NewsKindFragment extends BaseFragment {
 
                 NetData data = JSON.parseObject(result, NetData.class);
                 if (data.getResult() == 200) {
+
+                    /*缓存数据*/
+                    SPUtils.getCacheSp().edit().putString("" + channelid, result).apply();
                     /*重置当前page*/
                     curPage = 1;
                     //items.removeAll(items);
@@ -256,6 +291,7 @@ public class NewsKindFragment extends BaseFragment {
             @Override
             public void onFinished() {
                 ptrFrame.refreshComplete();
+                isHideLoading(true);
             }
         });
     }

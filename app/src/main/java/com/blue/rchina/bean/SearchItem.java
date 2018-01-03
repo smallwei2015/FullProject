@@ -8,8 +8,8 @@ import java.io.Serializable;
 
 public class SearchItem implements Serializable {
 
-    private int type;
-    private String content;
+    private int type=1;
+    private String title;
 
 
     public int getType() {
@@ -20,11 +20,11 @@ public class SearchItem implements Serializable {
         this.type = type;
     }
 
-    public String getContent() {
-        return content;
+    public String getTitle() {
+        return title;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

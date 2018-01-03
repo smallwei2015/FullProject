@@ -21,6 +21,7 @@ import com.blue.rchina.activity.TraveActivity;
 import com.blue.rchina.base.BaseFragment;
 import com.blue.rchina.bean.AreaInfo;
 import com.blue.rchina.bean.NetData;
+import com.blue.rchina.utils.SPUtils;
 import com.blue.rchina.utils.UIUtils;
 import com.blue.rchina.utils.UrlUtils;
 import com.blue.rchina.utils.xUtilsImageUtils;
@@ -46,11 +47,15 @@ public class MallAllFragment extends BaseFragment implements View.OnClickListene
     RecyclerView rec_c;
     public RecyclerView.Adapter<PHolder> pAdapter;
 
+    /*省级列表*/
     List<AreaInfo> pdatas;
+    /*市级列表*/
     List<AreaInfo> cdatas;
     public RecyclerView.Adapter<CHolder> cAdapter;
     public GridLayoutManager cManager;
+    /*当前默认选择省位置*/
     private int selectedPos=0;
+    /*1表示旅游0表示商城*/
     public int flag=0;
 
     public MallAllFragment() {
@@ -79,23 +84,31 @@ public class MallAllFragment extends BaseFragment implements View.OnClickListene
 
         pdatas=new ArrayList<>();
         cdatas=new ArrayList<>();
-        getCityList();
+
     }
 
     private void getCityList() {
+
+
         x.http().post(new RequestParams(UrlUtils.N_achieveAreaStructure), new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 NetData netData = JSON.parseObject(result, NetData.class);
 
                 if (netData.getResult()==200){
+
+                    SPUtils.getCacheSp().edit().putString("achieveAreaStructure",result).apply();
                     List<AreaInfo> areaInfos = JSON.parseArray(netData.getInfo(), AreaInfo.class);
+
+                    pdatas.clear();
 
                     if (areaInfos != null&&areaInfos.size()>0) {
                         pdatas.addAll(areaInfos);
                     }
 
                     pAdapter.notifyDataSetChanged();
+
+                    cdatas.clear();
                     cdatas.addAll(pdatas.get(selectedPos).getSons());
                     cAdapter.notifyDataSetChanged();
                 }else {
@@ -106,6 +119,14 @@ public class MallAllFragment extends BaseFragment implements View.OnClickListene
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 UIUtils.showToast("网络连接失败");
+                serverDie.setVisibility(View.VISIBLE);
+                serverDie.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        v.setVisibility(View.GONE);
+                        getCityList();
+                    }
+                });
             }
 
             @Override
@@ -115,7 +136,7 @@ public class MallAllFragment extends BaseFragment implements View.OnClickListene
 
             @Override
             public void onFinished() {
-
+                isHideLoading(true);
             }
         });
     }
@@ -198,6 +219,30 @@ public class MallAllFragment extends BaseFragment implements View.OnClickListene
             }
         };
         rec_c.setAdapter(cAdapter);
+
+        getCityList();
+
+
+        /*加载缓存数据*/
+        String achieveAreaStructure = SPUtils.getCacheSp().getString("achieveAreaStructure", "");
+
+        NetData netData = JSON.parseObject(achieveAreaStructure, NetData.class);
+
+        if (netData!=null){
+            List<AreaInfo> areaInfos = JSON.parseArray(netData.getInfo(), AreaInfo.class);
+
+            if (areaInfos != null&&areaInfos.size()>0) {
+                pdatas.addAll(areaInfos);
+            }
+
+            pAdapter.notifyDataSetChanged();
+            cdatas.addAll(pdatas.get(selectedPos).getSons());
+            cAdapter.notifyDataSetChanged();
+        }
+
+        if (pdatas.size()==0){
+            isHideLoading(false);
+        }
     }
 
     @Override

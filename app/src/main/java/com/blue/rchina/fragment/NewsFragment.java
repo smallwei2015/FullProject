@@ -36,6 +36,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
+/*所有其他栏目不可以选择栏目的新闻查看fragment，例如我的社区*/
 @ContentView(R.layout.fragment_news)
 public class NewsFragment extends BaseFragment {
 
@@ -202,7 +203,7 @@ public class NewsFragment extends BaseFragment {
             builder.append(channels.get(i).getTitle());
         }
 
-        if (builder.toString().length()>=10||channels.size()>4){
+        if (builder.toString().length()>12||channels.size()>4){
             tab.setTabMode(TabLayout.MODE_SCROLLABLE);
         }else {
             if (channels.size()==1){

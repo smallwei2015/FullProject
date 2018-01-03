@@ -31,7 +31,6 @@ public class AreaInfo implements Serializable {
     @Column(name = "areaIcon")
     private String areaIcon;
 
-
     public String getAreaId() {
         return areaId;
     }

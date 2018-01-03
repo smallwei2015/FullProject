@@ -474,7 +474,7 @@ public class SettingActivity extends BaseActivity {
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
         oks.setTitleUrl(UrlUtils.N_SHARE);
         // text是分享文本，所有平台都需要这个字段
-        oks.setText("您的好友邀请您下载融城中国APP");
+        oks.setText("融城互联智慧中国-城市服务联盟，尊享智慧生活。");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         //oks.setImagePath(FileUtils.APP_LOGO);//确保SDcard下面存在此张图片
         // url仅在微信（包括好友和朋友圈）中使用
@@ -535,7 +535,10 @@ public class SettingActivity extends BaseActivity {
 
         switch (requestCode){
             case 200:
-                finish();
+
+                if (resultCode==200) {
+                    finish();
+                }
                 break;
         }
     }

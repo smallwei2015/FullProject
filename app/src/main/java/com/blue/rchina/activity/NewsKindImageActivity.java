@@ -12,6 +12,7 @@ import com.blue.rchina.R;
 import com.blue.rchina.base.BaseActivity;
 import com.blue.rchina.bean.Goods;
 import com.blue.rchina.bean.Report;
+import com.blue.rchina.bean.TraveDetail;
 import com.blue.rchina.utils.xUtilsImageUtils;
 import com.blue.rchina.views.PinchImageView;
 import com.blue.rchina.views.PinchImageViewPager;
@@ -102,6 +103,8 @@ public class NewsKindImageActivity extends BaseActivity {
                 List<String> temp=new ArrayList<>();
                 temp.add(((Goods) data).getPicsrc());
                 return (temp);
+            }else if(data instanceof TraveDetail){
+                return ((TraveDetail) data).getManyPic();
             }
         }
 
@@ -115,5 +118,10 @@ public class NewsKindImageActivity extends BaseActivity {
         x.view().inject(this);
         initView();
         initData();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

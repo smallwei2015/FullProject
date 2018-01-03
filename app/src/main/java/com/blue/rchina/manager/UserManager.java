@@ -32,23 +32,30 @@ public class UserManager {
 
     public static final String action_in = "com.rcchina.login";
     public static final String action_out = "com.rcchina.login_out";
-    public static final String action_change="com.rcchina.change";
+    public static final String action_change = "com.rcchina.change";
 
-    public static final String action_cityChange="com.rcchina.city_change";
+    public static final String action_cityChange = "com.rcchina.city_change";
     private static User cUser;
 
-    public static User getUser(){
+    public static User getUser() {
 
-        if (cUser!=null){
+        if (cUser != null) {
             return cUser;
-        }else{
+        } else {
             return null;
         }
     }
 
-    public static void setUser(User user){
+    public static String getAppuserId() {
+        if (cUser != null)
+            return cUser.getAppuserId() + "";
+        else
+            return "";
+    }
+
+    public static void setUser(User user) {
         if (user != null) {
-            cUser=user;
+            cUser = user;
             sendLogin();
 
             setAlias();
@@ -69,10 +76,10 @@ public class UserManager {
         });*/
     }
 
-    public static void login(String name, String pass, final UserManagerInterface manager){
+    public static void login(String name, String pass, final UserManagerInterface manager) {
 
         RequestParams entity = new RequestParams(UrlUtils.N_login);
-        entity.addBodyParameter("arg1",name);
+        entity.addBodyParameter("arg1", name);
         entity.addBodyParameter("passWord", MD5Utils.getMD5(pass));
 
         x.http().post(entity, new Callback.CommonCallback<String>() {
@@ -81,19 +88,19 @@ public class UserManager {
 
                 NetData netData = JSON.parseObject(result, NetData.class);
 
-                if (netData.getResult()==200){
+                if (netData.getResult() == 200) {
 
                     User user = JSON.parseObject(netData.getInfo(), User.class);
-                    cUser=user;
+                    cUser = user;
 
                     manager.success(user);
                     saveUser(user);
                     sendLogin();
 
                     setAlias();
-                }else {
+                } else {
                     manager.faild(null);
-                    if (netData.getResult()==401){
+                    if (netData.getResult() == 401) {
                         UIUtils.showToast("登录名密码错误");
                     }
                 }
@@ -121,7 +128,7 @@ public class UserManager {
     public static void saveUser(User user) {
         try {
             /*登录过时时间为7天*/
-            user.setExpiration(System.currentTimeMillis()+1000L*60*60*24*30);
+            user.setExpiration(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30);
             x.getDb(daoConfig).saveOrUpdate(user);
         } catch (DbException e) {
             e.printStackTrace();
@@ -135,9 +142,9 @@ public class UserManager {
         BaseApplication.getInstance().sendBroadcast(intent);
     }
 
-    public static void loginOut(View view,final UserManagerInterface manager){
+    public static void loginOut(View view, final UserManagerInterface manager) {
 
-        final ProgressDialog dialog=new ProgressDialog(view.getContext());
+        final ProgressDialog dialog = new ProgressDialog(view.getContext());
         dialog.setMessage("正在退出登录...");
         dialog.show();
 
@@ -177,7 +184,7 @@ public class UserManager {
         } catch (DbException e) {
             e.printStackTrace();
         }
-        cUser=null;
+        cUser = null;
         sendLoginOut();
     }
 
@@ -193,7 +200,7 @@ public class UserManager {
             e.printStackTrace();
         }
 
-        cUser=null;
+        cUser = null;
     }
 
     private static void sendLoginOut() {
@@ -202,14 +209,14 @@ public class UserManager {
         BaseApplication.getInstance().sendBroadcast(intent);
     }
 
-    public static void register(String name,String pass,String nickname,String address,String path,final UserManagerInterface manager){
+    public static void register(String name, String pass, String nickname, String address, String path, final UserManagerInterface manager) {
 
 
         RequestParams entity = new RequestParams(UrlUtils.N_regiWithText);
-        entity.addBodyParameter("phone",name);
-        entity.addBodyParameter("passWord",MD5Utils.getMD5(pass));
-        entity.addBodyParameter("nickName",nickname);
-        entity.addBodyParameter("file",new File(path));
+        entity.addBodyParameter("phone", name);
+        entity.addBodyParameter("passWord", MD5Utils.getMD5(pass));
+        entity.addBodyParameter("nickName", nickname);
+        entity.addBodyParameter("file", new File(path));
 
         x.http().post(entity, new Callback.CommonCallback<String>() {
             @Override
@@ -217,11 +224,11 @@ public class UserManager {
 
                 NetData netData = JSON.parseObject(result, NetData.class);
 
-                if (netData.getResult()==200){
+                if (netData.getResult() == 200) {
                     manager.success(null);
-                }else {
+                } else {
                     manager.faild(null);
-                    if (netData.getResult()==401){
+                    if (netData.getResult() == 401) {
                         UIUtils.showToast("该手机号已注册");
                     }
                 }
@@ -245,16 +252,16 @@ public class UserManager {
     }
 
     public static boolean isLogin() {
-        return cUser!=null;
+        return cUser != null;
     }
 
-    public static void loginThird(String userId, String nameStr, String userIcon,final UserManagerInterface manager) {
+    public static void loginThird(String userId, String nameStr, String userIcon, final UserManagerInterface manager) {
 
         RequestParams entity = new RequestParams(UrlUtils.N_thirdPartyLogin);
 
-        entity.addBodyParameter("thirdAuth",userId);
-        entity.addBodyParameter("nickName",nameStr);
-        entity.addBodyParameter("arg1",userIcon);
+        entity.addBodyParameter("thirdAuth", userId);
+        entity.addBodyParameter("nickName", nameStr);
+        entity.addBodyParameter("arg1", userIcon);
 
 
         x.http().post(entity, new Callback.CommonCallback<String>() {
@@ -263,10 +270,10 @@ public class UserManager {
 
                 NetData netData = JSON.parseObject(result, NetData.class);
 
-                if (netData.getResult()==200){
+                if (netData.getResult() == 200) {
 
                     User user = JSON.parseObject(netData.getInfo(), User.class);
-                    cUser=user;
+                    cUser = user;
                     manager.success(user);
 
                     saveUser(user);
@@ -274,7 +281,7 @@ public class UserManager {
 
                     setAlias();
 
-                }else {
+                } else {
                     manager.faild(null);
                     UIUtils.showToast("登录成功");
                 }
@@ -300,7 +307,7 @@ public class UserManager {
     }
 
 
-    public static void sendChange(){
+    public static void sendChange() {
 
         loginOutWithoutDelay();
         try {
@@ -317,7 +324,7 @@ public class UserManager {
 
     public static void toLogin() {
         BaseApplication instance = BaseApplication.getInstance();
-        Intent intent=new Intent(instance, LoginActivity.class);
+        Intent intent = new Intent(instance, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         instance.startActivity(intent);
     }

@@ -20,12 +20,18 @@
             android:id="@+id/img"
             android:transitionName="@string/trave_transition"/>
 
-
-
         <TextView
-            style="@style/trave_price_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:textSize="@dimen/sp16"
+            android:textColor="@color/white"
             android:id="@+id/price"
-            />
+            android:background="@drawable/trave_price_bg"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/dp10"/>
+
         <com.blue.rchina.views.DeleteTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,18 +39,37 @@
             android:layout_alignBaseline="@+id/price"
             android:textColor="@color/xlightGray"
             android:padding="@dimen/dp5"
-            android:text="原价1988"/>
+            android:text="原价1988"
+            android:visibility="gone"/>
+
     </RelativeLayout>
 
 
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/title"
-        android:text="北京“欢迎”你？"
-        android:padding="@dimen/dp5"
-        />
+        android:orientation="horizontal"
+        android:padding="@dimen/dp5">
+
+        <TextView
+            style="@style/trave_text_style"
+            android:id="@+id/title"
+            android:text="北京“欢迎”你？"
+            />
+        <View
+            android:layout_width="@dimen/dp0.5"
+            android:layout_height="match_parent"
+            android:background="@color/bg_color"
+            />
+        <TextView
+            style="@style/trave_text_style"
+            android:id="@+id/time"
+            android:gravity="right"
+            android:text="开放时间：9-20"
+            android:visibility="gone"/>
+    </LinearLayout>
+
 
 
 </LinearLayout>

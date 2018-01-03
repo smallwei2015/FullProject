@@ -43,7 +43,8 @@
                 android:layout_toRightOf="@+id/icon"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:padding="@dimen/dp5">
+                android:padding="@dimen/dp5"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/top_search_edit"
@@ -71,7 +72,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp20" />
+                android:textSize="@dimen/sp20"
+                android:text="@string/app_name"/>
 
 
             <ImageView
@@ -79,7 +81,6 @@
                 style="@style/normal_icon_style"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/address_icon"
                 />
 
             <RelativeLayout
@@ -93,7 +94,7 @@
                 <ImageView
                     android:id="@+id/top_mall_right"
                     style="@style/normal_icon_style"
-                    android:src="@mipmap/address_icon" />
+                    />
 
                 <TextView
                     android:layout_width="@dimen/dp15"

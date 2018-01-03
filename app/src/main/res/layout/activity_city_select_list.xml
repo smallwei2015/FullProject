@@ -24,16 +24,6 @@
         android:layout_below="@+id/toolbar"
         />
 
-    <com.zhy.view.flowlayout.FlowLayout
-        android:id="@+id/flow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bg_color_light"
-        android:layout_below="@+id/toolbar"
-        android:visibility="gone"
-        android:padding="@dimen/dp5"
-        />
-
     <include layout="@layout/no_data" />
 
 </RelativeLayout>

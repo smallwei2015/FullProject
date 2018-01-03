@@ -11,8 +11,9 @@
     <color name="colorPrimaryTra">#665bb7f4</color>
     <color name="colorPrimaryPressed">#164a81</color>
     <color name="orange">#FF9731</color>
-
-
+    <color name="orangeTra">#ddFF9731</color>
+    <color name="orangePressed">#ae5b0b</color>
+    <color name="orangePressedTra">#ddae5b0b</color>
     <color name="divider_gray">#9eee</color>
     <color name="white">#ffff</color>
     <color name="transparent">#0fff</color>

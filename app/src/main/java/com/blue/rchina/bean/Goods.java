@@ -35,6 +35,7 @@ public class Goods implements Serializable{
     private String DCTime;
     private String attention;
 
+    private String shareLink;
     private int layoutType=1;
 
     public int getId() {
@@ -131,5 +132,13 @@ public class Goods implements Serializable{
 
     public void setDCTime(String DCTime) {
         this.DCTime = DCTime;
+    }
+
+    public String getShareLink() {
+        return shareLink;
+    }
+
+    public void setShareLink(String shareLink) {
+        this.shareLink = shareLink;
     }
 }

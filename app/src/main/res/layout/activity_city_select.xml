@@ -1,31 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:zhy="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_city_select"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.blue.rchina.activity.CitySelectActivity"
-    android:background="@color/bg_color_light">
+    android:background="@color/bg_color_light"
+    tools:context="com.blue.rchina.activity.CitySelectActivity">
 
-    <include layout="@layout/top"/>
+    <include layout="@layout/top" />
 
 
-    <RelativeLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/city_rec"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar" />
 
 
-        <com.zhy.view.flowlayout.TagFlowLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            zhy:max_select="1"
-            android:padding="@dimen/dp10"
-            android:id="@+id/city_flow"/>
+    <include layout="@layout/no_data" />
 
-        <include layout="@layout/no_data"/>
-    </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

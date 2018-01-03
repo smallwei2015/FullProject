@@ -27,12 +27,14 @@
             android:layout_weight="1"
             android:layout_margin="@dimen/dp0.5"
             android:id="@+id/news_double_icon1"
+            android:background="@color/bg_color"
             />
 
         <ImageView
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
+            android:background="@color/bg_color"
             android:layout_margin="@dimen/dp0.5"
             android:id="@+id/news_double_icon2"/>
     </LinearLayout>

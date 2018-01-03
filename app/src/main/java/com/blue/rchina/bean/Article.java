@@ -14,7 +14,6 @@ public class Article extends BaseData {
     private long commentCount=0;
     private long contentId;
     private String  datetime;
-
     private int displayType;
     private long hateCount;
     private long likeCount;
@@ -26,6 +25,12 @@ public class Article extends BaseData {
     private String title;
 
     private String shareUrl;
+
+    private int collectState;
+    private int commentState;
+    private int shareState;
+    private int readState;
+    private int positionState;
 
     public String getShareUrl() {
         return shareUrl;
@@ -155,6 +160,47 @@ public class Article extends BaseData {
     @Override
     public List<BaseData> parseList(String jsonList) {
         return null;
+    }
+
+
+    public int getCollectState() {
+        return collectState;
+    }
+
+    public void setCollectState(int collectState) {
+        this.collectState = collectState;
+    }
+
+    public int getCommentState() {
+        return commentState;
+    }
+
+    public void setCommentState(int commentState) {
+        this.commentState = commentState;
+    }
+
+    public int getShareState() {
+        return shareState;
+    }
+
+    public void setShareState(int shareState) {
+        this.shareState = shareState;
+    }
+
+    public int getReadState() {
+        return readState;
+    }
+
+    public void setReadState(int readState) {
+        this.readState = readState;
+    }
+
+    public int getPositionState() {
+        return positionState;
+    }
+
+    public void setPositionState(int positionState) {
+        this.positionState = positionState;
     }
 
     @Override

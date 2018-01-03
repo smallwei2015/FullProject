@@ -10,6 +10,7 @@ public class DataWrap implements Serializable {
 
     private Object data;
     private int type;
+    private int state;
 
     public Object getData() {
         return data;
@@ -25,5 +26,13 @@ public class DataWrap implements Serializable {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }

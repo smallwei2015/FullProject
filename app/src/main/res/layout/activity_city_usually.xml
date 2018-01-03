@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_city_usually"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.blue.rchina.activity.CityUsuallyActivity">
+    android:orientation="vertical"
+    tools:context="com.blue.rchina.fragment.MallContainerFragment">
 
-</RelativeLayout>
+    <include layout="@layout/top"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbarSize"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            style="@style/mall_tab_style"
+            android:id="@+id/tab_local"
+            android:text="常用城市"
+            />
+        <View
+            android:layout_width="@dimen/dp0.5"
+            android:layout_height="match_parent"
+            android:background="@color/xxxlight_gray"
+            android:layout_marginTop="@dimen/dp5"
+            android:layout_marginBottom="@dimen/dp5"/>
+
+        <TextView
+            style="@style/mall_tab_style"
+            android:id="@+id/tab_all"
+            android:text="常用APP"/>
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/usually_contain"
+        android:background="@color/white"/>
+
+</LinearLayout>

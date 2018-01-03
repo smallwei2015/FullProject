@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.blue.rchina.R;
@@ -34,8 +33,6 @@ public class TraveContainerFragment extends BaseFragment {
     @ViewInject(R.id.tab_local)
     TextView local;
 
-    @ViewInject(R.id.mall_contain)
-    FrameLayout contain;
     public TraveFragment localFragment;
     public MallAllFragment allFragment;
     public FragmentManager manager;
@@ -62,13 +59,13 @@ public class TraveContainerFragment extends BaseFragment {
         FragmentTransaction transaction = manager.beginTransaction();
 
         localFragment = new TraveFragment();
-        transaction.add(R.id.mall_contain, localFragment);
+        transaction.add(R.id.trave_contain, localFragment);
         allFragment = new MallAllFragment();
         Bundle args = new Bundle();
         /*1表示旅游栏目*/
         args.putInt("flag",1);
         allFragment.setArguments(args);
-        transaction.add(R.id.mall_contain, allFragment);
+        transaction.add(R.id.trave_contain, allFragment);
 
         transaction.hide(allFragment);
         transaction.commitAllowingStateLoss();

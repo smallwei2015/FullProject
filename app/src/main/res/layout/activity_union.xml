@@ -4,10 +4,17 @@
     android:id="@+id/activity_union"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.blue.rchina.activity.UnionActivity">
+
+    <include layout="@layout/top"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:padding="@dimen/dp5"
+        android:id="@+id/rec"/>
+
+    <include layout="@layout/no_data"/>
 
 </RelativeLayout>

@@ -30,7 +30,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <!-- 高德地图权限 -->
 
 
@@ -124,11 +124,29 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="rchina" />
+            </intent-filter>
         </activity>
         <activity android:name=".activity.FlashActivity" />
         <activity
             android:name=".Main2Activity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+
+        </activity>
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.UserCenterActivity" />
@@ -149,7 +167,9 @@
         <activity android:name=".activity.CollectActivity" />
         <activity android:name=".activity.MallDetailActivity" />
         <activity android:name=".activity.SplashActivity" />
-        <activity android:name=".activity.PayActivity" />
+        <activity
+            android:name=".activity.PayActivity"
+            android:launchMode="singleTop" />
         <activity android:name=".activity.CheckPhoneActivity" />
         <activity android:name=".activity.CouponActivity" />
         <activity android:name=".activity.WeatherActivity" />
@@ -400,7 +420,10 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".wxapi.WXPayEntryActivity" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
         <!-- 银联支付结束 -->
         <!-- 广告sdk -->
         <activity
@@ -433,7 +456,11 @@
         <activity android:name=".activity.BalanceChargeActivity" />
         <activity android:name=".activity.ChargeRecordActivity" />
         <activity android:name=".activity.TraveActivity" />
-        <activity android:name=".activity.TraveDetailActivity"></activity>
+        <activity android:name=".activity.TraveDetailActivity" />
+        <activity android:name=".activity.SearchDetailActivity" />
+        <activity android:name=".activity.QrCodeActivity" />
+        <activity android:name=".activity.CityUsuallyActivity" />
+        <activity android:name=".activity.UnionActivity"></activity>
     </application>
 
 </manifest>

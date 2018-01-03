@@ -101,8 +101,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.Holder> {
             }
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                holder.firstImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                holder.firstImage.setImageResource(R.mipmap.no_data);
+                /*holder.firstImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                holder.firstImage.setImageResource(R.mipmap.no_data);*/
             }
 
             @Override
@@ -247,14 +247,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.Holder> {
                 String articlePicsrc = article.getPicsrc().split(";")[0];
 
                 if (TextUtils.isEmpty(articlePicsrc)){
-                    holder.firstImage.setImageResource(R.mipmap.no_data);
+                    holder.firstImage.setImageResource(R.color.bg_color);
                 }else {
                     //xUtilsImageUtils.display(holder.firstImage, articlePicsrc, callback);
 
                     if (articlePicsrc.contains("dwtt/static/images/logo.png")){
                         options = new ImageOptions.Builder()
                                 .setIgnoreGif(false)//是否忽略gif图。false表示不忽略。不写这句，默认是true
-                                .setFailureDrawableId(R.mipmap.no_data)
+                                .setFailureDrawableId(R.color.xxxlight_gray)
                                 .setLoadingDrawableId(R.color.xxxlight_gray)
                                 .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
                                 .setUseMemCache(false)

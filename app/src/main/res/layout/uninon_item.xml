@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    >
 
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/tab_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/union_tag"
+        android:gravity="center"
+        android:padding="@dimen/dp5"
+        android:lines="2"
+        android:text="你好"
+        android:textSize="@dimen/sp15"
+        android:layout_margin="@dimen/dp5"
+        android:ellipsize="middle"
+        android:clickable="true"/>
+
+    <ImageView
+        android:id="@+id/tag_del"
+        style="@style/normal_icon_style_small"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/x"
+        android:alpha="0.8"
+        android:visibility="gone" />
+
+
+</RelativeLayout>

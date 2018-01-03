@@ -1,6 +1,9 @@
 package com.blue.rchina.activity;
 
+import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -25,6 +28,9 @@ import com.blue.rchina.utils.SPUtils;
 import com.blue.rchina.utils.UIUtils;
 import com.blue.rchina.utils.UrlUtils;
 import com.blue.rchina.utils.xUtilsImageUtils;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Rationale;
+import com.yanzhenjie.permission.RationaleListener;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -34,6 +40,7 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.finalteam.galleryfinal.permission.EasyPermissions;
 import in.srain.cube.views.ptr.PtrClassicDefaultHeader;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
@@ -67,7 +74,32 @@ public class NearbySelectListActivity extends BaseActivity implements View.OnCli
         datas = new ArrayList<>();
 
         if (location==null){
-            locate();
+            if (AndPermission.hasPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                locate();
+            }else {
+                AndPermission.with(mActivity).requestCode(200).rationale(new RationaleListener() {
+                    @Override
+                    public void showRequestPermissionRationale(int requestCode, Rationale rationale) {
+                        AndPermission.defaultSettingDialog(mActivity, 400).show();
+                    }
+                }).permission(Manifest.permission.ACCESS_FINE_LOCATION)
+                        .callback(new EasyPermissions.PermissionCallbacks() {
+                            @Override
+                            public void onPermissionsGranted(List<String> perms) {
+                                locate();
+                            }
+
+                            @Override
+                            public void onPermissionsDenied(List<String> perms) {
+                                AndPermission.defaultSettingDialog(mActivity, 400).show();
+                            }
+
+                            @Override
+                            public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+                            }
+                        }).start();
+            }
         }else {
             getNearbyList();
         }
@@ -300,6 +332,16 @@ public class NearbySelectListActivity extends BaseActivity implements View.OnCli
             des = ((TextView) itemView.findViewById(R.id.des));
             icon = ((ImageView) itemView.findViewById(R.id.icon));
             distance = ((TextView) itemView.findViewById(R.id.distance));
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==400){
+            if(AndPermission.hasPermission(mActivity,Manifest.permission.ACCESS_FINE_LOCATION)){
+                locate();
+            }
         }
     }
 }

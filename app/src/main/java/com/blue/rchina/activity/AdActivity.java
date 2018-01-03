@@ -1,5 +1,6 @@
 package com.blue.rchina.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -17,33 +18,73 @@ import com.kyview.manager.AdViewInstlManager;
 import com.kyview.manager.AdViewNativeManager;
 import com.kyview.manager.AdViewSpreadManager;
 import com.kyview.manager.AdViewVideoManager;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionNo;
+import com.yanzhenjie.permission.PermissionYes;
+import com.yanzhenjie.permission.Rationale;
+import com.yanzhenjie.permission.RationaleListener;
+
+import java.util.List;
 
 public class AdActivity extends AppCompatActivity {
 
 
-    public static final String APP_ID = "SDK20171512030632690fn35schyj25t";
+    //public static final String APP_ID = "SDK20171505030508aeipv2k3umhdk04";
+    //public static final String APP_ID="SDK20171021101248glctd8nqbv4slic";
+    public static final String APP_ID="SDK20171528030650grw6gsq6irtk4b3";
     public static final String keySet[] = new String[]{APP_ID};
     public RelativeLayout container;
     private boolean isJumping;
     private boolean adClicked=false;
     private boolean isDisplying=false;
+    private int count=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
+            getWindow().setNavigationBarColor(Color.TRANSPARENT);
         }
         container = (RelativeLayout) findViewById(R.id.activity_ad);
 
-        init();
-        startAd();
+        if(!AndPermission.hasPermission(this,new String[]{Manifest.permission.READ_PHONE_STATE,Manifest.permission.WRITE_EXTERNAL_STORAGE})) {
+            AndPermission.with(this)
+                    .requestCode(200)
+                    .permission(Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .rationale(new RationaleListener() {
+                        @Override
+                        public void showRequestPermissionRationale(int requestCode, Rationale rationale) {
+                            AndPermission.defaultSettingDialog(AdActivity.this, 400).show();
+                        }
+                    }).callback(this).start();
+        }else {
+            init();
+            startAd();
+        }
+
 
     }
 
+    @PermissionYes(200)
+    private void getPermissionYes(List<String> grantedPermissions) {
+        // TODO 申请权限成功。
+        init();
+        startAd();
+    }
+
+    @PermissionNo(200)
+    private void getPermissionNo(List<String> deniedPermissions) {
+        // TODO 申请权限失败。
+        AndPermission.defaultSettingDialog(this, 400).show();
+    }
+
     private void startAd() {
+
         // 设置开屏下方LOGO，必须调用该方法
         AdViewSpreadManager.getInstance(this).setSpreadLogo(R.mipmap.ad_banner);
         //AdViewSpreadManager.getInstance(this).setSpreadBackgroudPic(R.mipmap.banner);
@@ -59,20 +100,18 @@ public class AdActivity extends AppCompatActivity {
 
             @Override
             public void onAdClose(String s) {
-                jump();
+                /*显示两秒后关闭*/
+                container.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        jump();
+                    }
+                }, 2000);
             }
 
             @Override
             public void onAdRecieved(String s) {
-                /*判断三秒钟是否还未显示，那么就跳过*/
-                container.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!isDisplying) {
-                            jump();
-                        }
-                    }
-                }, 3000);
+
             }
 
             @Override
@@ -126,5 +165,22 @@ public class AdActivity extends AppCompatActivity {
         AdViewNativeManager.getInstance(this).init(initConfig,keySet);
         AdViewSpreadManager.getInstance(this).init(initConfig,keySet);
         AdViewVideoManager.getInstance(this).init(initConfig,keySet);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case 400: { // 这个400就是你上面传入的数字。
+                // 你可以在这里检查你需要的权限是否被允许，并做相应的操作。
+                if (AndPermission.hasPermission(AdActivity.this, Manifest.permission.READ_PHONE_STATE)) {
+                    init();
+                    startAd();
+                }else {
+                    AndPermission.defaultSettingDialog(AdActivity.this, 400).show();
+                }
+
+                break;
+            }
+        }
     }
 }

@@ -259,10 +259,10 @@ public class MallFragment extends BaseFragment {
                             String msg = article.getPicsrc();
                             String[] split = msg.split(";");
 
-                    /*对于多张图，取第一张去显示*/
+                            /*对于多张图，取第一张去显示*/
                             String img = split[0];
                             if (img == null || img.equals("") || img.equalsIgnoreCase("null")) {
-                                list.add(new ImageCycleView.ImageInfo(R.mipmap.no_data, article.getTitle(), article));
+                                list.add(new ImageCycleView.ImageInfo(R.mipmap.no_data1, article.getTitle(), article));
                                 continue;
                             }
                             list.add(new ImageCycleView.ImageInfo(img, article.getTitle(), article));

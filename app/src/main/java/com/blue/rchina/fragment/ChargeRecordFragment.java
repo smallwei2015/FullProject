@@ -168,7 +168,7 @@ public class ChargeRecordFragment extends BaseFragment {
     }
 
     private void getChargeList(int flag, final int pager) {
-        isHideLoading(false);
+
         isloading=true;
 
         RequestParams entity = new RequestParams(UrlUtils.N_getRechargeInfo);

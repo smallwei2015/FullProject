@@ -38,6 +38,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
+/*首页新闻栏目，fragment*/
 @ContentView(R.layout.fragment_news)
 public class NewsMainFragment extends BaseFragment {
 
@@ -233,7 +234,7 @@ public class NewsMainFragment extends BaseFragment {
             builder.append(channels.get(i).getTitle());
         }
 
-        if (builder.toString().length()>=10||channels.size()>4){
+        if (builder.toString().length()>12||channels.size()>4){
             tab.setTabMode(TabLayout.MODE_SCROLLABLE);
         }else {
             if (channels.size()==1){

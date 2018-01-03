@@ -10,9 +10,9 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="80dp"
-        android:src="@mipmap/no_data"
         android:id="@+id/news_single_icon"
         android:scaleType="centerCrop"
+        android:background="@color/bg_color"
         android:layout_margin="@dimen/small_padding"/>
 
     <LinearLayout

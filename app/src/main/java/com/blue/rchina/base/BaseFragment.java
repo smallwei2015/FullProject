@@ -16,8 +16,8 @@ import com.blue.rchina.utils.AnimationUtils;
 
 public abstract class BaseFragment extends Fragment implements BaseUIContainer {
     public Activity mActivity;
-    View nodata;
-    ContentLoadingProgressBar loading;
+    public View nodata;
+    public ContentLoadingProgressBar loading;
     public View serverDie;
 
     @Override

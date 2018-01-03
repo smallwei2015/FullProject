@@ -38,7 +38,7 @@ public class UIDUtils {
         return uidStr;
     }
 
-    private static String getIMEI() {
+    public static String getIMEI() {
         TelephonyManager TelephonyMgr = (TelephonyManager) mContext.getSystemService(TELEPHONY_SERVICE);
         String szImei = TelephonyMgr.getDeviceId();
         return szImei;

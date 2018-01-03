@@ -262,6 +262,7 @@ public class NewsKindDetailActivty extends BaseActivity {
             }
         });
 
+        collect.setSelected(data.getCollectState()==1);
         collect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -342,7 +343,11 @@ public class NewsKindDetailActivty extends BaseActivity {
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                fresh();
+                if(UserManager.isLogin()) {
+                    fresh();
+                }else {
+                    frame.refreshComplete();
+                }
             }
         });
 
@@ -367,25 +372,27 @@ public class NewsKindDetailActivty extends BaseActivity {
 
         RequestParams entity = new RequestParams(UrlUtils.LIST_ARTICLE_COMMENT);
         entity.addBodyParameter("dataId", contentId + "");
-        entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
+        entity.addBodyParameter("appuserId", UserManager.getAppuserId() + "");
 
         x.http().post(entity, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                try {
+                    NetData data = JSON.parseObject(result, NetData.class);
 
-                NetData data = JSON.parseObject(result, NetData.class);
+                    if (data.getResult() == 200) {
+                        datas.clear();
 
-                if (data.getResult() == 200) {
-                    datas.clear();
+                        List<Comment> comments = JSON.parseArray(data.getInfo(), Comment.class);
+                        datas.addAll(comments);
+                        adapter.notifyDataSetChanged();
 
-                    List<Comment> comments = JSON.parseArray(data.getInfo(), Comment.class);
-                    datas.addAll(comments);
-                    adapter.notifyDataSetChanged();
-
-                } else {
-                    UIUtils.showToast("刷新失败");
+                    } else {
+                        UIUtils.showToast("刷新失败");
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -449,7 +456,7 @@ public class NewsKindDetailActivty extends BaseActivity {
         RequestParams entity = new RequestParams(UrlUtils.N_commentArticle);
         entity.addBodyParameter("dataId", contentId + "");
         entity.addBodyParameter("content", content);
-        entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
+        entity.addBodyParameter("appuserId", UserManager.getAppuserId() );
         x.http().post(entity, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -484,11 +491,11 @@ public class NewsKindDetailActivty extends BaseActivity {
 
     }
 
-    private void collect(boolean col) {
+    private void collect(final boolean col) {
 
         if (col) {
             RequestParams entity = new RequestParams(UrlUtils.N_collectArticle);
-            entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
+            entity.addBodyParameter("appuserId", UserManager.getAppuserId());
             entity.addBodyParameter("dataId", contentId + "");
             x.http().post(entity, new Callback.CommonCallback<String>() {
                 @Override
@@ -497,7 +504,7 @@ public class NewsKindDetailActivty extends BaseActivity {
                     NetData data = JSON.parseObject(result, NetData.class);
                     if (data.getResult() == 200) {
                         UIUtils.showToast("收藏成功");
-                        collect.setSelected(!collect.isSelected());
+                        collect.setSelected(col);
                     } else {
                         UIUtils.showToast("服务器请求失败");
                     }
@@ -522,7 +529,7 @@ public class NewsKindDetailActivty extends BaseActivity {
             });
         } else {
             RequestParams entity = new RequestParams(UrlUtils.N_cancelCollectArticle);
-            entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
+            entity.addBodyParameter("appuserId", UserManager.getAppuserId());
             entity.addBodyParameter("dataId", contentId + "");
             x.http().post(entity, new Callback.CommonCallback<String>() {
                 @Override
@@ -530,8 +537,8 @@ public class NewsKindDetailActivty extends BaseActivity {
 
                     NetData data = JSON.parseObject(result, NetData.class);
                     if (data.getResult() == 200) {
-                        UIUtils.showToast("成功取消收藏");
-                        collect.setSelected(!collect.isSelected());
+                        UIUtils.showToast("取消收藏");
+                        collect.setSelected(col);
                     } else {
                         UIUtils.showToast("服务器请求失败");
                     }
@@ -623,7 +630,7 @@ public class NewsKindDetailActivty extends BaseActivity {
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
                 //分享成功后调用，分享成功的接口
                 RequestParams entity = new RequestParams(UrlUtils.N_shareArticle);
-                entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
+                entity.addBodyParameter("appuserId", UserManager.getAppuserId() );
                 entity.addBodyParameter("dataId", contentId + "");
                 x.http().post(entity, new Callback.CommonCallback<String>() {
                     @Override
@@ -706,65 +713,13 @@ public class NewsKindDetailActivty extends BaseActivity {
         contentId = data.getContentId();
         if (UserManager.isLogin()) {
             //getUserState();
-            getComments(contentId + "", UserManager.getUser().getAppuserId() + "");
+            getComments(contentId + "", UserManager.getAppuserId() );
             readSuccess();
         }
 
 
     }
 
-    /*private void getUserState() {
-        *//*获取当前用户关于这篇文章的状态*//*
-        RequestParams entity = new RequestParams(String.format(UrlUtils.USER_ARTICLE_STATE, contentId + "",
-                UserManager.getUser().getAppuserId() + ""));
-        x.http().get(entity, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    int code = jsonObject.getInt("result");
-
-                    if (code == 200) {
-                        JSONObject info = jsonObject.getJSONObject("info");
-                        int collectState = info.getInt("collectState");
-                        int shareState = info.getInt("shareState");
-
-                        if (collectState == 1) {
-                            collect.setSelected(true);
-                        } else {
-                            collect.setSelected(false);
-                        }
-
-                        if (shareState == 1) {
-                            share.setSelected(true);
-                        } else {
-                            share.setSelected(false);
-                        }
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-    }*/
 
     private void readSuccess() {
 
@@ -773,7 +728,7 @@ public class NewsKindDetailActivty extends BaseActivity {
 
         /*成功阅读了一篇*/
             RequestParams entity = new RequestParams(UrlUtils.N_readArticle);
-            entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
+            entity.addBodyParameter("appuserId", UserManager.getAppuserId() );
             entity.addBodyParameter("dataId", contentId + "");
             x.http().get(entity, new Callback.CommonCallback<String>() {
                 @Override

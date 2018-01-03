@@ -25,17 +25,6 @@ public class Order implements Serializable {
     private String logisticsNumber;
 
 
-    /*  "orderFlag": 0,
-            "orderNo": "B101500313431",
-            "moneySum": 0.01,
-            "receiveName": "Vode",
-            "receiveAddress": "哈哈哈",
-            "receivePhone": "123456",
-            "district": "北京市东城区",
-            "datetime": "2017-07-18 18:31:04",
-            "orderId": 28
-        */
-
     public int getType() {
         return type;
     }
