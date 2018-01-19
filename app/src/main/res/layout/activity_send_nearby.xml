@@ -62,27 +62,26 @@
             />
 
 
-        <LinearLayout
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp10"
-            android:orientation="horizontal"
-            android:id="@+id/bottom"
-            android:gravity="center_vertical">
+            android:id="@+id/send_phone"
+            android:layout_marginBottom="@dimen/dp50"
+            android:background="@color/bg_color_light"
+            android:padding="@dimen/dp10"
+            android:textSize="@dimen/sp15"
+            android:inputType="phone"
+            android:hint="请输入您的手机号"
+            />
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@mipmap/address_icon" />
-
-            <TextView
-                android:id="@+id/send_locate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="定位失败" />
-        </LinearLayout>
+        <TextView
+            style="@style/login_btn"
+            android:id="@+id/sure"
+            android:text="发送"
+            />
     </LinearLayout>
+
+
 
     <include layout="@layout/no_data" />
 </RelativeLayout>

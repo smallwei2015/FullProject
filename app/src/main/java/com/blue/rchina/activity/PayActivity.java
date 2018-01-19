@@ -13,6 +13,7 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -170,7 +171,10 @@ public class PayActivity extends BaseActivity {
         datas.add(new ItemData("微信", R.mipmap.weixin));
         datas.add(new ItemData("支付宝", R.mipmap.zhifubao));
         datas.add(new ItemData("银联", R.mipmap.yinglian));
-        datas.add(new ItemData("余额",R.mipmap.yue));
+        /*余额充值不能使用余额支付的方式*/
+        if (payFlag!=1) {
+            datas.add(new ItemData("余额", R.mipmap.yue));
+        }
 
         adapter.notifyDataSetChanged();
 
@@ -404,7 +408,7 @@ public class PayActivity extends BaseActivity {
 
     }
 
-    private void pay(final int type, String orderNumer, int flag) {
+    private void pay(int type, String orderNumer, int flag) {
 
         final ProgressDialog dialog=new ProgressDialog(mActivity);
 
@@ -413,7 +417,7 @@ public class PayActivity extends BaseActivity {
 
         if (payFlag==1){
             balancePay(type,orderNumer,dialog);
-        }if (payFlag==2){
+        }else if (payFlag==2){
             travePay(type,orderNumer,dialog);
         }else {
             goodsPay(type, orderNumer, dialog);
@@ -431,10 +435,13 @@ public class PayActivity extends BaseActivity {
         entity.addBodyParameter("dataId", orderNumer);
         entity.addBodyParameter("type", type + "");//0银联1微信2支付宝
 
+        Log.w("4444",entity.getUri()+"?dataId="+orderNumer+"&type="+type);
         //entity.addBodyParameter("flag", flag + "");//0未使用1使用
         x.http().post(entity, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
+
+                Log.w("44444",result);
 
                 JSONObject object = JSON.parseObject(result);
 
@@ -456,7 +463,8 @@ public class PayActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                UIUtils.showToast("订单生成失败");
+                Log.w("4444",ex.getMessage());
+                UIUtils.showToast("订单生成失败1");
             }
 
             @Override
@@ -482,7 +490,6 @@ public class PayActivity extends BaseActivity {
             @Override
             public void onSuccess(String result) {
 
-
                 JSONObject object = JSON.parseObject(result);
 
                 if (object.getInteger("result") == 200) {
@@ -504,7 +511,7 @@ public class PayActivity extends BaseActivity {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
 
-                UIUtils.showToast("订单生成失败");
+                UIUtils.showToast("订单生成失败2");
             }
 
             @Override

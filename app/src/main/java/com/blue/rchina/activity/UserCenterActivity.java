@@ -44,6 +44,8 @@ import java.util.List;
 import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.model.PhotoInfo;
 
+import static com.blue.rchina.R.id.share;
+
 public class UserCenterActivity extends BaseActivity implements GalleryFinal.OnHanlderResultCallback{
 
 
@@ -57,6 +59,15 @@ public class UserCenterActivity extends BaseActivity implements GalleryFinal.OnH
     View phone;
     @ViewInject(R.id.toolbar)
     View toolbar;
+
+    @ViewInject(R.id.read)
+    TextView tv_read;
+    @ViewInject(share)
+    TextView tv_share;
+    @ViewInject(R.id.recommend)
+    TextView tv_rec;
+    @ViewInject(R.id.interact)
+    TextView tv_interact;
 
     @ViewInject(R.id.icon_image)
     ImageView icon_image;
@@ -188,6 +199,48 @@ public class UserCenterActivity extends BaseActivity implements GalleryFinal.OnH
             public void userStateChange() {
                 UIUtils.showToast("数据修改成功,请重新登录");
                 UserManager.toLogin();
+            }
+        });
+
+        loadUserInfo();
+    }
+
+    private void loadUserInfo() {
+        RequestParams entity = new RequestParams(UrlUtils.N_achievePersonalInfoCount);
+        entity.addBodyParameter("appuserId",UserManager.getUser().getAppuserId()+"");
+        x.http().post(entity, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                NetData netData = JSON.parseObject(result, NetData.class);
+
+                if (netData.getResult()==200){
+                    JSONObject object = JSON.parseObject(netData.getInfo());
+                    String read = object.getString("read");
+                    String share = object.getString("share");
+                    String recommend = object.getString("recommend");
+                    String report = object.getString("report");
+
+
+                    tv_read.setText(read);
+                    tv_share.setText(share);
+                    tv_rec.setText(recommend);
+                    tv_interact.setText(report);
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
             }
         });
     }

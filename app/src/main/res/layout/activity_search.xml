@@ -51,6 +51,7 @@
                 android:textColorHint="@color/xxlight_gray"
                 android:textSize="@dimen/sp16"
                 android:imeOptions="actionSearch"
+                android:textCursorDrawable="@color/colorPrimary"
                 android:singleLine="true"/>
 
             <ImageView

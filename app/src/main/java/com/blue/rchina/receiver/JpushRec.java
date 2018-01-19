@@ -14,6 +14,5 @@ public class JpushRec extends JPushMessageReceiver {
     public void onAliasOperatorResult(Context context, JPushMessage jPushMessage) {
         super.onAliasOperatorResult(context, jPushMessage);
 
-
     }
 }

@@ -384,18 +384,26 @@ public class InteractAdapter extends RecyclerView.Adapter<InteractAdapter.Holder
                 holder.interact_icon_container.removeAllViews();
                 holder.interact_icon_container.addView(demo);
 
-                for (int i = 0; i < data2.getPraiseCount() && i < 6; i++) {
-                    ImageView imageView = new ImageView(context);
-                    imageView.setLayoutParams(demoLayoutParams);
-                    String headIcon = data2.getPraiseList().get(i).getHeadIcon();
+                for (int i = 0; i < data2.getPraiseList().size() && i < 6; i++) {
 
-                    if (TextUtils.isEmpty(headIcon)) {
-                        xUtilsImageUtils.display(imageView, "", true);
-                    } else {
-                        xUtilsImageUtils.display(imageView, headIcon, true);
+                    /*点赞时候是前台刷新，所以这里会获取不到数据和praiseCount可能不一致*/
+                    User user = data2.getPraiseList().get(i);
+
+                    if (user != null) {
+                        ImageView imageView = new ImageView(context);
+                        imageView.setLayoutParams(demoLayoutParams);
+
+                        String headIcon = user.getHeadIcon();
+
+                        if (TextUtils.isEmpty(headIcon)) {
+                            xUtilsImageUtils.display(imageView, "", true);
+                        } else {
+                            xUtilsImageUtils.display(imageView, headIcon, true);
+                        }
+
+                        holder.interact_icon_container.addView(imageView);
                     }
 
-                    holder.interact_icon_container.addView(imageView);
                 }
 
                 final List<String> manyPic2 = data2.getManyPic();

@@ -1,5 +1,6 @@
 package com.blue.rchina.activity;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -48,16 +49,14 @@ import cn.finalteam.toolsfinal.BitmapUtils;
 
 import static android.Manifest.permission.CAMERA;
 
-public class SendInteractActivity extends BaseActivity {
+public class SendNearbyActivity extends BaseActivity {
 
-    @ViewInject(R.id.bottom)
-    View bottom;
+
+    @ViewInject(R.id.sure)
+    TextView sure;
 
     @ViewInject(R.id.send_edit)
     EditText editText;
-
-    @ViewInject(R.id.send_locate)
-    TextView locate;
 
     @ViewInject(R.id.pic_img)
     ImagePicView picker;
@@ -79,15 +78,13 @@ public class SendInteractActivity extends BaseActivity {
     public List<ImagePicView.ImgData> imgDatas;
     public ImagePicView.ImgAdapter adapter;
 
-
     @Override
     public void initView() {
         super.initView();
 
+        initTop(R.mipmap.left_white, "社区报修", "记录");
+        phone.setVisibility(View.VISIBLE);
 
-        initTop(R.mipmap.left_white, "发表互动", "发送");
-        phone.setVisibility(View.GONE);
-        bottom.setVisibility(View.VISIBLE);
 
         imgDatas = new ArrayList<>();
         imgDatas.add(new ImagePicView.ImgData("", imgDatas.size() + 1));
@@ -103,31 +100,37 @@ public class SendInteractActivity extends BaseActivity {
             }
         });
 
+        sure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                send(v);
+            }
+        });
+
         adapter = picker.new ImgAdapter(imgDatas);
         picker.setAdapter(adapter);
 
-
-        //adapter.notifyDataChanged();
     }
 
     @Override
     public void initData() {
         super.initData();
 
-
-        if (location != null) {
-            locate.setText(getDisplayString());
-        } else {
-            locate();
+        if (false) {
+            if (location != null) {
+                //locate.setText(getDisplayString());
+            } else {
+                locate();
+            }
         }
-
     }
 
     @Override
     public void onRightTextClick(View v) {
         super.onRightTextClick(v);
-        isHideLoading(false);
-        send(v);
+
+        Intent intent = new Intent(mActivity,NearbyRecordActivity.class);
+        startActivity(intent);
     }
 
     private void locate() {
@@ -145,7 +148,7 @@ public class SendInteractActivity extends BaseActivity {
                 if (amapLocation != null) {
                     if (amapLocation.getErrorCode() == 0) {
                         location = amapLocation;
-                        locate.setText(getDisplayString());
+                        //locate.setText(getDisplayString());
 
                         mlocationClient.stopLocation();
                     } else {
@@ -194,45 +197,25 @@ public class SendInteractActivity extends BaseActivity {
     private void send(final View view) {
 
         String editStr = editText.getText().toString();
-
-        /*if (location==null){
-            UIUtils.showToast("定位失败，请稍后再试");
-            isHideLoading(true);
-            return;
-        }*/
-
+        String phoneStr = phone.getText().toString().trim();
         if (!UserManager.isLogin()) {
             UserManager.toLogin();
-            isHideLoading(true);
             return;
         }
 
-        String phoneStr = phone.getText().toString().trim();
+        if (TextUtils.isEmpty(phoneStr)) {
+            UIUtils.showToast("请输入手机号");
+            return;
+        }
+
+        isHideLoading(false);
+
 
         if (!TextUtils.isEmpty(editStr)) {
 
-            /*if (editStr.length()>210){
-                UIUtils.showToast("文本内容过长，请限制在两百字以内");
-                isHideLoading(true);
-                return;
-            }*/
+            RequestParams entity = new RequestParams(UrlUtils.N_reportCommunity);
 
-
-            RequestParams entity = new RequestParams(UrlUtils.N_report);
-
-            if (location != null) {
-                entity.addBodyParameter("arg2", location.getLatitude() + "");
-                entity.addBodyParameter("arg1", location.getLongitude() + "");
-            } else {
-                entity.addBodyParameter("arg2", "116");
-                entity.addBodyParameter("arg1", "39");
-            }
-            if (location != null && location.getAddress() != null) {
-                entity.addBodyParameter("arg3", getDisplayString());
-            } else {
-                entity.addBodyParameter("arg3", "");
-            }
-
+            entity.addBodyParameter("phone", phoneStr);
 
             entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
             entity.addBodyParameter("content", editStr);
@@ -247,7 +230,7 @@ public class SendInteractActivity extends BaseActivity {
 
             }
 
-            view.setVisibility(View.GONE);
+            view.setEnabled(false);
             x.http().post(entity, new Callback.CommonCallback<String>() {
                 @Override
                 public void onSuccess(String result) {
@@ -255,9 +238,6 @@ public class SendInteractActivity extends BaseActivity {
                     Integer code = object.getInteger("result");
                     if (code == 200) {
                         UIUtils.showToast("发布成功");
-
-                        mActivity.sendAutoRefreshBroadcast(mActivity);
-
                         finish();
                     } else {
                         UIUtils.showToast("发布失败");
@@ -280,6 +260,7 @@ public class SendInteractActivity extends BaseActivity {
                 @Override
                 public void onFinished() {
                     isHideLoading(true);
+                    view.setEnabled(true);
                 }
             });
         } else {
@@ -292,7 +273,7 @@ public class SendInteractActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_interact);
+        setContentView(R.layout.activity_send_nearby);
 
         x.view().inject(this);
         initView();
@@ -300,7 +281,7 @@ public class SendInteractActivity extends BaseActivity {
     }
 
     private void getImage() {
-        View popView = LayoutInflater.from(SendInteractActivity.this).inflate(R.layout.popwindow_getpicture, null);
+        View popView = LayoutInflater.from(SendNearbyActivity.this).inflate(R.layout.popwindow_getpicture, null);
         mPopupWindow = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, true);
         mPopupWindow.setOutsideTouchable(true);

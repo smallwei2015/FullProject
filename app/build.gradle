@@ -13,8 +13,8 @@ android {
         applicationId "com.blue.rchina"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 103
-        versionName "2.3.3"
+        versionCode 105
+        versionName "2.3.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true

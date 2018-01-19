@@ -57,7 +57,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="25"/>
+                android:id="@+id/read"
+                android:text="0"/>
         </LinearLayout>
 
         <LinearLayout
@@ -72,7 +73,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="12"/>
+                android:id="@+id/share"
+                android:text="0"/>
         </LinearLayout>
 
         <LinearLayout
@@ -87,6 +89,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/recommend"
                 android:text="0"/>
         </LinearLayout>
         <LinearLayout
@@ -101,7 +104,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10"/>
+                android:id="@+id/interact"
+                android:text="0"/>
         </LinearLayout>
 
     </LinearLayout>

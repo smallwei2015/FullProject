@@ -2,6 +2,7 @@ package com.blue.rchina.manager;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -20,6 +21,10 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.io.File;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 
 import static com.blue.rchina.base.BaseApplication.daoConfig;
 
@@ -63,17 +68,18 @@ public class UserManager {
     }
 
     private static void setAlias() {
-        /*JPushInterface.setAlias(BaseApplication.getInstance(), cUser.getUserName(), new TagAliasCallback() {
+        JPushInterface.setAlias(BaseApplication.getInstance(), cUser.getUserName(), new TagAliasCallback() {
             @Override
             public void gotResult(int i, String s, Set<String> set) {
-                Log.w("3333","设置alias成功"+i+"-"+s);
-
+                Log.w("vode",s);
                 if (i==6002){
-                    *//*超时就去重新设置*//*
                     //setAlias();
+                    Log.w("vode","设置alias失败");
+                }else {
+                    Log.w("vode","设置alias成功");
                 }
             }
-        });*/
+        });
     }
 
     public static void login(String name, String pass, final UserManagerInterface manager) {
@@ -155,12 +161,12 @@ public class UserManager {
                 manager.success(cUser);
 
 
-                /*JPushInterface.setAlias(BaseApplication.getInstance(), "", new TagAliasCallback() {
+                JPushInterface.setAlias(BaseApplication.getInstance(), "", new TagAliasCallback() {
                     @Override
                     public void gotResult(int i, String s, Set<String> set) {
-                        Log.w("3333","取消别名设置");
+                        Log.w("vode","取消别名设置");
                     }
-                });*/
+                });
                 deleteUser();
                 sendLoginOut();
             }
@@ -170,12 +176,12 @@ public class UserManager {
     }
 
     public static void loginOutWithoutDelay() {
-        /*JPushInterface.setAlias(BaseApplication.getInstance(), "", new TagAliasCallback() {
+        JPushInterface.setAlias(BaseApplication.getInstance(), "", new TagAliasCallback() {
             @Override
             public void gotResult(int i, String s, Set<String> set) {
-                Log.w("3333","取消别名设置");
+                Log.w("vode","取消别名设置");
             }
-        });*/
+        });
         //deleteUser();
 
         DbManager db = x.getDb(daoConfig);

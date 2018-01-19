@@ -9,62 +9,10 @@ package com.blue.rchina.utils;
  **/
 public class UrlUtils {
 	/**基础ip 融中国域名*/
-	/*http://smartchina.blueapp.com.cn:8093/smartchina*/
-	public final static String BASE="http://smartchina.blueapp.com.cn:8093/";
-
-
 	public static final String BWEATHER="http://api.map.baidu.com/telematics/v3/weather?location=%s&output=json&ak=qQTjMuGGYt9VlOYnpE0EeqIENimTW0nS&mcode=2D:52:C3:2B:88:44:A4:1D:92:2B:43:C9:03:ED:A3:A4:B5:55:73:20;com.blue.rchina";
-
-
-	public static final String BASEURL="http://longyan.blueapp.com.cn:8080/dwtt/frontAPI/";
-	public static final String LIST_REPORT =BASEURL+"achieveReport" ;
-	public static final String REPORT_HANDLE=BASEURL+"handleReport";
-
-	public static final String BASEURL1="http://202.85.214.46:8090/blueapp/frontAPI/";
-
-	public static final String joinShopCart=BASEURL1+"joinShopCart";
-	public static final String getGoodsInfo=BASEURL1+"getGoodsInfo";
-	public static final String emptyShopCart=BASEURL1+"emptyShopCart";
-	public static final String updateShopCart=BASEURL1+"updateShopCart";
-	public static final String getOrderId=BASEURL1+"getOrderId";
-	public static final String getShopCartInfo=BASEURL1+"getShopCartInfo";
-
-	 public static final String CHANNEL_LIST=BASEURL+"achieveNewsList";
-	public static final String CHANEL_STRUCTURE=BASEURL+"achieveChannelData?channelId=%s&page=%s";
-	public static final String READ_ARTICLE=BASEURL+"readArticle?appuserId=%s&dataId=%s";
-	public static final String LIST_ARTICLE_COMMENT=BASEURL+"findArticleCommentList";
-	public static final String USER_ARTICLE_STATE=BASEURL+"getStateAboutAppuserToArticle?dataId=%s&appuserId=%s";
-
-	public static final String List_COMMENT_REPORT=BASEURL+"achieveCommentReport";
-	public static final String REPORT_COMMENT = BASEURL + "commentReport";
-
-	public static final String deleteOrder=BASEURL1+"deleteOrder";
-	public static final String confirmReceive=BASEURL1+"confirmReceive";
-	public static final String getOrderInfoByAppuser=BASEURL1+"getOrderInfoByAppuser";
-	public static final String FEEDBACK = "";
-	public static final String LIST_USER_COLLECT = "";
-	public static final String pay=BASEURL1+"pay";
-
-	/*上传头像*/
-	public static final String UPDATE_HEAD=BASEURL1+"updatePersonalHeadIcon";
-	/*修改用户名*/
-	public static final String UPDATE_NAME=BASEURL1+"updatePersonalNickName";
-	/*修改性别*/
-	public static final String UPDATE_GENDER=BASEURL1+"updatePersonalSex?arg1=%s&appuserId=%s";
-	/*修改手机号*/
-	public static final String UPDATE_PHONE=BASEURL1+"updatePersonalPhone";
-
-	public static final String VALIDATE_VERIFY=BASEURL1+"validateSMSCode";
-	public static final String  UPDATE_PASSWORD =BASEURL1+"resetPassword";
-	public static final String getCouponInfoByAppuser=BASEURL1+"getCouponInfoByAppuser";
 
 	public static final String 	APP_URL="";
 	public static final String achieveNoticeList="";
-
-
-
-
-	//public static final String N_base="http://192.168.1.12:8088/smartchina/frontAPI/";
 
 	public static final String N_base="http://smartcity.blueapp.com.cn:8088/smartchina/frontAPI/";
 
@@ -99,6 +47,7 @@ public class UrlUtils {
 	public static final String N_cancelCollectArticle=N_base+"cancelCollectArticle";
 	public static final String N_achieveSearchData=N_base+"achieveSearchData";
 	public static final String N_achieveSearchRecord=N_base+"achieveSearchRecord";
+	public static final String N_achievePersonalInfoCount=N_base+"achievePersonalInfoCount";
 
 
 	public static final String N_report=N_base+"report";
@@ -122,6 +71,7 @@ public class UrlUtils {
 	public static final String N_getRechargeOrder=N_base+"getRechargeOrder";
 	public static final String N_recharge=N_base+"recharge";
 	public static final String N_getRechargeInfo=N_base+"getRechargeInfo";
+
 
 	public static final String N_joinShopCart=N_base+"joinShopCart";
 	public static final String N_getShopCartInfo=N_base+"getShopCartInfo";
@@ -156,4 +106,13 @@ public class UrlUtils {
 	public static final String N_addCommon=N_base+"addCommon";
 	public static final String N_delCommon=N_base+"delCommon";
 	public static final String N_checkTicket=N_base+"checkTicket";
+
+
+
+
+	public static final String N_reportCommunity=N_base+"reportCommunity";
+	public static final String N_achieveCommunityReport=N_base+"achieveCommunityReport";
+	public static final String N_achieveCommunityChannelData=N_base+"achieveCommunityChannelData";
+	public static final String N_achieveCommunityIntroduce=N_base+"achieveCommunityIntroduce";
+	public static final String N_getGoodsInfoById=N_base+"getGoodsInfoById";
 }

@@ -23,6 +23,9 @@ public class Order implements Serializable {
     private String datetime;
 
     private String logisticsNumber;
+    private int goodsCount;
+    private String payTime;
+    private String sendTime;
 
 
     public int getType() {
@@ -127,5 +130,29 @@ public class Order implements Serializable {
 
     public void setLogisticsNumber(String logisticsNumber) {
         this.logisticsNumber = logisticsNumber;
+    }
+
+    public String getSendTime() {
+        return sendTime;
+    }
+
+    public void setSendTime(String sendTime) {
+        this.sendTime = sendTime;
+    }
+
+    public String getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(String payTime) {
+        this.payTime = payTime;
+    }
+
+    public int getGoodsCount() {
+        return goodsCount;
+    }
+
+    public void setGoodsCount(int goodsCount) {
+        this.goodsCount = goodsCount;
     }
 }

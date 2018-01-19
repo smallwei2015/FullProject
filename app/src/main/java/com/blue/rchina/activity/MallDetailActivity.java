@@ -70,20 +70,23 @@ public class MallDetailActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
-
-        data = ((Goods) getIntent().getSerializableExtra("data"));
-
         infos=new ArrayList<>();
 
-        DataWrap first = new DataWrap();
-        first.setType(1);
-        List<String> firstData = new ArrayList<>();
+        String dataId = getIntent().getStringExtra("dataId");
+        if (!TextUtils.isEmpty(dataId)){
+            loadData(dataId);
+        }else {
+            data = ((Goods) getIntent().getSerializableExtra("data"));
 
+            DataWrap first = new DataWrap();
+            first.setType(1);
+            List<String> firstData = new ArrayList<>();
+            firstData.add(data.getPicsrc());
 
-        firstData.add(data.getPicsrc());
+            first.setData(firstData);
+            infos.add(first);
+        }
 
-        first.setData(firstData);
-        infos.add(first);
 
         DataWrap second = new DataWrap();
         second.setType(2);
@@ -108,6 +111,45 @@ public class MallDetailActivity extends BaseActivity {
         sixth.setType(3);
         sixth.setData("注意事项");
         infos.add(sixth);
+    }
+
+    private void loadData(String dataId) {
+        RequestParams entity = new RequestParams(UrlUtils.N_getGoodsInfoById);
+        entity.addBodyParameter("dataId",dataId);
+        x.http().post(entity, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                NetData netData = JSON.parseObject(result, NetData.class);
+                if (netData.getResult()==200){
+                    Goods goods = JSON.parseObject(netData.getInfo(), Goods.class);
+
+                    DataWrap first = new DataWrap();
+                    first.setType(1);
+                    List<String> firstData = new ArrayList<>();
+                    firstData.add(goods.getPicsrc());
+
+                    first.setData(firstData);
+                    infos.add(0,first);
+
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                UIUtils.showToast("服务器错误");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 
     @Override

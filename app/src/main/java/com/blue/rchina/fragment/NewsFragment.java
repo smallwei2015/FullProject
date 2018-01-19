@@ -95,10 +95,17 @@ public class NewsFragment extends BaseFragment {
                 args.putSerializable("data",channelItem);
                 args.putInt("flag",flag);
                 int channelType = channelItem.getChannelType();
+
+                /*1外链2发布
+                    3含子栏目5上传发布*/
                 if (channelType ==2) {
                     fragment = new NewsKindFragment();
                 }else if (channelType==1){
                     fragment=new NewsWebFragment();
+                }else if (channelType==3){
+                    fragment = new NewsKindFragment();
+                }else if (channelType==5){
+                    fragment = new NewsNearbyFragment();
                 }
                 fragment.setArguments(args);
                 fragments.add(fragment);

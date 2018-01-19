@@ -5,12 +5,14 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -18,6 +20,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -77,6 +80,7 @@ import com.blue.rchina.manager.UserInterface;
 import com.blue.rchina.manager.UserManager;
 import com.blue.rchina.utils.FileUtils;
 import com.blue.rchina.utils.GPSUtils;
+import com.blue.rchina.utils.PackageUtils;
 import com.blue.rchina.utils.RightUtils;
 import com.blue.rchina.utils.SPUtils;
 import com.blue.rchina.utils.SystemBrightUtils;
@@ -905,7 +909,7 @@ public class Main2Activity extends BaseActivity {
             item_message.setMoreRes(R.drawable.circle_red_5_5);
         menuItemArrayList.add(item_message);
 
-        //menuItemArrayList.add(new MenuItem("我的管理", R.drawable.guanli));
+        menuItemArrayList.add(new MenuItem("我的管理", R.drawable.guanli));
 
         menuAdapter = new MenuAdapter(mActivity, menuItemArrayList);
         menuList.setAdapter(menuAdapter);
@@ -958,14 +962,47 @@ public class Main2Activity extends BaseActivity {
                     intent = new Intent(mActivity, InfoActivity.class);
                     startActivity(intent);
                 } else if (itemName.equals("我的管理")) {
-                    popUp();
-                } else {
+                    //popUp();
+                    openRchina4b();
+                } else if(itemName.equals("商品管理")){
+                    openRchina4b();
+                }else {
                     intent = new Intent(mActivity, UserCenterActivity.class);
                     startActivity(intent);
                 }
             }
         });
 
+    }
+
+    private void openRchina4b() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(mActivity);
+
+        builder.setTitle("提示：");
+        builder.setMessage("打开融城管家APP?");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                String uri = "http://openbox.mobilem.360.cn/index/d/sid/3954347";
+
+                if (PackageUtils.isAvilible(mActivity, "com.blue.rchina4b")) {
+                    Intent resolveIntent = getPackageManager().getLaunchIntentForPackage("com.blue.rchina4b");
+                    // 这里的packname就是从上面得到的目标apk的包名
+                    // 启动目标应用
+                    startActivity(resolveIntent);
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                    startActivity(intent);
+                }
+
+            }
+        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).create().show();
     }
 
     private void popUp() {
@@ -1005,21 +1042,16 @@ public class Main2Activity extends BaseActivity {
 
 
         /*根据用户的类型判断用户是否具有管理权限*/
-        /*View community = view.findViewById(R.id.pop_community);
+        View community = view.findViewById(R.id.pop_community);
 
-        *//*putInt("isCommunity",isCommunity)
-                                        .putInt("isScenery",isScenery)
-                                        .putInt("isGoods",isGoods)
-                                        .putInt("isChannel",isChannel)*//*
-        if (SPUtils.getSP().getInt("isCommunity",-1)==1) {
+        if (SPUtils.getSP().getInt("isCommunity",1)==1) {
             community.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!TextUtils.isEmpty(SPUtils.getUsername()))
-                        startActivity(new Intent(getActivity(), CommunityListActivity.class));
-                    else
-                        UIUtils.showToast("请先登录");
+                    if (UserManager.isLogin()) {
 
+                    }else
+                        UIUtils.showToast("请先登录");
                     window.dismiss();
                 }
             });
@@ -1028,14 +1060,13 @@ public class Main2Activity extends BaseActivity {
         }
 
         View goods = view.findViewById(R.id.pop_goods);
-        if (SPUtils.getSP().getInt("isGoods",-1)==1) {
+        if (SPUtils.getSP().getInt("isGoods",1)==1) {
 
             goods.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    openRchina4b();
                     window.dismiss();
-
-                    ToastUtils.showToast(getActivity(),"该功能正在开发中");
                 }
             });
         }else {
@@ -1043,25 +1074,11 @@ public class Main2Activity extends BaseActivity {
         }
 
         View landscape = view.findViewById(R.id.pop_landscape);
-        if (SPUtils.getSP().getInt("isScenery",-1)==1) {
+        if (SPUtils.getSP().getInt("isScenery",1)==1) {
             landscape.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    *//*Intent openCameraIntent = new Intent(getActivity(), CaptureActivity.class);
-                *//**//*返回码100*//**//*
-                    startActivityForResult(openCameraIntent, 100);
-                    window.dismiss();*//*
-
-                    JSONObject jsonTree = ((MainActivity) getActivity()).jsonTree;
-
-                    *//*旅游的channel*//*
-                    Channel tourism = JSONArray.parseArray(jsonTree.getJSONArray("subItem").toString(), Channel.class).get(4);
-                    Channel channel = tourism.getSubItem().get(0);
-
-
-                    Intent intent=new Intent(getActivity(), LandscapeManageActivty.class);
-                    intent.putExtra("url",channel.getJsonUrl()+"time_%s.json");
-                    startActivity(intent);
+                    openRchina4b();
                     window.dismiss();
                 }
             });
@@ -1070,18 +1087,17 @@ public class Main2Activity extends BaseActivity {
         }
 
         View channel = view.findViewById(R.id.pop_channel);
-        if (SPUtils.getSP().getInt("isChannel",-1)==1) {
+        if (SPUtils.getSP().getInt("isChannel",1)==1) {
 
             channel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     window.dismiss();
-                    ToastUtils.showToast(getActivity(),"该功能正在开发中");
                 }
             });
         }else {
             channel.setVisibility(View.GONE);
-        }*/
+        }
 
     }
 

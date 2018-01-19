@@ -648,10 +648,7 @@ public class InteractFragment extends BaseFragment {
                     /*设置已点赞，点赞数量加1*/
                     data.setPraiseState(1);
                     data.setPraiseCount(data.getPraiseCount()+1);
-                    items.remove(position);
-                    items.add(position,dataWrap);
                     adapter.notifyDataSetChanged();
-                    //fresh();
                 } else if (code == 501) {
                     UIUtils.showToast("不可重复举报");
                 } else if (code == 502) {

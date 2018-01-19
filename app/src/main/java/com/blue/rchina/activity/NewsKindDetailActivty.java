@@ -370,7 +370,7 @@ public class NewsKindDetailActivty extends BaseActivity {
 
     private void fresh() {
 
-        RequestParams entity = new RequestParams(UrlUtils.LIST_ARTICLE_COMMENT);
+        RequestParams entity = new RequestParams(UrlUtils.N_findArticleCommentList);
         entity.addBodyParameter("dataId", contentId + "");
         entity.addBodyParameter("appuserId", UserManager.getAppuserId() + "");
 
@@ -423,6 +423,8 @@ public class NewsKindDetailActivty extends BaseActivity {
                 NetData data = JSON.parseObject(result, NetData.class);
 
                 if (data.getResult() == 200) {
+
+                    datas.clear();
                     List<Comment> comments = JSON.parseArray(data.getInfo(), Comment.class);
                     datas.addAll(comments);
                     adapter.notifyDataSetChanged();
@@ -713,7 +715,8 @@ public class NewsKindDetailActivty extends BaseActivity {
         contentId = data.getContentId();
         if (UserManager.isLogin()) {
             //getUserState();
-            getComments(contentId + "", UserManager.getAppuserId() );
+            //getComments(contentId + "", UserManager.getAppuserId() );
+            fresh();
             readSuccess();
         }
 
@@ -726,7 +729,7 @@ public class NewsKindDetailActivty extends BaseActivity {
         if (!isReading) {
             isReading = true;
 
-        /*成功阅读了一篇*/
+            /*成功阅读了一篇*/
             RequestParams entity = new RequestParams(UrlUtils.N_readArticle);
             entity.addBodyParameter("appuserId", UserManager.getAppuserId() );
             entity.addBodyParameter("dataId", contentId + "");

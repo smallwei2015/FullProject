@@ -38,6 +38,8 @@ public class Goods implements Serializable{
     private String shareLink;
     private int layoutType=1;
 
+
+
     public int getId() {
         return id;
     }

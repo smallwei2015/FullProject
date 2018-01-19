@@ -17,6 +17,8 @@ import com.blue.rchina.utils.UrlUtils;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
+import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.ArrayList;
@@ -27,6 +29,17 @@ public class NearbyActivity extends BaseActivity {
     List<Channel> datas;
     private NewsFragment fragment;
     private FragmentTransaction fragmentTransaction;
+
+
+    @ViewInject(R.id.nearby_intro)
+    View intro;
+    @ViewInject(R.id.nearby_info)
+    View info;
+    @ViewInject(R.id.nearby_send)
+    View send;
+    @ViewInject(R.id.nearby_other)
+    View other;
+
 
 
     @Override
@@ -41,7 +54,7 @@ public class NearbyActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
-        datas=new ArrayList<>();
+        datas = new ArrayList<>();
     }
 
     private void getNearbyStruct() {
@@ -61,21 +74,21 @@ public class NearbyActivity extends BaseActivity {
                     datas.clear();
                     datas.addAll(channels);
 
-                    if (channels != null && channels.size() > 0) {
+                    /*if (channels != null && channels.size() > 0) {
                         fragment = new NewsFragment();
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("channel", channels.get(0));
-                        /*社区新闻显示*/
+                        *//*社区新闻显示*//*
                         bundle.putInt("flag",2);
                         fragment.setArguments(bundle);
 
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.fra, fragment);
                         fragmentTransaction.commit();
-                    }
+                    }*/
                 } else {
                     Intent intent = new Intent(mActivity, NearbySelectListActivity.class);
-                    startActivityForResult(intent,200);
+                    startActivityForResult(intent, 200);
                 }
             }
 
@@ -92,27 +105,28 @@ public class NearbyActivity extends BaseActivity {
             @Override
             public void onFinished() {
                 isHideLoading(true);
-                if (datas.size()>0){
+                if (datas.size() > 0) {
                     isNodata(false);
-                }else {
+                } else {
                     isNodata(true);
                 }
             }
         });
     }
+
     @Override
     public void initView() {
         super.initView();
-        initTop(R.mipmap.left_white,"我的社区",R.mipmap.exchange);
-        getNearbyStruct();
+        initTop(R.mipmap.left_white, "我的社区", R.mipmap.exchange);
+        //getNearbyStruct();
     }
 
     @Override
     public void onRightIconClick(View view) {
         super.onRightIconClick(view);
 
-        Intent intent=new Intent(mActivity,NearbySelectListActivity.class);
-        startActivityForResult(intent,200);
+        Intent intent = new Intent(mActivity, NearbySelectListActivity.class);
+        startActivityForResult(intent, 200);
     }
 
 
@@ -120,8 +134,41 @@ public class NearbyActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode==200) {
+        if (requestCode == 200) {
             getNearbyStruct();
+        }
+    }
+
+    @Event({R.id.nearby_send, R.id.nearby_intro, R.id.nearby_other, R.id.nearby_info})
+    private void click(View view) {
+
+        Intent intent;
+        switch (view.getId()) {
+            case R.id.nearby_intro:
+                intent = new Intent(mActivity, WebViewActivity.class);
+                intent.putExtra("flag", 2);
+                intent.putExtra("title", "社区介绍");
+
+                startActivity(intent);
+                break;
+            case R.id.nearby_other:
+                intent = new Intent(mActivity, NearbyDetailActivity.class);
+                /*1社区介绍
+                2社区通知
+                3社区新闻*/
+                intent.putExtra("flag",3);
+                startActivity(intent);
+                break;
+            case R.id.nearby_info:
+                intent = new Intent(mActivity, NearbyDetailActivity.class);
+                intent.putExtra("flag",2);
+                startActivity(intent);
+                break;
+            case R.id.nearby_send:
+                intent = new Intent(mActivity, SendNearbyActivity.class);
+
+                startActivity(intent);
+                break;
         }
     }
 }

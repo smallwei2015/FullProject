@@ -1,20 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_nearby"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/nearby_bg"
     tools:context="com.blue.rchina.activity.NearbyActivity">
 
-    <include layout="@layout/top"/>
+    <include layout="@layout/top" />
 
-    <fragment
+
+    <!--<fragment
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/fra"
-        android:name="com.blue.rchina.fragment.NewsKindFragment"/>
+        android:name="com.blue.rchina.fragment.NewsKindFragment"
+        />-->
 
-    <!--<include layout="@layout/no_data"/>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/nearby_intro"
+                style="@style/nearby_linear_style">
+
+                <ImageView
+                    style="@style/nearby_img_style"
+                    android:src="@mipmap/nearby_intr" />
+
+                <TextView
+                    style="@style/nearby_text_style"
+                    android:text="社区介绍" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/nearby_info"
+                style="@style/nearby_linear_style">
+
+                <ImageView
+                    style="@style/nearby_img_style"
+                    android:src="@mipmap/nearby_info" />
+
+                <TextView
+
+                    style="@style/nearby_text_style"
+                    android:text="社区通知" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp20"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/nearby_other"
+                style="@style/nearby_linear_style">
+
+                <ImageView
+                    style="@style/nearby_img_style"
+                    android:src="@mipmap/nearby_news" />
+
+                <TextView
+
+                    style="@style/nearby_text_style"
+                    android:text="社区新闻" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/nearby_send"
+                style="@style/nearby_linear_style">
+
+                <ImageView
+                    style="@style/nearby_img_style"
+                    android:src="@mipmap/nearby_fix" />
+
+                <TextView
+                    style="@style/nearby_text_style"
+                    android:text="社区报修" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
 
 </RelativeLayout>

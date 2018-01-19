@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.blue.rchina.R;
 import com.blue.rchina.base.BaseActivity;
 import com.blue.rchina.bean.Goods;
+import com.blue.rchina.bean.NearbyRecord;
 import com.blue.rchina.bean.Report;
 import com.blue.rchina.bean.TraveDetail;
 import com.blue.rchina.utils.xUtilsImageUtils;
@@ -105,6 +106,8 @@ public class NewsKindImageActivity extends BaseActivity {
                 return (temp);
             }else if(data instanceof TraveDetail){
                 return ((TraveDetail) data).getManyPic();
+            }else if (data instanceof NearbyRecord){
+                return ((NearbyRecord) data).getManyPic();
             }
         }
 

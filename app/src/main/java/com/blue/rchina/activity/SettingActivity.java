@@ -46,8 +46,8 @@ public class SettingActivity extends BaseActivity {
 
     @ViewInject(R.id.setting_change)
     View change;
-    @ViewInject(R.id.setting_contact)
-    View contact;
+    @ViewInject(R.id.setting_join)
+    View join;
 
     @ViewInject(R.id.setting_size)
     View size;
@@ -106,18 +106,12 @@ public class SettingActivity extends BaseActivity {
             }
         });
 
-        contact.setOnClickListener(new View.OnClickListener() {
+        join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*intent=new Intent(mActivity, ContactUsActivity.class);
-                                startActivity(intent);*/
+                intent=new Intent(mActivity, JoinUsActivity.class);
+                                startActivity(intent);
 
-                if(UserManager.isLogin()) {
-                    intent = new Intent(mActivity, UserCenterActivity.class);
-                    startActivity(intent);
-                }else {
-                    UserManager.toLogin();
-                }
             }
         });
 
@@ -309,35 +303,9 @@ public class SettingActivity extends BaseActivity {
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
                 //分享成功后调用，分享成功的接口
 
-                RequestParams entity = new RequestParams(UrlUtils.N_inviteFriend);
-                if (UserManager.isLogin()) {
-                    entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
-                }
-                x.http().post(entity, new Callback.CommonCallback<String>() {
-                    @Override
-                    public void onSuccess(String result) {
-                        NetData netData = JSON.parseObject(result, NetData.class);
-                        if (netData.getResult()==200){
-                            UIUtils.showToast("分享成功");
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(CancelledException cex) {
-
-                    }
-
-                    @Override
-                    public void onFinished() {
-
-                    }
-                });
+                invite();
             }
+
 
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
@@ -462,6 +430,36 @@ public class SettingActivity extends BaseActivity {
 
     }
 
+    private void invite() {
+        RequestParams entity = new RequestParams(UrlUtils.N_inviteFriend);
+        if (UserManager.isLogin()) {
+            entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
+        }
+        x.http().post(entity, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                NetData netData = JSON.parseObject(result, NetData.class);
+                if (netData.getResult()==200){
+                    UIUtils.showToast("邀请成功");
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
     private void showShare() {
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
@@ -489,7 +487,7 @@ public class SettingActivity extends BaseActivity {
         oks.setCallback(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-
+                invite();
             }
 
             @Override

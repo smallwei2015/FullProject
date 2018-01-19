@@ -1,5 +1,7 @@
 package com.blue.rchina.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -87,8 +89,7 @@ public class MyInteractActivity extends BaseActivity {
 
 
                         if (UserManager.isLogin()) {
-                            v.findViewById(R.id.interact_agree_icon).setSelected(true);
-                            //agree(position);
+                            handleReport(position, 1);
                         } else {
                             UserManager.toLogin();
                         }
@@ -102,7 +103,7 @@ public class MyInteractActivity extends BaseActivity {
                         break;
                     case R.id.interact_report_parent:
                         if (UserManager.isLogin()) {
-                            //report(position);
+                            report(position);
                         } else {
                             UserManager.toLogin();
                         }
@@ -384,6 +385,76 @@ public class MyInteractActivity extends BaseActivity {
         });
     }
 
+    private void report(final int i) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+
+        builder.setTitle("举报：");
+        builder.setMessage("是否确认进行举报？");
+        builder.setPositiveButton("确认举报", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                handleReport(i, 0);
+
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
+    }
+    private void handleReport(final int position, final int flag) {
+
+        final DataWrap dataWrap = datas.get(position);
+        final Report data = (Report) dataWrap.getData();
+
+        RequestParams entity = new RequestParams(UrlUtils.N_handleReport);
+        entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
+        entity.addBodyParameter("flag", flag + "");
+        entity.addBodyParameter("dataId", data.getReportId() + "");
+        x.http().post(entity, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                JSONObject object = JSON.parseObject(result);
+                Integer code = object.getInteger("result");
+                if (code == 201) {
+                    UIUtils.showToast("举报成功");
+                } else if (code == 202) {
+                    UIUtils.showToast("点赞成功");
+                    /*设置已点赞，点赞数量加1*/
+                    data.setPraiseState(1);
+                    data.setPraiseCount(data.getPraiseCount()+1);
+                    adapter.notifyDataSetChanged();
+                    //fresh();
+                } else if (code == 501) {
+                    UIUtils.showToast("不可重复举报");
+                } else if (code == 502) {
+                    UIUtils.showToast("不可重复点赞");
+                } else {
+                    UIUtils.showToast("服务器异常");
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                UIUtils.showToast("网络请求失败");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

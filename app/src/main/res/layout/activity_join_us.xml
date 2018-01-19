@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_join_us"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.blue.rchina.activity.JoinUsActivity">
+
+
+    <include layout="@layout/top"/>
+
+
+    <LinearLayout
+        android:id="@+id/join_city"
+        style="@style/info_setting_linear_style"
+        >
+
+        <ImageView
+            style="@style/normal_icon_style_small"
+            android:src="@mipmap/chengshi"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="城市APP"
+            android:textSize="@dimen/middle_text"
+            />
+
+        <ImageView
+            style="@style/info_setting_img"
+            android:src="@mipmap/arr_right_gray" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/join_alliance"
+        style="@style/info_setting_linear_style"
+        >
+
+        <ImageView
+            style="@style/normal_icon_style_small"
+            android:src="@mipmap/chengshi"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="联盟APP"
+            android:textSize="@dimen/middle_text"
+            />
+
+        <ImageView
+            style="@style/info_setting_img"
+            android:src="@mipmap/arr_right_gray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/join_top"
+        style="@style/info_setting_linear_style"
+        >
+
+        <ImageView
+            style="@style/normal_icon_style_small"
+            android:src="@mipmap/chengshi"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="置顶版位"
+            android:textSize="@dimen/middle_text"
+            />
+
+        <ImageView
+            style="@style/info_setting_img"
+            android:src="@mipmap/arr_right_gray" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_web_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.blue.rchina.activity.WebViewActivity">
+
+    <include layout="@layout/top"/>
+
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/web_ptr">
+
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/web"/>
+
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+    <include layout="@layout/no_data"/>
+
+</RelativeLayout>

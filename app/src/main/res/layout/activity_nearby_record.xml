@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_nearby_record"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context="com.blue.rchina.activity.NearbyRecordActivity">
+
+
+    <include layout="@layout/top" />
+
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/nearby_ptr"
+        android:layout_below="@+id/toolbar">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rec"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+
+
+
+    <include layout="@layout/no_data" />
+
+</RelativeLayout>

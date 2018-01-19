@@ -53,6 +53,7 @@ public class InteractCommentActivity extends BaseActivity {
     private Report report;
     private int curPage=1;
     private AlertDialog dialog;
+    public DataWrap data;
 
 
     @Override
@@ -78,15 +79,7 @@ public class InteractCommentActivity extends BaseActivity {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame)
             {
-                frame.postDelayed(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        ptrFrameLayout.refreshComplete();
-                        fresh();
-                    }
-                }, 1500);
+                fresh();
             }
         });
 
@@ -268,9 +261,9 @@ public class InteractCommentActivity extends BaseActivity {
     public void initData() {
         super.initData();
 
-        DataWrap data = (DataWrap) getIntent().getSerializableExtra("data");
+        data = (DataWrap) getIntent().getSerializableExtra("data");
         data.setType(2);
-        items.add(0,data);
+        items.add(0, data);
 
         report = (Report) data.getData();
 
@@ -286,11 +279,9 @@ public class InteractCommentActivity extends BaseActivity {
                 JSONObject object = JSON.parseObject(result);
                 Integer code = object.getInteger("result");
                 if (code==200){
-
                     /*第一条不移除，从第二条开始*/
-                    for (int i = 1; i < items.size(); i++) {
-                        items.remove(i);
-                    }
+                    items.clear();
+                    items.add(data);
                     List<Comment> comments = JSON.parseArray(object.getString("info"), Comment.class);
 
                     for (int i = 0; i < comments.size(); i++) {
@@ -315,7 +306,7 @@ public class InteractCommentActivity extends BaseActivity {
 
             @Override
             public void onFinished() {
-
+                ptrFrameLayout.refreshComplete();
             }
         });
     }

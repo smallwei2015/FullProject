@@ -75,7 +75,7 @@ public class ProDialog extends DialogFragment {
             String message = arguments.getString("message");
 
 
-            ((TextView) inflate.findViewById(R.id.title)).setText(title);
+            //((TextView) inflate.findViewById(R.id.title)).setText(title);
             ((TextView) inflate.findViewById(R.id.message)).setText(message);
         }
 

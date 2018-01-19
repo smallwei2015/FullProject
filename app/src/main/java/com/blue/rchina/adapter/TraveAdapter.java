@@ -67,6 +67,7 @@ public class TraveAdapter extends RecyclerView.Adapter<TraveAdapter.Holder>{
                 intent.putExtra("data",trave);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(),v,"trave").toBundle());
+                    //context.startActivity(intent);
                 }else {
                     context.startActivity(intent);
                 }

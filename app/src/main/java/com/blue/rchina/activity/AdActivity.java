@@ -3,9 +3,11 @@ package com.blue.rchina.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -43,6 +45,11 @@ public class AdActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad);
+
+        /*处理js打开方式*/
+        parseJsData();
+
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -65,6 +72,27 @@ public class AdActivity extends AppCompatActivity {
         }else {
             init();
             startAd();
+        }
+
+
+    }
+
+    private void parseJsData() {
+
+        String TAG="vode";
+        Intent intent =getIntent();
+        if (intent != null) {
+            Log.e(TAG, "scheme:" +intent.getScheme());
+            Uri uri =intent.getData();
+            if (uri != null) {
+                Log.e(TAG, "scheme: "+uri.getScheme());
+                Log.e(TAG, "host: "+uri.getHost());
+                Log.e(TAG, "port: "+uri.getPort());
+                Log.e(TAG, "path: "+uri.getPath());
+                Log.e(TAG, "queryString: "+uri.getQuery().length());
+                Log.e(TAG, "queryParameter: "+uri.getQueryParameter("contentId"));
+            }
+
         }
 
 
