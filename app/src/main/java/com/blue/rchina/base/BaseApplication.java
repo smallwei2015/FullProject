@@ -95,6 +95,8 @@ public class BaseApplication extends MobApplication {
         //对xUtils进行初始化
         x.Ext.init(this);
 
+
+
         File dbDir = new File(getFilesDir()+File.separator+"dateBase");
         if (!dbDir.exists()) {
             //将数据库文件存储在database文件内

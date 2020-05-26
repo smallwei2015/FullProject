@@ -16,4 +16,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="trave_transition">trave</string>
+    <string name="title_activity_web_goods_detail">WebGoodsDetailActivity</string>
+    <string name="buy">购买</string>
+    <string name="download">下载</string>
 </resources>

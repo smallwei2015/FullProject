@@ -47,6 +47,8 @@ import com.blue.rchina.activity.CitySelectListActivity;
 import com.blue.rchina.activity.CollectActivity;
 import com.blue.rchina.activity.FragmentHolderActivity;
 import com.blue.rchina.activity.InfoActivity;
+import com.blue.rchina.activity.MallSearchActivity;
+import com.blue.rchina.activity.MyDocActivity;
 import com.blue.rchina.activity.MyInteractActivity;
 import com.blue.rchina.activity.MyWalletActivity;
 import com.blue.rchina.activity.NearbyActivity;
@@ -80,6 +82,7 @@ import com.blue.rchina.manager.UserInterface;
 import com.blue.rchina.manager.UserManager;
 import com.blue.rchina.utils.FileUtils;
 import com.blue.rchina.utils.GPSUtils;
+import com.blue.rchina.utils.MetadataUtils;
 import com.blue.rchina.utils.PackageUtils;
 import com.blue.rchina.utils.RightUtils;
 import com.blue.rchina.utils.SPUtils;
@@ -110,6 +113,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.alibaba.fastjson.JSON.parseObject;
+import static com.blue.rchina.R.id.top_mall;
 import static com.blue.rchina.manager.UserManager.action_cityChange;
 
 public class Main2Activity extends BaseActivity {
@@ -175,7 +179,7 @@ public class Main2Activity extends BaseActivity {
     @ViewInject(R.id.mall)
     View mall;*/
 
-    @ViewInject(R.id.top_mall)
+    @ViewInject(top_mall)
     RelativeLayout mall;
     @ViewInject(R.id.top_mall_right)
     ImageView mall_icon;
@@ -185,6 +189,8 @@ public class Main2Activity extends BaseActivity {
     TextView title;
     @ViewInject(R.id.top_right)
     ImageView right;
+    @ViewInject(R.id.top_rightsecond)
+    ImageView rightSecond;
     @ViewInject(R.id.top_search)
     RelativeLayout search;
     @ViewInject(R.id.top_search_edit)
@@ -289,7 +295,7 @@ public class Main2Activity extends BaseActivity {
     private void getPermissionYes(List<String> grantedPermissions) {
         // TODO 申请权限成功。
         if (grantedPermissions.contains(Manifest.permission.READ_PHONE_STATE)) {
-            openApp();
+            //openApp();
         }
 
         if (grantedPermissions.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
@@ -488,13 +494,36 @@ public class Main2Activity extends BaseActivity {
             @Override
             public void locationSuccess(AMapLocation location) {
 
+
+                /*GeocodeSearch geocoderSearch = new GeocodeSearch(Main2Activity.this);
+                geocoderSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
+                    @Override
+                    public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+                        Log.w("2222",JSON.toJSON(regeocodeResult).toString());
+                    }
+
+                    @Override
+                    public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+                        Log.w("2222",JSON.toJSON(geocodeResult).toString());
+                    }
+                });
+                // name表示地址，第二个参数表示查询城市，中文或者中文全拼，citycode、adcode
+                GeocodeQuery query = new GeocodeQuery(location.getCountry(),location.getAdCode());
+                geocoderSearch.getFromLocationNameAsyn(query);
+
+
+                // 第一个参数表示一个Latlng(经纬度)，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
+                RegeocodeQuery query1 = new RegeocodeQuery(new LatLonPoint(location.getLatitude(),location.getLongitude()), 25, GeocodeSearch.AMAP);
+                geocoderSearch.getFromLocationAsyn(query1);*/
+
+
                 /*是否第一次打开app*/
                 boolean firstOpen = SPUtils.getSP().getBoolean("firstOpen", true);
                 /*自动切换是否打开*/
                 boolean agreeAutoChange = SPUtils.getSP().getBoolean("agreeAutoChange", false);
                 if (firstOpen) {
                     /*第一次打开就切换到当前定位城市*/
-                    changeToLocation(location.getCity());
+                    changeToLocation(location.getCity(),location.getDistrict());
                     return;
                 }else {
 
@@ -507,19 +536,22 @@ public class Main2Activity extends BaseActivity {
                         return;
                     }
 
+
                     /*当前选择城市不为定位城市，提示*/
-                    if (location != null && curCity != null && !location.getCity().equals(curCity.getProvinceCapital())) {
+                    if (location != null && curCity != null && !location.getDistrict().equals(curCity.getAreaName())) {
 
                         if (agreeAutoChange) {
                             /*自动切换打开也切换到当前定位城市*/
-                            changeToLocation(location.getCity());
+                            changeToLocation(location.getCity(),location.getDistrict());
+
+
                         }else {
                             String lastLocationCity = SPUtils.getSP().getString("lastLocationCity", "");
 
-                            if (location.getCity().equals(lastLocationCity)) {
+                            if (location.getDistrict().equals(lastLocationCity)) {
                                 Log.w("44444", "用户取消了当前城市定位提示");
                             } else {
-                                getAreaByLocation(location.getCity());
+                                getAreaByLocation(location.getCity(),location.getDistrict());
                             }
                         }
                     }
@@ -536,7 +568,7 @@ public class Main2Activity extends BaseActivity {
         });
     }
 
-    private void openApp() {
+    private void openApp(AreaInfo area) {
         RequestParams entity = new RequestParams(UrlUtils.N_openAPP);
 
         if (UserManager.isLogin()) {
@@ -555,7 +587,16 @@ public class Main2Activity extends BaseActivity {
             e.printStackTrace();
         }
 
-        entity.addBodyParameter("arg4", "0");
+        boolean firstOpen = SPUtils.getSP().getBoolean("firstOpen", true);
+        if (firstOpen) {
+            entity.addBodyParameter("arg4", "1");
+        }else {
+            entity.addBodyParameter("arg4","0");
+        }
+
+        if (area != null) {
+            entity.addBodyParameter("areaId",area.getAreaId());
+        }
 
         x.http().post(entity, new Callback.CommonCallback<String>() {
             @Override
@@ -580,9 +621,11 @@ public class Main2Activity extends BaseActivity {
         });
     }
 
+    @Deprecated
     private void changeToLocation(String city) {
         RequestParams entity = new RequestParams(UrlUtils.N_achieveAreaByLocation);
         entity.addBodyParameter("arg1", city);
+        //entity.addBodyParameter("arg2",county);
         x.http().post(entity, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -625,9 +668,55 @@ public class Main2Activity extends BaseActivity {
         });
     }
 
-    private void getAreaByLocation(final String cityName) {
+    private void changeToLocation(String city, final String county) {
+        RequestParams entity = new RequestParams(UrlUtils.N_achieveAreaByLocation);
+        entity.addBodyParameter("arg1", city);
+        entity.addBodyParameter("arg2",county);
+        x.http().post(entity, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+
+                NetData data = JSON.parseObject(result, NetData.class);
+                if (data.getResult() == 200) {
+
+                    List<AreaInfo> areaInfos = JSON.parseArray(data.getInfo(), AreaInfo.class);
+
+                    if (areaInfos != null && areaInfos.size() > 0) {
+                        AreaInfo areaInfo = areaInfos.get(0);
+                        if (areaInfo != null && areaInfo.getIsOperate() == 1) {
+                            changeCity(areaInfo);
+                        } else {
+                            changeToLocation("北京市");
+                        }
+                    } else {
+                        changeToLocation("北京市");
+                    }
+                } else {
+                    changeToLocation("北京市");
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                changeToLocation("北京市");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    private void getAreaByLocation(String cityName, final String county) {
         RequestParams entity = new RequestParams(UrlUtils.N_achieveAreaByLocation);
         entity.addBodyParameter("arg1", cityName);
+        entity.addBodyParameter("arg2",county);
         x.http().post(entity, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -642,9 +731,11 @@ public class Main2Activity extends BaseActivity {
                         final AreaInfo areaInfo = areaInfos.get(0);
                         if (areaInfo != null) {
 
-                            if (cityName.equals(areaInfo.getAreaName())) {
+                            String areaName = areaInfo.getAreaName();
+                            if (county.equals(areaName)) {
                                 if (areaInfo.getIsOperate() == 1) {
-                                    ProDialog proDialog = ProDialog.newInstance("提示", "当前定位到您位于" + cityName + "，是否要切换到当前定位城市？", false, cityName);
+                                    ProDialog proDialog = ProDialog.newInstance("提示", "当前定位到您位于" + areaName + "，" +
+                                            "是否要切换到当前定位城市？", false, areaName);
 
                                     proDialog.setmListener(new ProDialog.ConfirmDialogListener() {
                                         @Override
@@ -666,7 +757,30 @@ public class Main2Activity extends BaseActivity {
                                     Log.w("4444", "当前定位城市开通，但是没有operate");
                                 }
                             } else {
-                                Log.w("4444", "当前定位城市未开通,返回北京");
+                                /*定位城市未开通但是有上级城市开通了*/
+                                if (areaInfo.getIsOperate() == 1) {
+                                    ProDialog proDialog = ProDialog.newInstance("提示", "当前定位到您位于"+county+",但是当前城市未开通，为您匹配了" + areaName + "，" +
+                                            "是否要切换到"+areaName+"？", false, areaName);
+
+                                    proDialog.setmListener(new ProDialog.ConfirmDialogListener() {
+                                        @Override
+                                        public void onConform(ProDialog proDialog) {
+                                            if (areaInfo.getIsOperate() == 1) {
+                                                changeCity(areaInfo);
+                                            } else {
+                                                UIUtils.showToast("当前城市未开通");
+                                            }
+                                            proDialog.dismiss();
+                                        }
+                                    });
+
+                                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                                    transaction.add(proDialog, "pop");
+                                    transaction.commitAllowingStateLoss();
+
+                                } else {
+                                    Log.w("4444", "当前定位城市开通，但是没有operate");
+                                }
                             }
                         }
                     }
@@ -732,28 +846,29 @@ public class Main2Activity extends BaseActivity {
         changeSt(area, dialog);
         changeMenu(area);
 
-
     }
 
     private void changeSt(final AreaInfo area, final Dialog dialog) {
         RequestParams entity = new RequestParams(UrlUtils.N_achieveApplicationStructure);
-        entity.addQueryStringParameter("areaId", area.getAreaId());
+        entity.addBodyParameter("areaId", area.getAreaId());
+        //entity.addBodyParameter("dataId",UIDUtils.getUID(this));
 
         x.http().post(entity, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
 
+                openApp(area);
                 NetData data = parseObject(result, NetData.class);
                 if (data.getResult() == 200) {
                     /*城市切换成功就存储起来*/
                     if (area != null) {
                         String str = JSON.toJSONString(area);
-                        Log.w("4444",str);
                         SPUtils.getSP().edit().putString("area", str).putBoolean("firstOpen", false).apply();
                     }
                     isServerDie(false);
 
                     channels = JSON.parseArray(data.getInfo(), Channel.class);
+
 
                     if (channels != null && channels.size() > 0) {
                         clearStruture();
@@ -805,6 +920,7 @@ public class Main2Activity extends BaseActivity {
     }
 
     private void clearStruture() {
+
 
         bottomContainer.removeAllViews();
         trascation = getSupportFragmentManager().beginTransaction();
@@ -909,7 +1025,15 @@ public class Main2Activity extends BaseActivity {
             item_message.setMoreRes(R.drawable.circle_red_5_5);
         menuItemArrayList.add(item_message);
 
-        menuItemArrayList.add(new MenuItem("我的管理", R.drawable.guanli));
+        //todo test文档管理
+        menuItemArrayList.add(new MenuItem("我的文档", R.drawable.file));
+
+        if (MetadataUtils.isFromHuawei(this)) {
+            /*华为渠道将不显示我的管理*/
+            menuItemArrayList.add(new MenuItem("我的管理", R.drawable.guanli));
+        }else {
+            menuItemArrayList.add(new MenuItem("我的管理", R.drawable.guanli));
+        }
 
         menuAdapter = new MenuAdapter(mActivity, menuItemArrayList);
         menuList.setAdapter(menuAdapter);
@@ -939,11 +1063,13 @@ public class Main2Activity extends BaseActivity {
                 } else if (itemName.equals("我的社区")) {
 
                     /*判断用户是否绑定社区*/
-                    if (TextUtils.isEmpty(UserManager.getUser().getCommunityName())) {
+                    String communityName = UserManager.getUser().getCommunityName();
+                    if (TextUtils.isEmpty(communityName)) {
                         intent = new Intent(mActivity, NearbySelectListActivity.class);
                         startActivity(intent);
                     } else {
                         intent = new Intent(mActivity, NearbyActivity.class);
+                        intent.putExtra("name",communityName);
                         startActivity(intent);
                     }
 
@@ -966,6 +1092,9 @@ public class Main2Activity extends BaseActivity {
                     openRchina4b();
                 } else if(itemName.equals("商品管理")){
                     openRchina4b();
+                }else if(itemName.equals("我的文档")){
+                    intent = new Intent(mActivity, MyDocActivity.class);
+                    startActivity(intent);
                 }else {
                     intent = new Intent(mActivity, UserCenterActivity.class);
                     startActivity(intent);
@@ -984,7 +1113,7 @@ public class Main2Activity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                String uri = "http://openbox.mobilem.360.cn/index/d/sid/3954347";
+                String uri = "http://zhushou.360.cn/detail/index/soft_id/3954347";
 
                 if (PackageUtils.isAvilible(mActivity, "com.blue.rchina4b")) {
                     Intent resolveIntent = getPackageManager().getLaunchIntentForPackage("com.blue.rchina4b");
@@ -1282,6 +1411,7 @@ public class Main2Activity extends BaseActivity {
             title.setVisibility(View.VISIBLE);
             title.setText(!(curCity == null) ? curCity.getApplicationName() : "融城中国");
 
+            rightSecond.setVisibility(View.GONE);
             right.setVisibility(View.VISIBLE);
             right.setImageResource(R.mipmap.search_white);
             right.setOnClickListener(new View.OnClickListener() {
@@ -1298,12 +1428,13 @@ public class Main2Activity extends BaseActivity {
                 }
             });
             mall.setVisibility(View.GONE);
+
         } else if (titStr.equals("动态")) {
             search.setVisibility(View.GONE);
             title.setVisibility(View.VISIBLE);
             title.setText(!(curCity == null) ? curCity.getApplicationName() : "融城中国");
 
-
+            rightSecond.setVisibility(View.GONE);
             right.setImageResource(R.mipmap.interact_add);
             right.setVisibility(View.VISIBLE);
             right.setOnClickListener(new View.OnClickListener() {
@@ -1325,14 +1456,14 @@ public class Main2Activity extends BaseActivity {
             search.setVisibility(View.GONE);
             title.setVisibility(View.VISIBLE);
             title.setText(!(curCity == null) ? curCity.getApplicationName() : "融城中国");
-
+            rightSecond.setVisibility(View.GONE);
             right.setVisibility(View.GONE);
             mall.setVisibility(View.GONE);
         } else if (titStr.equals("政务")) {
             search.setVisibility(View.GONE);
             title.setVisibility(View.VISIBLE);
             title.setText(!(curCity == null) ? curCity.getApplicationName() : "融城中国");
-
+            rightSecond.setVisibility(View.GONE);
             right.setVisibility(View.GONE);
             mall.setVisibility(View.GONE);
         } else if (titStr.equals("商城")) {
@@ -1354,19 +1485,28 @@ public class Main2Activity extends BaseActivity {
                     }
                 }
             });
+            rightSecond.setVisibility(View.VISIBLE);
+            rightSecond.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(mActivity,MallSearchActivity.class);
+                    intent.putExtra("flag",1);
+                    startActivity(intent);
+                }
+            });
             right.setVisibility(View.GONE);
         } else if (titStr.equals("旅游")) {
             search.setVisibility(View.GONE);
             title.setVisibility(View.VISIBLE);
             title.setText(!(curCity == null) ? curCity.getApplicationName() : "融城中国");
-
+            rightSecond.setVisibility(View.GONE);
             right.setVisibility(View.GONE);
             mall.setVisibility(View.GONE);
         } else {
             search.setVisibility(View.GONE);
             title.setVisibility(View.VISIBLE);
             title.setText(!(curCity == null) ? curCity.getApplicationName() : "融城中国");
-
+            rightSecond.setVisibility(View.GONE);
             right.setVisibility(View.GONE);
             mall.setVisibility(View.GONE);
         }
@@ -1379,6 +1519,9 @@ public class Main2Activity extends BaseActivity {
                 count = 99;
             }
             mall_count.setText(count + "");
+
+            /*记录商品数量*/
+            //SPUtils.getSP().edit().putInt("mallCount",count).apply();
         } else {
             mall_count.setVisibility(View.GONE);
         }
@@ -1480,7 +1623,7 @@ public class Main2Activity extends BaseActivity {
                 break;
             case 300:
                 if (hasRight) {
-                    openApp();
+                    //openApp();
                 } else {
                     //用户授权拒绝之后
                     RightUtils.getAppDetailSettingIntent(mActivity);
@@ -1520,7 +1663,7 @@ public class Main2Activity extends BaseActivity {
         switch (requestCode){
             case 2001:
                 if (AndPermission.hasPermission(mActivity, Manifest.permission.READ_PHONE_STATE)) {
-                    openApp();
+                    //openApp();
                 }else {
                     AndPermission.defaultSettingDialog(mActivity, 2001).show();
                 }

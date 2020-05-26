@@ -7,9 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -18,6 +16,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.blue.rchina.R;
+import com.blue.rchina.adapter.SearchAdapter;
 import com.blue.rchina.base.BaseActivity;
 import com.blue.rchina.bean.NetData;
 import com.blue.rchina.bean.SearchItem;
@@ -51,7 +50,7 @@ public class SearchActivity extends BaseActivity {
 
 
     private List<SearchItem> datas;
-    public RecyclerView.Adapter adapter;
+    public SearchAdapter adapter;
     private View.OnClickListener listener;
     private String searchStr;
 
@@ -89,27 +88,18 @@ public class SearchActivity extends BaseActivity {
 
         datas = new ArrayList<>();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initHistory();
-
-        listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SearchItem vTag = (SearchItem) v.getTag();
-
-                switch (v.getId()) {
-                    case R.id.search_item_tv:
-                        seachNews(vTag.getTitle());
-                        break;
-                }
-
-
-            }
-        };
     }
 
     private void initHistory() {
         RequestParams entity = new RequestParams(UrlUtils.N_achieveSearchRecord);
         entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId()+"");
+        entity.addBodyParameter("flag","1");
         x.http().post(entity, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -134,7 +124,17 @@ public class SearchActivity extends BaseActivity {
                     datas.add(e2);
                     List<SearchItem> listItems = JSON.parseArray(list, SearchItem.class);
                     datas.addAll(listItems);
-
+                    if (listItems.size()>0){
+                        SearchItem e3 = new SearchItem();
+                        e3.setType(2);
+                        e3.setTitle("清空搜索记录");
+                        datas.add(e3);
+                    }else {
+                        SearchItem e3 = new SearchItem();
+                        e3.setType(3);
+                        e3.setTitle("暂无搜索记录");
+                        datas.add(e3);
+                    }
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -263,76 +263,26 @@ public class SearchActivity extends BaseActivity {
 
                 int type = searchItem.getType();
 
-                if (type == 0) {
-                    return 2;
+                if (type == 1) {
+                    return 1;
                 }
-                return 1;
+                return 2;
             }
         });
 
         rec.setLayoutManager(manager);
-        adapter = new RecyclerView.Adapter<Holder>() {
-
+        adapter = new SearchAdapter(mActivity,datas);
+        adapter.setListener(new SearchAdapter.SearchListener() {
             @Override
-            public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-                View view = null;
-                Holder holder = null;
-                LayoutInflater layoutInflater = LayoutInflater.from(mActivity);
-
-                switch (viewType) {
-
-                    case 0:
-                        view = layoutInflater.inflate(R.layout.search_item_title, parent, false);
-                        holder = new Holder(view, viewType);
-                        break;
-                    case 1:
-                        view = layoutInflater.inflate(R.layout.search_item_text, parent, false);
-                        holder = new Holder(view, viewType);
-                        break;
-                }
-
-                x.view().inject(holder, view);
-
-                return holder;
+            public void itemClick(SearchItem item) {
+                seachNews(item.getTitle());
             }
 
             @Override
-            public void onBindViewHolder(Holder holder, int position) {
-
-                SearchItem searchItem = datas.get(position);
-
-                int type = searchItem.getType();
-
-                switch (type) {
-                    case 0:
-                        holder.title_tv.setTag(searchItem);
-                        holder.title_tv.setText(searchItem.getTitle());
-                        holder.title_tv.setOnClickListener(listener);
-                        break;
-                    case 1:
-                        holder.item_tv.setTag(searchItem);
-                        holder.item_tv.setText(searchItem.getTitle());
-                        holder.item_tv.setOnClickListener(listener);
-                        break;
-
-                }
+            public void bottomClick() {
+                clearHistory(1);
             }
-
-
-            @Override
-            public int getItemCount() {
-                if (datas != null) {
-                    return datas.size();
-                }
-                return 0;
-            }
-
-            @Override
-            public int getItemViewType(int position) {
-                return datas.get(position).getType();
-            }
-        };
+        });
         rec.setAdapter(adapter);
 
 
@@ -351,27 +301,36 @@ public class SearchActivity extends BaseActivity {
         }
 
     }
-
-
-    class Holder extends RecyclerView.ViewHolder {
-
-        @ViewInject(R.id.search_item_tv)
-        TextView item_tv;
-        @ViewInject(R.id.search_title_tv)
-        TextView title_tv;
-
-        public Holder(View view, int viewType) {
-            super(view);
-
-            switch (viewType) {
-                case 0:
-                    title_tv = (TextView) view.findViewById(R.id.search_title_tv);
-                    break;
-                case 1:
-                    item_tv = (TextView) view.findViewById(R.id.search_item_tv);
-                    break;
+    private void clearHistory(int type) {
+        RequestParams entity = new RequestParams(UrlUtils.N_emptySearchRecord);
+        entity.addBodyParameter("appuserId",UserManager.getAppuserId());
+        entity.addBodyParameter("flag",type+"");
+        x.http().post(entity, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String r) {
+                NetData netData = JSON.parseObject(r, NetData.class);
+                if (netData.getResult()==200){
+                    initHistory();
+                }else {
+                    UIUtils.showToast(netData.getMessage());
+                }
             }
-        }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                UIUtils.showToast("网络错误");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 
 

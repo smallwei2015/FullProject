@@ -1,182 +1,194 @@
-package com.blue.rchina.activity;
+    package com.blue.rchina.activity;
 
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+    import android.content.Intent;
+    import android.os.Bundle;
+    import android.support.v7.widget.LinearLayoutManager;
+    import android.support.v7.widget.RecyclerView;
+    import android.view.View;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.blue.rchina.R;
-import com.blue.rchina.adapter.NewsAdapter;
-import com.blue.rchina.base.BaseActivity;
-import com.blue.rchina.bean.Article;
-import com.blue.rchina.bean.DataWrap;
-import com.blue.rchina.bean.NetData;
-import com.blue.rchina.manager.UserManager;
-import com.blue.rchina.utils.UIUtils;
-import com.blue.rchina.utils.UrlUtils;
+    import com.alibaba.fastjson.JSON;
+    import com.alibaba.fastjson.JSONObject;
+    import com.blue.rchina.R;
+    import com.blue.rchina.adapter.NewsAdapter;
+    import com.blue.rchina.base.BaseActivity;
+    import com.blue.rchina.bean.Article;
+    import com.blue.rchina.bean.DataWrap;
+    import com.blue.rchina.bean.NetData;
+    import com.blue.rchina.manager.UserManager;
+    import com.blue.rchina.utils.UIUtils;
+    import com.blue.rchina.utils.UrlUtils;
 
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.view.annotation.ContentView;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
+    import org.xutils.common.Callback;
+    import org.xutils.http.RequestParams;
+    import org.xutils.view.annotation.ContentView;
+    import org.xutils.view.annotation.ViewInject;
+    import org.xutils.x;
 
-import java.util.ArrayList;
-import java.util.List;
+    import java.util.ArrayList;
+    import java.util.List;
 
-import in.srain.cube.views.ptr.PtrClassicDefaultHeader;
-import in.srain.cube.views.ptr.PtrClassicFrameLayout;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
-
-
-@ContentView(R.layout.activity_nearby_detail)
-public class NearbyDetailActivity extends BaseActivity {
+    import in.srain.cube.views.ptr.PtrClassicDefaultHeader;
+    import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+    import in.srain.cube.views.ptr.PtrDefaultHandler;
+    import in.srain.cube.views.ptr.PtrFrameLayout;
 
 
-    @ViewInject(R.id.ptr)
-    PtrClassicFrameLayout ptr;
-    @ViewInject(R.id.rec)
-    RecyclerView rec;
-    public NewsAdapter adapter;
-    private List<DataWrap> items;
+    @ContentView(R.layout.activity_nearby_detail)
+    public class NearbyDetailActivity extends BaseActivity {
 
-    private int cPager=2;
-    public int flag;
-    private boolean isLoading=false;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        x.view().inject(this);
+        @ViewInject(R.id.ptr)
+        PtrClassicFrameLayout ptr;
+        @ViewInject(R.id.rec)
+        RecyclerView rec;
+        public NewsAdapter adapter;
+        private List<DataWrap> items;
 
-        initData();
-        initView();
-    }
+        private int cPager=2;
+        public int flag;
+        private boolean isLoading=false;
 
-    @Override
-    public void initData() {
-        super.initData();
-        items=new ArrayList<>();
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            x.view().inject(this);
 
-        flag = getIntent().getIntExtra("flag",3);
-    }
-
-    @Override
-    public void initView() {
-        super.initView();
-
-        if (flag==3) {
-            initTop(R.mipmap.left_white, "社区新闻", -1);
-        }else {
-            initTop(R.mipmap.left_white, "社区通知", -1);
+            initData();
+            initView();
         }
 
-        PtrClassicDefaultHeader ptrUIHandler = new PtrClassicDefaultHeader(mActivity);
-        ptr.addPtrUIHandler(ptrUIHandler);
-        ptr.setHeaderView(ptrUIHandler);
-        ptrUIHandler.setLastUpdateTimeKey(getClass().getName());
-        ptr.setPtrHandler(new PtrDefaultHandler() {
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-                loadData(1);
+        @Override
+        public void initData() {
+            super.initData();
+            items=new ArrayList<>();
+
+            flag = getIntent().getIntExtra("flag",3);
+        }
+
+        @Override
+        public void initView() {
+            super.initView();
+
+            if (flag==3) {
+                initTop(R.mipmap.left_white, "社区服务", -1);
+            }else {
+                initTop(R.mipmap.left_white, "社区通知", -1);
             }
-        });
 
-
-        rec.setLayoutManager(new LinearLayoutManager(mActivity));
-        adapter = new NewsAdapter(items);
-        rec.setAdapter(adapter);
-
-
-        rec.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                if (!rec.canScrollVertically(-1)&&items.size()>0){
-                    if (!isLoading){
-                        loadData(cPager);
-                    }else {
-                        UIUtils.showToast("加载中...");
-                    }
+            PtrClassicDefaultHeader ptrUIHandler = new PtrClassicDefaultHeader(mActivity);
+            ptr.addPtrUIHandler(ptrUIHandler);
+            ptr.setHeaderView(ptrUIHandler);
+            ptrUIHandler.setLastUpdateTimeKey(getClass().getName());
+            ptr.setPtrHandler(new PtrDefaultHandler() {
+                @Override
+                public void onRefreshBegin(PtrFrameLayout frame) {
+                    loadData(1);
                 }
-            }
-        });
-        isHideLoading(false);
-        loadData(1);
-    }
+            });
 
-    private void loadData(final int page) {
 
-        isLoading=true;
+            rec.setLayoutManager(new LinearLayoutManager(mActivity));
+            adapter = new NewsAdapter(items);
+            adapter.setListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = (int) v.getTag();
+                    DataWrap dataWrap = items.get(position);
+                    Intent intent = new Intent(mActivity, NewsKindDetailActivty.class);
+                    intent.putExtra("data", ((Article) dataWrap.getData()));
+                    startActivity(intent);
+                }
+            });
+            rec.setAdapter(adapter);
 
-        RequestParams entity = new RequestParams(UrlUtils.N_achieveCommunityChannelData);
-        entity.addBodyParameter("appuserId", UserManager.getAppuserId());
-        entity.addBodyParameter("page", page+"");
-        entity.addBodyParameter("flag", flag+"");
-        x.http().post(entity, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
 
-                NetData netData = JSON.parseObject(result, NetData.class);
-                if (netData != null) {
-                    if (netData.getResult()==200){
-                        JSONObject object = JSON.parseObject(netData.getInfo());
-                        List<Article> articles = JSON.parseArray(object.getString("list"), Article.class);
-                        List<Article> hots = JSON.parseArray(object.getString("top"), Article.class);
+            rec.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
 
-                        if (page==1){
-                            items.clear();
-                            cPager=2;
+                    if (!rec.canScrollVertically(-1)&&items.size()>0){
+                        if (!isLoading){
+                            loadData(cPager);
                         }else {
-                            if (articles.size()>0){
-                                cPager++;
-                            }
+                            UIUtils.showToast("加载中...");
                         }
-                        if (hots != null && hots.size() > 0) {
-                            DataWrap e1 = new DataWrap();
-                            e1.setType(0);
-                            e1.setData(hots);
-                            items.add(e1);
-                        }
-                        for (int i = 0; i < articles.size(); i++) {
-                            DataWrap e = new DataWrap();
-                            Article article = articles.get(i);
-                            e.setData(article);
-                            e.setType(article.getDisplayType());
-                            items.add(e);
-                        }
-
-
-                        adapter.notifyDataSetChanged();
                     }
                 }
-            }
+            });
+            isHideLoading(false);
+            loadData(1);
+        }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                UIUtils.showToast("服务器错误");
-            }
+        private void loadData(final int page) {
 
-            @Override
-            public void onCancelled(CancelledException cex) {
+            isLoading=true;
 
-            }
+            RequestParams entity = new RequestParams(UrlUtils.N_achieveCommunityChannelData);
+            entity.addBodyParameter("appuserId", UserManager.getAppuserId());
+            entity.addBodyParameter("page", page+"");
+            entity.addBodyParameter("flag", flag+"");
+            x.http().post(entity, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
 
-            @Override
-            public void onFinished() {
+                    NetData netData = JSON.parseObject(result, NetData.class);
+                    if (netData != null) {
+                        if (netData.getResult()==200){
+                            JSONObject object = JSON.parseObject(netData.getInfo());
+                            List<Article> articles = JSON.parseArray(object.getString("list"), Article.class);
+                            List<Article> hots = JSON.parseArray(object.getString("top"), Article.class);
 
-                isLoading=false;
-                ptr.refreshComplete();
-                isHideLoading(true);
-                if (items.size()==0){
-                    isNodata(true);
-                }else {
-                    isNodata(false);
+                            if (page==1){
+                                items.clear();
+                                cPager=2;
+                            }else {
+                                if (articles.size()>0){
+                                    cPager++;
+                                }
+                            }
+                            if (hots != null && hots.size() > 0) {
+                                DataWrap e1 = new DataWrap();
+                                e1.setType(0);
+                                e1.setData(hots);
+                                items.add(e1);
+                            }
+                            for (int i = 0; i < articles.size(); i++) {
+                                DataWrap e = new DataWrap();
+                                Article article = articles.get(i);
+                                e.setData(article);
+                                e.setType(article.getDisplayType());
+                                items.add(e);
+                            }
+
+
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
                 }
-            }
-        });
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    UIUtils.showToast("服务器错误");
+                }
+
+                @Override
+                public void onCancelled(CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
+                    isLoading=false;
+                    ptr.refreshComplete();
+                    isHideLoading(true);
+                    if (items.size()==0){
+                        isNodata(true);
+                    }else {
+                        isNodata(false);
+                    }
+                }
+            });
+        }
     }
-}

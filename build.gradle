@@ -3,9 +3,10 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:3.0.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -15,9 +16,16 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        google()
     }
 }
+// 当前beta版本号
+ext.build_number = "vode"
 
+// 显示的时间格式，形如20171110
+def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getDefault())
+}
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

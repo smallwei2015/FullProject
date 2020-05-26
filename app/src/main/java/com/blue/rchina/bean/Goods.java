@@ -27,7 +27,7 @@ public class Goods implements Serializable{
     @Column(name = "picsrc")
     private String picsrc;
     @Column(name = "stockCount")
-    private double stockCount;
+    private int stockCount;
     @Column(name = "upDatetime")
     private String upDatetime;
 
@@ -38,7 +38,18 @@ public class Goods implements Serializable{
     private String shareLink;
     private int layoutType=1;
 
+    private int isFree;//1是 2否
+    private double freight;
+    private String pageLink;
 
+
+    public String getPageLink() {
+        return pageLink;
+    }
+
+    public void setPageLink(String pageLink) {
+        this.pageLink = pageLink;
+    }
 
     public int getId() {
         return id;
@@ -96,11 +107,11 @@ public class Goods implements Serializable{
         this.picsrc = picsrc;
     }
 
-    public double getStockCount() {
+    public int getStockCount() {
         return stockCount;
     }
 
-    public void setStockCount(double stockCount) {
+    public void setStockCount(int stockCount) {
         this.stockCount = stockCount;
     }
 
@@ -142,5 +153,21 @@ public class Goods implements Serializable{
 
     public void setShareLink(String shareLink) {
         this.shareLink = shareLink;
+    }
+
+    public int getIsFree() {
+        return isFree;
+    }
+
+    public void setIsFree(int isFree) {
+        this.isFree = isFree;
+    }
+
+    public double getFreight() {
+        return freight;
+    }
+
+    public void setFreight(double freight) {
+        this.freight = freight;
     }
 }

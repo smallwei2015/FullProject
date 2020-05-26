@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_open_city_result"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.blue.rchina.activity.OpenCityResultActivity"
+    android:background="@color/bg_color">
+
+    <include layout="@layout/top"
+        />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/dp50"
+        android:id="@+id/top"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginBottom="@dimen/dp10"
+        android:background="@drawable/login_input_bg"
+        android:id="@+id/name"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="@dimen/dp5"
+            android:src="@mipmap/username"/>
+
+        <EditText
+            style="@style/login_edit_style"
+            android:id="@+id/name_edit"
+            android:inputType="text"
+            android:hint="企业全称"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_margin="@dimen/dp10"
+        android:background="@drawable/login_input_bg"
+        android:id="@+id/application"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="@dimen/dp5"
+            android:src="@mipmap/username"/>
+
+        <EditText
+            style="@style/login_edit_style"
+            android:id="@+id/application_edit"
+            android:inputType="text"
+            android:hint="应用名称"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/application"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginBottom="@dimen/dp100"
+        android:background="@drawable/login_input_bg"
+        android:id="@+id/phone"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="@dimen/dp5"
+            android:src="@mipmap/phone"/>
+
+        <EditText
+            style="@style/login_edit_style"
+            android:id="@+id/phone_edit"
+            android:inputType="text"
+            android:hint="手机号"/>
+    </LinearLayout>
+
+    <TextView
+        style="@style/login_btn"
+        android:text="确定"
+        android:clickable="true"
+        android:onClick="btn_login"
+        android:id="@+id/sure"
+        android:layout_below="@+id/phone"/>
+
+    <include layout="@layout/no_data"/>
+
+</RelativeLayout>

@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RCChina.iml" filepath="$PROJECT_DIR$/RCChina.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/living/living.iml" filepath="$PROJECT_DIR$/living/living.iml" />
+      <module fileurl="file://$PROJECT_DIR$/playerkit/playerkit.iml" filepath="$PROJECT_DIR$/playerkit/playerkit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rchianWithLive.iml" filepath="$PROJECT_DIR$/rchianWithLive.iml" />
     </modules>
   </component>
 </project>

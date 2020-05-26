@@ -242,8 +242,14 @@ public class NearbySelectListActivity extends BaseActivity implements View.OnCli
                 holder.des.setText(nearby.getLocation());
                 xUtilsImageUtils.display(holder.icon,nearby.getPicsrc());
 
-                double v = Integer.parseInt(nearby.getDistance()) / 1000.0;
-                holder.distance.setText(String.format("%.1f",v)+"km");
+                ///holder.distance.setVisibility(View.GONE);
+                try {
+
+                    double v = Integer.parseInt(nearby.getDistance()) / 1000.0;
+                    holder.distance.setText(String.format("%.1f", v) + "km");
+                }catch (Exception e){
+                    holder.distance.setText("");
+                }
             }
 
 
@@ -294,6 +300,10 @@ public class NearbySelectListActivity extends BaseActivity implements View.OnCli
                     UserManager.saveUser(UserManager.getUser());
                     /*存储当前选择的城市*/
                     SPUtils.getSP().edit().putString("nearby",JSON.toJSONString(nearby)).apply();
+
+                    Intent intent = getIntent().putExtra("data", nearby);
+                    setResult(100,intent);
+
                     finish();
                 }else {
                     UIUtils.showToast(netData.getMessage());

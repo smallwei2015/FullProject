@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -102,7 +101,7 @@ public class LoginActivity extends BaseActivity {
                 public void faild(User user) {
                     if (mDialog != null && mDialog.isShowing())
                         mDialog.dismiss();
-                    UIUtils.showToast("登录失败");
+                    //UIUtils.showToast("登录失败");
                 }
 
             });
@@ -143,7 +142,7 @@ public class LoginActivity extends BaseActivity {
                 if (mDialog != null && mDialog.isShowing())
                     mDialog.dismiss();
 
-                UIUtils.showToast("登录失败");
+                //UIUtils.showToast("登录失败");
             }
         });
 
@@ -188,9 +187,6 @@ public class LoginActivity extends BaseActivity {
 
         }
 
-        Log.w("33333","third login");
-
-
         plat.setPlatformActionListener(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
@@ -199,7 +195,6 @@ public class LoginActivity extends BaseActivity {
                 String userId = platform.getDb().getUserId();
                 String userIcon = platform.getDb().getUserIcon();
 
-                Log.w("3333",nickname+userIcon+userId+"weixin");
 
                 login(nickname,userId,userIcon);
 
@@ -229,6 +224,8 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void btn_forget(View view) {
+
+
         Intent intent=new Intent(mActivity,CheckPhoneActivity.class);
         intent.putExtra("flag",1);
         startActivity(intent);

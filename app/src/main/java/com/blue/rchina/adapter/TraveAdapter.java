@@ -64,7 +64,7 @@ public class TraveAdapter extends RecyclerView.Adapter<TraveAdapter.Holder>{
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(), TraveDetailActivity.class);
-                intent.putExtra("data",trave);
+                intent.putExtra("data",trave.getScenicId());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(),v,"trave").toBundle());
                     //context.startActivity(intent);

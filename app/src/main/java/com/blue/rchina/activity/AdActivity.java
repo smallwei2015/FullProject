@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.blue.rchina.R;
+import com.blue.rchina.utils.MetadataUtils;
 import com.kyview.InitConfiguration;
 import com.kyview.interfaces.AdViewSpreadListener;
 import com.kyview.manager.AdViewBannerManager;
@@ -46,8 +47,8 @@ public class AdActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad);
 
-        /*处理js打开方式*/
-        parseJsData();
+
+        //parseJsData();
 
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -70,27 +71,41 @@ public class AdActivity extends AppCompatActivity {
                         }
                     }).callback(this).start();
         }else {
-            init();
-            startAd();
+
+            if(MetadataUtils.isFromHuawei(this)){
+                jump();
+            }else {
+                init();
+                startAd();
+            }
         }
 
 
     }
 
     private void parseJsData() {
-
+        /*处理js打开方式*/
         String TAG="vode";
         Intent intent =getIntent();
         if (intent != null) {
             Log.e(TAG, "scheme:" +intent.getScheme());
             Uri uri =intent.getData();
+
             if (uri != null) {
-                Log.e(TAG, "scheme: "+uri.getScheme());
-                Log.e(TAG, "host: "+uri.getHost());
-                Log.e(TAG, "port: "+uri.getPort());
-                Log.e(TAG, "path: "+uri.getPath());
-                Log.e(TAG, "queryString: "+uri.getQuery().length());
-                Log.e(TAG, "queryParameter: "+uri.getQueryParameter("contentId"));
+                Log.w("vode",uri.toString());
+
+                if (uri.getQueryParameter("type") != null) {
+                    if (uri.getQueryParameter("type").equals("1")) {
+                        Intent intent1=new Intent(AdActivity.this,MallDetailActivity.class);
+                        intent1.putExtra("dataId",uri.getQueryParameter("contentId"));
+                        startActivity(intent1);
+                    }else if (uri.getQueryParameter("type").equals("2")){
+                        Intent intent1=new Intent(AdActivity.this,TraveDetailActivity.class);
+                        intent1.putExtra("data",uri.getQueryParameter("contentId"));
+                        startActivity(intent1);
+                    }
+                }
+
             }
 
         }
@@ -175,6 +190,9 @@ public class AdActivity extends AppCompatActivity {
             isJumping = true;
             Intent intent = new Intent(AdActivity.this, FlashActivity.class);
             startActivity(intent);
+
+
+            parseJsData();
             finish();
         }
     }

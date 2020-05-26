@@ -89,6 +89,8 @@ public class NewsMainFragment extends BaseFragment {
             channel = ((Channel) arguments.getSerializable("channel"));
             channels=channel.getSons();
 
+
+
             /*这里是默认排序*/
             for (int i = 0; i < channels.size(); i++) {
                 Channel channelItem = channels.get(i);
@@ -103,6 +105,12 @@ public class NewsMainFragment extends BaseFragment {
                     fragment = new NewsKindFragment();
                 }else if (channelType==1){
                     fragment=new NewsWebFragment();
+                }else if (channelType==6){
+                    fragment=new LiveListFragment();
+                }else if(channelType==7){
+                    fragment=new DocumentFragment();
+                }else {
+                    fragment = new NewsKindFragment();
                 }
                 fragment.setArguments(args);
                 fragments.add(fragment);
@@ -235,7 +243,12 @@ public class NewsMainFragment extends BaseFragment {
         }
 
         if (builder.toString().length()>12||channels.size()>4){
-            tab.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+            if (builder.toString().length()<=10){
+                tab.setTabMode(TabLayout.MODE_FIXED);
+            }else {
+                tab.setTabMode(TabLayout.MODE_SCROLLABLE);
+            }
         }else {
             if (channels.size()==1){
                 tab.setTabMode(TabLayout.MODE_SCROLLABLE);
@@ -269,6 +282,12 @@ public class NewsMainFragment extends BaseFragment {
             adapter.notifyDataSetChanged();
             channels.addAll(selects);
 
+            /*测试文档功能*/
+            Channel e = new Channel();
+            e.setChannelType(7);
+            e.setTitle("文档");
+            channels.add(e);
+
             List<BaseFragment> temps=new ArrayList<>();
             for (int i = 0; i < channels.size(); i++) {
                 Channel channelItem = channels.get(i);
@@ -283,7 +302,19 @@ public class NewsMainFragment extends BaseFragment {
                 }else if (channelType==1){
                     fragment=new NewsWebFragment();
                 }*/
-                fragment = new NewsKindFragment();
+
+                if (channelType ==2) {
+                    fragment = new NewsKindFragment();
+                }else if (channelType==1){
+                    fragment=new NewsWebFragment();
+                }else if (channelType==6){
+                    fragment=new LiveListFragment();
+                }else if(channelType==7){
+                    fragment=new DocumentFragment();
+                }else {
+                    fragment = new NewsKindFragment();
+                }
+                //fragment = new NewsKindFragment();
                 fragment.setArguments(args);
                 temps.add(fragment);
 

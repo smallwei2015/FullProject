@@ -20,38 +20,54 @@
         />-->
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="@dimen/dp300"
+        android:layout_height="@dimen/dp300"
         android:layout_centerInParent="true"
-        android:orientation="vertical">
+        android:background="@drawable/circle_primary"
+        >
 
-        <LinearLayout
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="1dp"
+            android:background="@color/white"
+            android:layout_centerInParent="true"/>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:layout_centerInParent="true"/>
 
+
+        <android.support.v7.widget.GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:rowCount="2"
+            app:columnCount="2">
             <LinearLayout
                 android:id="@+id/nearby_intro"
-                style="@style/nearby_linear_style">
+                style="@style/nearby_linear_style"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingTop="@dimen/dp10">
 
                 <ImageView
                     style="@style/nearby_img_style"
-                    android:src="@mipmap/nearby_intr" />
+                    android:src="@mipmap/nearby_into1" />
 
                 <TextView
                     style="@style/nearby_text_style"
                     android:text="社区介绍" />
             </LinearLayout>
 
-
             <LinearLayout
                 android:id="@+id/nearby_info"
-                style="@style/nearby_linear_style">
+                style="@style/nearby_linear_style"
+                android:paddingTop="@dimen/dp10"
+                android:paddingRight="@dimen/dp10">
 
                 <ImageView
                     style="@style/nearby_img_style"
-                    android:src="@mipmap/nearby_info" />
+                    android:src="@mipmap/nearby_info1" />
 
                 <TextView
 
@@ -59,46 +75,61 @@
                     android:text="社区通知" />
             </LinearLayout>
 
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp20"
-            android:orientation="horizontal">
-
             <LinearLayout
                 android:id="@+id/nearby_other"
-                style="@style/nearby_linear_style">
+                style="@style/nearby_linear_style"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingLeft="@dimen/dp10">
 
                 <ImageView
                     style="@style/nearby_img_style"
-                    android:src="@mipmap/nearby_news" />
+                    android:src="@mipmap/nearby_news1" />
 
                 <TextView
 
                     style="@style/nearby_text_style"
-                    android:text="社区新闻" />
+                    android:text="社区服务" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/nearby_send"
-                style="@style/nearby_linear_style">
+                style="@style/nearby_linear_style"
+                android:paddingRight="@dimen/dp10"
+                android:paddingBottom="@dimen/dp10">
 
                 <ImageView
                     style="@style/nearby_img_style"
-                    android:src="@mipmap/nearby_fix" />
+                    android:src="@mipmap/nearby_fix1" />
 
                 <TextView
                     style="@style/nearby_text_style"
                     android:text="社区报修" />
             </LinearLayout>
+        </android.support.v7.widget.GridLayout>
 
+
+
+        <LinearLayout
+            android:id="@+id/nearby_mall"
+            android:layout_width="@dimen/dp80"
+            android:layout_height="@dimen/dp80"
+            android:background="@drawable/circle_white"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:elevation="@dimen/dp5">
+
+            <ImageView
+                android:layout_width="@dimen/dp40"
+                android:layout_height="@dimen/dp40"
+                android:src="@mipmap/nearby_mall" />
+            <TextView
+                style="@style/nearby_text_style"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp13"
+                android:text="社区超市" />
         </LinearLayout>
-
-
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </RelativeLayout>

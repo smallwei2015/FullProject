@@ -3,6 +3,7 @@ package com.blue.rchina.adapter;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -79,13 +80,20 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.Holder> {
                             case 4:
                                 //sureGet(order);
                                 break;
+                            case 5:
+
+                                break;
                         }
                         break;
                     case R.id.order_delete:
                         if (order.getOrderFlag()==0) {
-                            delete(order);
+                            cancelOrder(order);
                         }else if (order.getOrderFlag()==2){
                             sureGet(order);
+                        }else if (order.getOrderFlag()==4){
+                            delete(order);
+                        }else if (order.getOrderFlag()==5){
+                            delete(order);
                         }
                         break;
                 }
@@ -94,6 +102,67 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.Holder> {
 
         };
 
+    }
+
+    private void cancelOrder(final Order order) {
+        AlertDialog dialog=new AlertDialog.Builder(mActivity)
+                .setTitle("提示:")
+                .setMessage("确定要取消该订单吗？")
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                        final ProgressDialog progressDialog = new ProgressDialog(mActivity);
+                        progressDialog.setMessage("加载中...");
+                        progressDialog.show();
+
+                        RequestParams entity = new RequestParams(UrlUtils.N_cancelOrder);
+
+                        entity.addBodyParameter("dataId",order.getOrderNo());
+                        entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId()+"");
+
+                        x.http().post(entity, new Callback.CommonCallback<String>() {
+                            @Override
+                            public void onSuccess(String result) {
+                                NetData netData = JSON.parseObject(result, NetData.class);
+                                if (netData.getResult()==200){
+                                    datas.remove(order);
+                                    notifyDataSetChanged();
+                                    UIUtils.showToast("订单取消成功");
+
+                                    //refreshData();
+
+                                }else{
+                                    UIUtils.showToast("删除取消失败");
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable ex, boolean isOnCallback) {
+                                UIUtils.showToast("网络请求失败");
+                            }
+
+                            @Override
+                            public void onCancelled(CancelledException cex) {
+
+                            }
+
+                            @Override
+                            public void onFinished() {
+                                progressDialog.dismiss();
+                            }
+                        });
+                    }
+                })
+                .create();
+        dialog.show();
     }
 
     private void delete(final Order order) {
@@ -290,29 +359,41 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.Holder> {
 
 
                 if (state == 0) {
+                    holder.state.setTextColor(Color.RED);
                     holder.state.setText("待付款");
                     holder.handler.setText("去付款");
 
-                    holder.delete.setText("删除订单");
+                    holder.delete.setText("取消订单");
                     holder.delete.setVisibility(View.VISIBLE);
+                    holder.handler.setVisibility(View.VISIBLE);
                 } else if (state == 1) {
+                    holder.state.setTextColor(Color.RED);
                     holder.state.setText("待发货");
                     //holder.handler.setText("提醒发货");
                     holder.handler.setVisibility(View.GONE);
-
                     holder.delete.setVisibility(View.GONE);
                 } else if (state == 2) {
+                    holder.state.setTextColor(Color.LTGRAY);
                     holder.state.setText("待收货");
                     holder.handler.setText("查看物流");
-
                     holder.delete.setText("确认收货");
                     holder.delete.setVisibility(View.VISIBLE);
+                    holder.handler.setVisibility(View.VISIBLE);
                 } else if (state == 4) {
+                    holder.state.setTextColor(Color.LTGRAY);
                     holder.state.setText("已完成");
+                    holder.delete.setText("删除订单");
                     holder.handler.setText("再次购买");
 
                     holder.handler.setVisibility(View.GONE);
-                    holder.delete.setVisibility(View.GONE);
+                    holder.delete.setVisibility(View.VISIBLE);
+                }else if (state==5){
+                    holder.state.setTextColor(Color.LTGRAY);
+                    holder.state.setText("已取消");
+                    holder.handler.setText("删除订单");
+
+                    holder.handler.setVisibility(View.GONE);
+                    holder.delete.setVisibility(View.VISIBLE);
                 }
                 holder.handler.setTag(position);
                 holder.handler.setOnClickListener(listener);
@@ -323,7 +404,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.Holder> {
 
 
                 holder.number.setText(order.getOrderNo());
-                holder.totalPrice.setText("￥" + order.getMoneySum());
+
+                if (order.getFreight()>0) {
+                    holder.totalPrice.setText(String.format("¥%.2f(运费¥%.1f)", order.getMoneySum(), order.getFreight()));
+                }else {
+                    holder.totalPrice.setText(String.format("¥%.2f(免运费)", order.getMoneySum()));
+                }
 
                 holder.listView.setAdapter(new MyListAdapter(order.getGoodsInfo()));
 

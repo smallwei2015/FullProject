@@ -51,7 +51,6 @@ public class PayActivity extends BaseActivity {
 
     @ViewInject(R.id.pay_rec)
     RecyclerView rec;
-
     @ViewInject(R.id.pay_money)
     TextView tv_money;
     @ViewInject(R.id.pay_number)
@@ -165,7 +164,7 @@ public class PayActivity extends BaseActivity {
         payFlag = getIntent().getIntExtra("flag",-1);
 
         tv_number.setText("订单号："+idNumber);
-        tv_money.setText("￥"+String.format("%.2f",money));
+        tv_money.setText(String.format("%.2f",money));
 
         datas = new ArrayList<>();
         datas.add(new ItemData("微信", R.mipmap.weixin));
@@ -311,6 +310,8 @@ public class PayActivity extends BaseActivity {
     private void payWeix(String signStr) {
 
 
+
+        Log.w("4444",signStr);
         JSONObject object = JSON.parseObject(signStr);
 
         if (object != null) {

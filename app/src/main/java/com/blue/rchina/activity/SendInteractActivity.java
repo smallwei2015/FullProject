@@ -24,6 +24,7 @@ import com.amap.api.location.AMapLocationListener;
 import com.blue.rchina.R;
 import com.blue.rchina.base.BaseActivity;
 import com.blue.rchina.manager.UserManager;
+import com.blue.rchina.utils.CameralUtils;
 import com.blue.rchina.utils.FileUtils;
 import com.blue.rchina.utils.UIUtils;
 import com.blue.rchina.utils.UrlUtils;
@@ -63,8 +64,7 @@ public class SendInteractActivity extends BaseActivity {
     ImagePicView picker;
     @ViewInject(R.id.send_scroll)
     HorizontalScrollView scroll;
-    @ViewInject(R.id.send_phone)
-    EditText phone;
+
 
 
     private AMapLocation location;
@@ -86,8 +86,6 @@ public class SendInteractActivity extends BaseActivity {
 
 
         initTop(R.mipmap.left_white, "发表互动", "发送");
-        phone.setVisibility(View.GONE);
-        bottom.setVisibility(View.VISIBLE);
 
         imgDatas = new ArrayList<>();
         imgDatas.add(new ImagePicView.ImgData("", imgDatas.size() + 1));
@@ -207,7 +205,6 @@ public class SendInteractActivity extends BaseActivity {
             return;
         }
 
-        String phoneStr = phone.getText().toString().trim();
 
         if (!TextUtils.isEmpty(editStr)) {
 
@@ -344,7 +341,16 @@ public class SendInteractActivity extends BaseActivity {
             public void onClick(View v) {
 
                 if (hasPermission(CAMERA)) {
-                    GalleryFinal.openCamera(REQUEST_CODE_CAMERA, callback);
+                    try {
+                        if(CameralUtils.hasCamera()) {
+                            GalleryFinal.openCamera(REQUEST_CODE_CAMERA, callback);
+                        }else {
+                            UIUtils.showToast("该设备无法使用摄像头");
+                        }
+                    }catch (Exception e){
+                        UIUtils.showToast("该设备无法使用摄像头");
+                    }
+
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         requestPermissions(new String[]{CAMERA}, 200);

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_mall_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.blue.rchina.activity.MallSearchActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/top_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/topview_size" />
+
+        <RelativeLayout
+            android:id="@+id/top_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_toolbarSize"
+            android:layout_toRightOf="@+id/icon"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:padding="@dimen/dp10">
+
+            <TextView
+                android:id="@+id/top_search_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp10"
+                android:text="取消"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp16" />
+
+            <EditText
+                android:id="@+id/top_search_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/top_search_cancel"
+                android:background="@drawable/circle_gray_dp5"
+                android:cursorVisible="false"
+                android:hint="请输入关键字"
+                android:lines="1"
+                android:paddingLeft="@dimen/dp40"
+                android:textColor="@color/middle_gray"
+                android:textColorHint="@color/xxlight_gray"
+                android:textSize="@dimen/sp16"
+                android:imeOptions="actionSearch"
+                android:textCursorDrawable="@color/colorPrimary"
+                android:singleLine="true"/>
+
+            <ImageView
+                android:id="@+id/top_search_go"
+                style="@style/normal_icon_style_small"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/searchicon" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/bg_color">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/search_rec"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+</LinearLayout>

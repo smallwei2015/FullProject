@@ -115,4 +115,30 @@ public class UrlUtils {
 	public static final String N_achieveCommunityChannelData=N_base+"achieveCommunityChannelData";
 	public static final String N_achieveCommunityIntroduce=N_base+"achieveCommunityIntroduce";
 	public static final String N_getGoodsInfoById=N_base+"getGoodsInfoById";
+
+	public static final String N_achieveChannelList=N_base+"achieveChannelList";
+	public static final String N_achieveProvinceList=N_base+"achieveProvinceList";
+	public static final String N_achieveCityList=N_base+"achieveCityList";
+	public static final String N_achieveCountyList=N_base+"achieveCountyList";
+	public static final String N_achieveTownList=N_base+"achieveTownList";
+	public static final String N_getUnionOrderId=N_base+"getUnionOrderId";
+	public static final String N_oppenAreaApply=N_base+"oppenAreaApply";
+	public static final String N_achieveCommunityStore=N_base+"achieveCommunityStore";
+	public static final String N_achieveGoodsCategory=N_base+"achieveGoodsCategory";
+
+	public static final String N_cancelOrder=N_base+"cancelOrder";
+
+	public static final String N_getOrderMoney=N_base+"getOrderMoney";
+
+	public static final String N_emptySearchRecord=N_base+"emptySearchRecord";
+	public static final String N_achieveGoodsSearchData=N_base+"achieveGoodsSearchData";
+
+
+	/*zhibo*/
+
+	public static final String N_saveLivingVideoInfo=N_base+"saveLivingVideoInfo";
+	public static final String N_liveFinish=N_base+"liveFinish";
+	public static final String N_achieveLivingVideoList=N_base+"achieveLivingVideoList";
+	public static final String N_commentLive=N_base+"commentLive";
+	public static final String N_achieveCommentLiveList=N_base+"achieveCommentLiveList";
 }

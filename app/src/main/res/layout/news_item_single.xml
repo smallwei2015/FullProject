@@ -45,6 +45,7 @@
                 style="@style/news_small_text"
                 android:text="0浏览"
                 android:id="@+id/news_single_comment"
+                android:visibility="gone"
                 />
 
             <TextView

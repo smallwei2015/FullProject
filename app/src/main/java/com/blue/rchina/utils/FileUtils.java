@@ -30,6 +30,8 @@ public class FileUtils {
     //错误日志路径
     public static final String LOGPATH = CACHEPATH + File.separator + "log_err.txt";
 
+    public static final String DOWNLOAD= CACHEPATH + File.separator + "download/";
+
     // 图片存放路径
     public static final String IMAGEPATH = CACHEPATH + File.separator + "images";
 

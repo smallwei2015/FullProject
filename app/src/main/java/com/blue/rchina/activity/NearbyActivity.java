@@ -3,12 +3,14 @@ package com.blue.rchina.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.blue.rchina.R;
 import com.blue.rchina.base.BaseActivity;
 import com.blue.rchina.bean.Channel;
+import com.blue.rchina.bean.Nearby;
 import com.blue.rchina.bean.NetData;
 import com.blue.rchina.fragment.NewsFragment;
 import com.blue.rchina.manager.UserManager;
@@ -39,7 +41,7 @@ public class NearbyActivity extends BaseActivity {
     View send;
     @ViewInject(R.id.nearby_other)
     View other;
-
+    public String name;
 
 
     @Override
@@ -55,6 +57,8 @@ public class NearbyActivity extends BaseActivity {
     public void initData() {
         super.initData();
         datas = new ArrayList<>();
+
+        name = getIntent().getStringExtra("name");
     }
 
     private void getNearbyStruct() {
@@ -117,7 +121,11 @@ public class NearbyActivity extends BaseActivity {
     @Override
     public void initView() {
         super.initView();
-        initTop(R.mipmap.left_white, "我的社区", R.mipmap.exchange);
+        if (!TextUtils.isEmpty(name)){
+            initTop(R.mipmap.left_white, name, R.mipmap.exchange);
+        }else {
+            initTop(R.mipmap.left_white, "我的社区", R.mipmap.exchange);
+        }
         //getNearbyStruct();
     }
 
@@ -129,17 +137,7 @@ public class NearbyActivity extends BaseActivity {
         startActivityForResult(intent, 200);
     }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 200) {
-            getNearbyStruct();
-        }
-    }
-
-    @Event({R.id.nearby_send, R.id.nearby_intro, R.id.nearby_other, R.id.nearby_info})
+    @Event({R.id.nearby_send, R.id.nearby_intro, R.id.nearby_other, R.id.nearby_info,R.id.nearby_mall})
     private void click(View view) {
 
         Intent intent;
@@ -158,6 +156,9 @@ public class NearbyActivity extends BaseActivity {
                 3社区新闻*/
                 intent.putExtra("flag",3);
                 startActivity(intent);
+                /*intent=new Intent(mActivity,NearbyServiceActivity.class);
+                startActivity(intent);*/
+
                 break;
             case R.id.nearby_info:
                 intent = new Intent(mActivity, NearbyDetailActivity.class);
@@ -166,9 +167,28 @@ public class NearbyActivity extends BaseActivity {
                 break;
             case R.id.nearby_send:
                 intent = new Intent(mActivity, SendNearbyActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nearby_mall:
+                intent = new Intent(mActivity, NearbyMallActivity.class);
 
                 startActivity(intent);
                 break;
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        /*重新选择社区*/
+        if (requestCode==200&&resultCode==100){
+            Nearby nearby = (Nearby) data.getSerializableExtra("data");
+
+            if (nearby != null) {
+                initTop(R.mipmap.left_white, nearby.getTitle(), R.mipmap.exchange);
+            }
         }
     }
 }

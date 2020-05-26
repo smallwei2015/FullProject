@@ -84,8 +84,8 @@ public class OrderDetailActivity extends BaseActivity {
         web.reload();
     }
 
-    private void loadMore(String order){
-        String path="http://wap.guoguo-app.com/wuliuDetail.htm?mailNo="+order;
+    private void loadMore(Order order){
+        String path= String.format("https://m.kuaidi100.com/index_all.html?type=%s&postid=%s",order.getExpressCompany(),order.getLogisticsNumber());
 
 
         mSetting = web.getSettings();
@@ -136,7 +136,7 @@ public class OrderDetailActivity extends BaseActivity {
                 transport_order.setText("暂无订单号");
             }else {
                 transport_order.setText(logisticsNumber);
-                loadMore(order.getLogisticsNumber());
+                loadMore(order);
             }
         }else {
             transport_order.setText("暂无订单号");

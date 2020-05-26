@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -217,7 +218,8 @@ public class InteractFragment extends BaseFragment {
             if (near!=null&&near.size()>0) {
                 DataWrap e1 = new DataWrap();
                 e1.setType(7);
-                e1.setData(near.get(0));
+                Alliance data = near.get(0);
+                e1.setData(data);
                 items.add(0,e1);
             }
         }
@@ -524,9 +526,12 @@ public class InteractFragment extends BaseFragment {
 
         entity.addBodyParameter("areaId", ((Main2Activity) mActivity).curCity.getAreaId());
 
+        entity.setConnectTimeout(1000*60*60);
+        entity.setReadTimeout(1000*60*60);
         x.http().post(entity, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
+
 
                 JSONObject object = JSON.parseObject(result);
 
@@ -609,7 +614,8 @@ public class InteractFragment extends BaseFragment {
             }
 
             @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
+            public void onError(Throwable ex, boolean isOnCal) {
+                Log.w("6666",ex.getMessage());
                 UIUtils.showToast("网络异常");
             }
 

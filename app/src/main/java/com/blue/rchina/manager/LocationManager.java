@@ -60,7 +60,7 @@ public class LocationManager {
                 }
             }
         });
-        //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
+        //设置定位模式为高精度模式Hight_Accuracy，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
         //设置定位间隔,单位毫秒,默认为2000ms
         mLocationOption.setInterval(1000*60);

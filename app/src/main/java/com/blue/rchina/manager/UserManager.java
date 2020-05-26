@@ -106,9 +106,7 @@ public class UserManager {
                     setAlias();
                 } else {
                     manager.faild(null);
-                    if (netData.getResult() == 401) {
-                        UIUtils.showToast("登录名密码错误");
-                    }
+                    UIUtils.showToast(netData.getMessage());
                 }
 
             }
@@ -289,7 +287,7 @@ public class UserManager {
 
                 } else {
                     manager.faild(null);
-                    UIUtils.showToast("登录成功");
+                    UIUtils.showToast(netData.getMessage());
                 }
 
             }

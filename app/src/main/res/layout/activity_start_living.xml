@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_start_living"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.blue.rchina.activity.StartLivingActivity">
+
+    <include layout="@layout/top"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#eee"
+        android:padding="@dimen/dp10"
+        android:hint="请输入直播标题，长度在6-50个字符"
+        android:id="@+id/title"
+        android:layout_below="@+id/toolbar"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp18"
+        android:textColor="@color/actionbar_sel_color"
+        android:text="选择直播屏幕方向(默认竖屏直播)"
+        android:background="@color/title_grey"
+        android:layout_below="@id/title"
+        android:padding="@dimen/dp10"
+        android:id="@+id/id1"/>
+
+    <RadioGroup
+        android:id = "@+id/main_screen_scale"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:layout_below="@+id/id1"
+        >
+
+        <RadioButton
+            android:id="@+id/main_scale_16x9"
+            style="@style/radio_button"
+            android:text="横屏"/>
+
+        <RadioButton
+            android:id="@+id/main_scale_normal"
+            android:checked="true"
+            style="@style/radio_button"
+            android:text="竖屏"/>
+    </RadioGroup >
+    <TextView
+        style="@style/login_btn"
+        android:layout_margin="10dp"
+        android:layout_centerInParent="true"
+        android:onClick="btn_start"
+        android:text="开始"/>
+
+</RelativeLayout>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -13,12 +13,23 @@
         />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp5"
         android:textColor="@color/price_red"
         android:textSize="@dimen/sp15"
         android:id="@+id/mall_price"
+        android:layout_below="@+id/mall_text"
         android:text="￥ 400"/>
 
-</LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mall_text"
+        android:paddingTop="@dimen/dp5"
+        android:id="@+id/mall_freight"
+        android:textSize="@dimen/sp14"
+        android:layout_toRightOf="@+id/mall_price"
+        android:text="(免运费)"/>
+</RelativeLayout>

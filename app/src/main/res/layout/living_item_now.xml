@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp5"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp5"
+            android:background="@drawable/living_bg"
+            android:gravity="center_vertical"
+            android:id="@+id/tag">
+
+            <ImageView
+                style="@style/x_mall_small_img"
+                android:src="@mipmap/video"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp12"
+                android:textColor="@color/white"
+                android:paddingRight="@dimen/dp5"
+                android:id="@+id/tag_text"
+                android:text="直播中"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingBottom="@dimen/dp5"
+        android:textSize="@dimen/sp14"
+        android:textColor="@color/middle_gray"
+        android:text="数百头母猪为何半夜惨叫，是人性的扭曲吗？"
+        android:id="@+id/title"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp200">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_color_light"
+            android:id="@+id/preview_img"
+            android:layout_margin="@dimen/dp2"/>
+
+
+        <ImageView
+            android:layout_width="@dimen/dp50"
+            android:layout_height="@dimen/dp50"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/play1"/>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp5"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <ImageView
+            android:layout_width="@dimen/dp30"
+            android:layout_height="@dimen/dp30"
+            android:id="@+id/icon"
+            android:layout_marginLeft="@dimen/dp5"
+            android:layout_marginRight="@dimen/dp5"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/dp5"
+            android:textSize="@dimen/sp15"
+            android:text="匿名用户"
+            android:textColor="@color/darkGray"
+            android:id="@+id/name"/>
+
+        <ImageView
+            style="@style/info_setting_img"
+            android:src="@mipmap/news_comment2"
+            android:id="@+id/comment"/>
+    </LinearLayout>
+</LinearLayout>

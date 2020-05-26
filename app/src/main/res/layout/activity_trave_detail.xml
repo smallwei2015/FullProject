@@ -62,7 +62,7 @@
                     android:textSize="@dimen/sp16"
                     android:padding="@dimen/dp5"
                     android:id="@+id/trave_detail_title"
-                    android:text="北京欢迎你？"/>
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -88,7 +88,7 @@
                     android:textColor="@color/dark_gray"
                     android:padding="@dimen/dp5"
                     android:id="@+id/trave_detail_address"
-                    android:text="地址：北京市还定去康德大厦"/>
+                    />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -97,7 +97,7 @@
                     android:textColor="@color/dark_gray"
                     android:padding="@dimen/dp5"
                     android:id="@+id/trave_detail_time"
-                    android:text="开放时间：123456778"/>
+                    />
 
                 <com.blue.rchina.views.JustifyTextView
                     android:layout_width="match_parent"

@@ -21,6 +21,8 @@ import com.blue.rchina.R;
 import com.blue.rchina.base.BaseActivity;
 import com.blue.rchina.bean.CartGoods;
 import com.blue.rchina.bean.Coupon;
+import com.blue.rchina.bean.NetData;
+import com.blue.rchina.bean.OrderPrice;
 import com.blue.rchina.bean.mall.Address;
 import com.blue.rchina.manager.UserManager;
 import com.blue.rchina.manager.xUtilsManager;
@@ -80,10 +82,11 @@ public class OrderGenerateActivity extends BaseActivity {
     public static final int SELECT_COUPON = 100;
     public Address addressEx;
     public Coupon coupon;
-    public double tPrice;
     public int flag;
     public double totalPrice;
     private View.OnClickListener listener;
+    public OrderPrice orderPrice;
+    private int number;
 
     @Override
     public void initView() {
@@ -208,25 +211,22 @@ public class OrderGenerateActivity extends BaseActivity {
 
     private void updateBottom() {
 
-        tPrice =   0;
-
-        for (int i = 0; i < datas.size(); i++) {
-            CartGoods cartGoods = datas.get(i);
-
-            double v = cartGoods.getPrice() * cartGoods.getCount();
-            tPrice += v;
-
+        if (orderPrice != null) {
+            totalPrice=orderPrice.getMoneySum();
         }
-
-        totalPrice = tPrice;
-
         if (coupon != null) {
-            tPrice -= coupon.getCoupon();
-            if (tPrice<0){
-                tPrice=0;
+            totalPrice -= coupon.getCoupon();
+            if (totalPrice<0){
+                totalPrice=0;
             }
         }
-        price.setText("￥" + String.format("%.2f", tPrice));
+
+
+        if(orderPrice.getFreight()>0) {
+            price.setText(String.format("¥%.2f(运费¥%.1f)", totalPrice, orderPrice.getFreight()));
+        }else {
+            price.setText(String.format("¥%.2f(免运费)", totalPrice));
+        }
 
 
         cSelectedCount = datas.size();
@@ -244,11 +244,27 @@ public class OrderGenerateActivity extends BaseActivity {
         super.initData();
 
         Intent intent = getIntent();
+        orderPrice = ((OrderPrice) intent.getSerializableExtra("info"));
         datas = ((List<CartGoods>) intent.getSerializableExtra("goods"));
         addressEx= (Address) intent.getSerializableExtra("address");
         flag = intent.getIntExtra("flag",-1);
 
+        if (flag==1){
+            number=intent.getIntExtra("num",1);
+        }
         adapter.notifyDataSetChanged();
+
+
+        //UIUtils.showToast("请选择收货地址");
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mActivity, MyAddressActivity.class);
+                startActivityForResult(intent, SELECT_ADDRESS);
+            }
+        };
+        cart_no_address.setOnClickListener(listener);
+        cart_address.setOnClickListener(listener);
 
 
         if (addressEx != null) {
@@ -256,15 +272,51 @@ public class OrderGenerateActivity extends BaseActivity {
             name.setText("收件人：" + addressEx.getReceiveName());
             phone.setText("电话：" + addressEx.getReceivePhone());
         }else {
-            cart_no_address.setVisibility(View.VISIBLE);
-            cart_address.setVisibility(View.GONE);
 
-            //UIUtils.showToast("请选择收货地址");
-            cart_no_address.setOnClickListener(new View.OnClickListener() {
+            RequestParams entity = new RequestParams(UrlUtils.N_getReceiveInfo);
+            entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
+            x.http().post(entity, new Callback.CommonCallback<String>() {
                 @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(mActivity, MyAddressActivity.class);
-                    startActivityForResult(intent, SELECT_ADDRESS);
+                public void onSuccess(String result) {
+
+
+                    NetData netData = JSON.parseObject(result, NetData.class);
+
+                    if (netData.getResult() == 200) {
+
+                        List<Address> addresses = JSON.parseArray(netData.getInfo(), Address.class);
+
+                        if (addresses != null && addresses.size() > 0) {
+                            for (int i = 0; i < addresses.size(); i++) {
+                                Address addressDefault = addresses.get(i);
+                                if (addressDefault.getIsDefault()==1){
+
+                                    addressEx = addressDefault;
+
+                                    address.setText(addressEx.getDistrict() + "-" + addressEx.getReceiveAddress());
+                                    name.setText("收件人：" + addressEx.getReceiveName());
+                                    phone.setText("电话：" + addressEx.getReceivePhone());
+                                    break;
+                                }
+                            }
+                        } else {
+                            cart_no_address.setVisibility(View.VISIBLE);
+                            cart_address.setVisibility(View.GONE);
+                        }
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                }
+
+                @Override
+                public void onCancelled(CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
                 }
             });
         }
@@ -336,9 +388,9 @@ public class OrderGenerateActivity extends BaseActivity {
         entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
         entity.addBodyParameter("arg1", value);
 
-
         if (flag!=-1) {
             entity.addBodyParameter("type", "0");
+            entity.addBodyParameter("num",number+"");
         }else {
             entity.addBodyParameter("type", "1");
         }
@@ -366,7 +418,7 @@ public class OrderGenerateActivity extends BaseActivity {
 
                     Intent intent = new Intent(mActivity, PayActivity.class);
                     intent.putExtra("id", object.getString("orderNo"));
-                    intent.putExtra("money",tPrice);
+                    intent.putExtra("money",totalPrice);
                     startActivity(intent);
 
                     finish();

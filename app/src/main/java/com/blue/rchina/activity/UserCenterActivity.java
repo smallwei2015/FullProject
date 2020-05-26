@@ -29,6 +29,7 @@ import com.blue.rchina.bean.User;
 import com.blue.rchina.manager.UserInterface;
 import com.blue.rchina.manager.UserManager;
 import com.blue.rchina.manager.xUtilsManager;
+import com.blue.rchina.utils.CameralUtils;
 import com.blue.rchina.utils.UIUtils;
 import com.blue.rchina.utils.UrlUtils;
 import com.blue.rchina.views.BasePopUpWindow;
@@ -159,7 +160,18 @@ public class UserCenterActivity extends BaseActivity implements GalleryFinal.OnH
                 inflate.findViewById(R.id.camera).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        GalleryFinal.openCamera(100, UserCenterActivity.this);
+
+                        try {
+
+                            if(CameralUtils.hasCamera()) {
+                                GalleryFinal.openCamera(100, UserCenterActivity.this);
+                            }else {
+                                UIUtils.showToast("该设备无法使用摄像头");
+                            }
+                        }catch (Exception e){
+                            UIUtils.showToast("该设备无法使用摄像头");
+                        }
+
                     }
                 });
 

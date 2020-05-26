@@ -1,5 +1,6 @@
 package com.blue.rchina.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -38,6 +39,22 @@ public class JoinUsActivity extends BaseActivity {
 
     @Event(value ={R.id.join_city,R.id.join_alliance,R.id.join_top},type = View.OnClickListener.class)
     private void onClick(View view){
-        UIUtils.showToast("该功能暂未开通");
+        Intent intent;
+        switch (view.getId()){
+
+            case R.id.join_city:
+                intent=new Intent(mActivity,OpenCityActivity.class);
+                intent.putExtra("openFlag",1);
+                startActivity(intent);
+                break;
+            case R.id.join_alliance:
+                intent=new Intent(mActivity,OpenCityActivity.class);
+                intent.putExtra("openFlag",0);
+                startActivity(intent);
+                break;
+            case R.id.join_top:
+                UIUtils.showToast("暂未开通");
+                break;
+        }
     }
 }

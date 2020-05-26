@@ -1,6 +1,8 @@
 package com.blue.rchina.manager;
 
 
+import android.widget.ImageView;
+
 import com.blue.rchina.R;
 
 import org.xutils.image.ImageOptions;
@@ -39,6 +41,7 @@ public class xUtilsManager {
                 .setUseMemCache(true)
                 //设置显示圆形图片
                 .setCircular(false)
+                .setImageScaleType(ImageView.ScaleType.FIT_XY)
                 //设置支持gif
                 .setIgnoreGif(false)
                 .setCrop(true)

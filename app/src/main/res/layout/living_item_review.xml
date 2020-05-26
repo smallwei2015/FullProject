@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp5"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/white">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp5"
+            android:background="@drawable/living_bg"
+            android:gravity="center_vertical"
+            android:id="@+id/tag">
+
+            <ImageView
+                style="@style/x_mall_small_img"
+                android:src="@mipmap/video"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp12"
+                android:textColor="@color/white"
+                android:paddingRight="@dimen/dp5"
+                android:id="@+id/tag_text"
+                android:text="直播中"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="@dimen/text_10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/dp5"
+            android:textSize="@dimen/sp14"
+            android:textColor="@color/middle_gray"
+            android:text="数百头母猪为何半夜惨叫，是人性的扭曲吗？"
+            android:id="@+id/title"
+            android:singleLine="true"
+            />
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp160"
+        android:background="@color/bg_color_light"
+        android:id="@+id/preview_img"/>
+</LinearLayout>

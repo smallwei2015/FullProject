@@ -11,6 +11,7 @@ import com.blue.rchina.R;
 import com.blue.rchina.base.BaseActivity;
 import com.blue.rchina.bean.NetData;
 import com.blue.rchina.manager.UserManager;
+import com.blue.rchina.utils.UIUtils;
 import com.blue.rchina.utils.UrlUtils;
 
 import org.xutils.common.Callback;
@@ -37,6 +38,8 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
 
     @ViewInject(R.id.wallet_charge)
     View charge;
+    @ViewInject(R.id.wallet_exchange_score)
+    View exchange;
     public Intent intent;
 
     @Override
@@ -104,6 +107,8 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
         charge.setOnClickListener(this);
         balance.setOnClickListener(this);
         score.setOnClickListener(this);
+
+        exchange.setOnClickListener(this);
     }
 
     @Override
@@ -120,6 +125,9 @@ public class MyWalletActivity extends BaseActivity implements View.OnClickListen
             case R.id.balance:
                 intent=new Intent(mActivity,ChargeRecordActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.wallet_exchange_score:
+                UIUtils.showToast("该功能暂未开通");
                 break;
         }
     }

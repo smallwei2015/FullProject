@@ -25,6 +25,7 @@ import com.amap.api.location.AMapLocationListener;
 import com.blue.rchina.R;
 import com.blue.rchina.base.BaseActivity;
 import com.blue.rchina.manager.UserManager;
+import com.blue.rchina.utils.CameralUtils;
 import com.blue.rchina.utils.FileUtils;
 import com.blue.rchina.utils.UIUtils;
 import com.blue.rchina.utils.UrlUtils;
@@ -325,7 +326,18 @@ public class SendNearbyActivity extends BaseActivity {
             public void onClick(View v) {
 
                 if (hasPermission(CAMERA)) {
-                    GalleryFinal.openCamera(REQUEST_CODE_CAMERA, callback);
+
+                    try {
+
+                        if(CameralUtils.hasCamera()) {
+                            GalleryFinal.openCamera(REQUEST_CODE_CAMERA, callback);
+                        }else {
+                            UIUtils.showToast("该设备无法使用摄像头");
+                        }
+                    }catch (Exception e){
+                        UIUtils.showToast("该设备无法使用摄像头");
+                    }
+
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         requestPermissions(new String[]{CAMERA}, 200);

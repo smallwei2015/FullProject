@@ -235,6 +235,8 @@ public class InfoActivity extends BaseActivity {
         };
         rec.setAdapter(adapter);
 
+
+        isNodata(true);
     }
 
     private void makeSureAddWine(NoticeInfo noticeInfo) {
@@ -338,7 +340,7 @@ public class InfoActivity extends BaseActivity {
 
                     adapter.notifyDataSetChanged();
                 }else {
-                    UIUtils.showToast("服务器异常");
+                    UIUtils.showToast(netData.getMessage());
                 }
 
 
@@ -346,7 +348,8 @@ public class InfoActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                UIUtils.showToast("网络加载失败");
+                //UIUtils.showToast("网络加载失败");
+                UIUtils.showToast("暂无消息");
             }
 
             @Override

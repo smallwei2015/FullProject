@@ -40,6 +40,7 @@
                 android:layout_marginLeft="@dimen/dp10"
                 android:text="0浏览"
                 android:id="@+id/news_single_comment"
+                android:visibility="gone"
                 />
             <TextView
                 style="@style/news_small_text"

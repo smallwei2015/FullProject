@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -21,7 +22,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.blue.rchina.R;
 import com.blue.rchina.base.BaseActivity;
 import com.blue.rchina.bean.NetData;
-import com.blue.rchina.bean.Trave;
 import com.blue.rchina.bean.TraveDetail;
 import com.blue.rchina.manager.UserManager;
 import com.blue.rchina.manager.xUtilsManager;
@@ -73,11 +73,12 @@ public class TraveDetailActivity extends BaseActivity {
     @ViewInject(R.id.trave_detail_price)
     TextView price;
 
-    public Trave data;
+
     private List<String> images;
     private List<ImageView> views;
     public PagerAdapter adapter;
     public TraveDetail detail;
+    private String dataId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +113,8 @@ public class TraveDetailActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
-        data = ((Trave) getIntent().getSerializableExtra("data"));
+        dataId = getIntent().getStringExtra("data");
+
         images=new ArrayList<>();
         views=new ArrayList<>();
 
@@ -125,11 +127,13 @@ public class TraveDetailActivity extends BaseActivity {
 
 
         RequestParams entity = new RequestParams(UrlUtils.N_getScenicInfo);
-        entity.addBodyParameter("dataId",data==null?"":data.getScenicId());
+        entity.addBodyParameter("dataId",dataId==null?"":dataId);
         entity.addBodyParameter("appuserId",UserManager.isLogin()?UserManager.getUser().getAppuserId()+"":"");
         x.http().post(entity, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
+
+                Log.w("vode",result);
 
                 NetData netData = JSON.parseObject(result, NetData.class);
                 if (netData.getResult()==200){
@@ -137,6 +141,31 @@ public class TraveDetailActivity extends BaseActivity {
 
                     des.setText(detail.getContent());
                     collect.setSelected(detail.getCollectState()==1);
+                    share.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            showShare(detail);
+                        }
+                    });
+
+                    title.setText(detail.getTitle());
+                    address.setText(detail.getLocation());
+                    time.setText(detail.getOpenTime());
+                    price.setText("￥"+detail.getPrice());
+
+
+                    phone.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Intent intent = new Intent(Intent.ACTION_DIAL);
+                            Uri dataU = Uri.parse("tel:" + detail.getPhone());
+                            intent.setData(dataU);
+                            startActivity(intent);
+
+                        }
+                    });
+
                     if (detail.getManyPic()!=null){
 
                         images.addAll(detail.getManyPic());
@@ -190,34 +219,7 @@ public class TraveDetailActivity extends BaseActivity {
                 finish();
             }
         });
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showShare(data.getShareLink());
-            }
-        });
 
-        title.setText(data.getTitle());
-        address.setText(data.getLocation());
-        time.setText(data.getOpenTime());
-        price.setText("￥"+data.getPrice());
-
-
-        phone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                Uri dataU = Uri.parse("tel:" + data.getPhone());
-                intent.setData(dataU);
-                startActivity(intent);
-
-                /*Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:10086"));
-                startActivity(intent);*/
-            }
-        });
 
         collect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -311,10 +313,13 @@ public class TraveDetailActivity extends BaseActivity {
             return;
         }
 
+        if (detail == null) {
+            return;
+        }
         isHideLoading(false);
         RequestParams entity = new RequestParams(UrlUtils.N_collectScenic);
         entity.addBodyParameter("appuserId",UserManager.getUser().getAppuserId()+"");
-        entity.addBodyParameter("dataId",data.getScenicId());
+        entity.addBodyParameter("dataId",detail.getScenicId());
         entity.addBodyParameter("state",state+"");
         x.http().post(entity, new Callback.CommonCallback<String>() {
             @Override
@@ -355,10 +360,14 @@ public class TraveDetailActivity extends BaseActivity {
             UserManager.toLogin();
             return;
         }
+
+        if (detail == null) {
+            return;
+        }
         isHideLoading(false);
         RequestParams entity = new RequestParams(UrlUtils.N_getTicketOrderId);
         entity.addBodyParameter("appuserId",UserManager.getUser().getAppuserId()+"");
-        entity.addBodyParameter("dataId",data.getScenicId());
+        entity.addBodyParameter("dataId",dataId);
         x.http().post(entity, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -369,7 +378,7 @@ public class TraveDetailActivity extends BaseActivity {
 
                     Intent intent=new Intent(mActivity,PayActivity.class);
                     intent.putExtra("id",orderNo);
-                    intent.putExtra("money",data.getPrice());
+                    intent.putExtra("money",detail.getPrice());
                     intent.putExtra("flag",2);
                     startActivity(intent);
                 }else {
@@ -401,7 +410,8 @@ public class TraveDetailActivity extends BaseActivity {
         isHideLoading(true);
     }
 
-    private void showShare(String path) {
+    private void showShare(final TraveDetail data) {
+        String path=data.getShareLink();
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
@@ -444,4 +454,5 @@ public class TraveDetailActivity extends BaseActivity {
         // 启动分享GUI
         oks.show(this);
     }
+
 }

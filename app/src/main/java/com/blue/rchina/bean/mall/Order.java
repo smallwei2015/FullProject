@@ -27,6 +27,34 @@ public class Order implements Serializable {
     private String payTime;
     private String sendTime;
 
+    private double goodsMoney;
+    private double freight;
+    private String expressCompany;
+
+
+    public String getExpressCompany() {
+        return expressCompany;
+    }
+
+    public void setExpressCompany(String expressCompany) {
+        this.expressCompany = expressCompany;
+    }
+
+    public double getGoodsMoney() {
+        return goodsMoney;
+    }
+
+    public void setGoodsMoney(double goodsMoney) {
+        this.goodsMoney = goodsMoney;
+    }
+
+    public double getFreight() {
+        return freight;
+    }
+
+    public void setFreight(double freight) {
+        this.freight = freight;
+    }
 
     public int getType() {
         return type;

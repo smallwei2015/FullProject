@@ -69,5 +69,7 @@
     <dimen name="dp015">-15dp</dimen>
     <dimen name="dp025">-25dp</dimen>
     <dimen name="dp030">-30dp</dimen>
+    <dimen name="dp120">120dp</dimen>
+    <dimen name="mall_tab_size">20dp</dimen>
 
 </resources>

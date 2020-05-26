@@ -8,6 +8,7 @@ import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.blue.rchina.base.BaseActivity;
 import com.blue.rchina.bean.CartGoods;
 import com.blue.rchina.bean.Coupon;
 import com.blue.rchina.bean.NetData;
+import com.blue.rchina.bean.OrderPrice;
 import com.blue.rchina.bean.mall.Address;
 import com.blue.rchina.manager.UserManager;
 import com.blue.rchina.manager.xUtilsManager;
@@ -44,7 +46,6 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
-
 
 
 public class ShoppingCartActivity extends BaseActivity {
@@ -124,7 +125,7 @@ public class ShoppingCartActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mActivity, CouponActivity.class);
-                intent.putExtra("flag",1);
+                intent.putExtra("flag", 1);
                 startActivityForResult(intent, SELECT_COUPON);
             }
         });
@@ -201,8 +202,8 @@ public class ShoppingCartActivity extends BaseActivity {
                 });*/
 
                 holder.goods_des.setText(goods.getTitle());
-                holder.goods_price.setText("￥" + goods.getPrice() + " x " + goods.getCount());
-                holder.total_price.setText("￥" + String.format("%.2f", goods.getPrice() * goods.getCount()));
+                holder.goods_price.setText("¥" + goods.getPrice() + " x " + goods.getCount());
+                holder.total_price.setText("¥" + String.format("%.2f", goods.getPrice() * goods.getCount()));
 
                 holder.goods_count.setText(goods.getCount() + "");
 
@@ -284,30 +285,31 @@ public class ShoppingCartActivity extends BaseActivity {
         });
     }
 
-    private void updateData(int type){
-        if (type==1){
+    private void updateData(int type) {
+        if (type == 1) {
             selectedData.clear();
-        }else {
-            for (int i = 0; i < selectedData.size() ; i++) {
+        } else {
+            for (int i = 0; i < selectedData.size(); i++) {
                 long id = selectedData.get(i);
-                boolean isIndata=false;
+                boolean isIndata = false;
 
                 for (int j = 0; j < datas.size(); j++) {
                     CartGoods cartGoods = datas.get(j);
-                    if (cartGoods.getShopId()==id){
+                    if (cartGoods.getShopId() == id) {
                         cartGoods.setSelect(true);
 
-                        isIndata=true;
+                        isIndata = true;
                     }
                 }
 
-                if (!isIndata){
+                if (!isIndata) {
                     /*如果商品不在了就删除掉*/
                     selectedData.remove(id);
                 }
             }
         }
     }
+
     private void updateBottom() {
 
         double tPrice = 0;
@@ -377,12 +379,12 @@ public class ShoppingCartActivity extends BaseActivity {
 
                     List<Address> addresses = JSON.parseArray(netData.getString("list"), Address.class);
 
-                    if (addresses == null||addresses.size()==0) {
+                    if (addresses == null || addresses.size() == 0) {
                         if (addressEx != null) {
                             cart_address.setVisibility(View.GONE);
                             cart_no_address.setVisibility(View.VISIBLE);
                         }
-                    }else {
+                    } else {
 
                         if (addressEx == null) {
                             cart_address.setVisibility(View.VISIBLE);
@@ -402,7 +404,7 @@ public class ShoppingCartActivity extends BaseActivity {
 
                     List<CartGoods> goodses = JSON.parseArray(netData.getString("info"), CartGoods.class);
 
-                    if (goodses != null ) {
+                    if (goodses != null) {
 
                         if (type == 1) {
                             datas.clear();
@@ -415,7 +417,7 @@ public class ShoppingCartActivity extends BaseActivity {
                             if (goodses.size() > 0) {
                                 cPage++;
                                 datas.addAll(goodses);
-                            }else {
+                            } else {
                                 UIUtils.showToast("没有更多了");
                             }
 
@@ -548,9 +550,9 @@ public class ShoppingCartActivity extends BaseActivity {
     }
 
     private void changeMall(int i) {
-        Intent intent=new Intent();
+        Intent intent = new Intent();
         intent.setAction("action_change_mall");
-        intent.putExtra("count",i);
+        intent.putExtra("count", i);
         sendBroadcast(intent);
     }
 
@@ -564,8 +566,10 @@ public class ShoppingCartActivity extends BaseActivity {
 
         entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
         entity.addBodyParameter("dataId", "" + goods.getShopId());
+        // TODO: 2018/6/26 删除失败 
         /*0修改1删除*/
         entity.addBodyParameter("flag", "" + flag);
+
         if (flag == 0) {
             entity.addBodyParameter("num", "" + num);
         }
@@ -639,6 +643,8 @@ public class ShoppingCartActivity extends BaseActivity {
     }
 
     public void btn_buy(View view) {
+
+
         if (datas != null && datas.size() > 0) {
             if (addressEx == null) {
                 UIUtils.showToast("请选择收货地址");
@@ -662,15 +668,89 @@ public class ShoppingCartActivity extends BaseActivity {
                 }
             }
 
-            Intent intent=new Intent(mActivity,OrderGenerateActivity.class);
-            intent.putExtra("goods", (Serializable) buyGoods);
-            intent.putExtra("address",addressEx);
-            startActivity(intent);
+            getOrderMoney(buyGoods);
 
-            //generateOrder(buyGoods);
+
         } else {
             UIUtils.showToast("请选择要购买的物品");
         }
+    }
+
+    private void getOrderMoney(final List<CartGoods> buyGoods) {
+
+        StringBuilder arg = new StringBuilder();
+
+        arg.append("[");
+
+        for (int i = 0; i < buyGoods.size(); i++) {
+            arg.append("{");
+            arg.append("\"" + "id" + "\"" + ":" + "\"" + buyGoods.get(i).getGoodsId() + "\"");
+            arg.append("}");
+
+            if (i != buyGoods.size() - 1) {
+                arg.append(",");
+            }
+        }
+
+        arg.append("]");
+
+
+
+        RequestParams entity = new RequestParams(UrlUtils.N_getOrderMoney);
+        String value = arg.toString();
+        entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
+        entity.addBodyParameter("arg1", value);
+
+        entity.addBodyParameter("type", "1");
+
+        entity.addBodyParameter("flag", "0");
+        entity.addBodyParameter("dataId", "");
+
+
+        final ProgressDialog dialog=new ProgressDialog(mActivity);
+
+        dialog.setMessage("加载中...");
+        dialog.show();
+
+        x.http().post(entity, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+
+
+                JSONObject object = JSON.parseObject(result);
+
+                Integer code = object.getInteger("result");
+                if (code == 200) {
+                    OrderPrice info = JSON.parseObject(object.getString("info"), OrderPrice.class);
+                    Intent intent = new Intent(mActivity, OrderGenerateActivity.class);
+                    intent.putExtra("goods", (Serializable) buyGoods);
+                    intent.putExtra("info",info);
+                    intent.putExtra("address", addressEx);
+                    startActivity(intent);
+
+                } else{
+                    UIUtils.showToast(""+object.getString("message"));
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                UIUtils.showToast("网络请求失败");
+                Log.w("44444",ex.getMessage());
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+                dialog.dismiss();
+            }
+        });
+
+
     }
 
     /**
@@ -714,9 +794,9 @@ public class ShoppingCartActivity extends BaseActivity {
                 address.setText(addressEx.getDistrict() + "-" + addressEx.getReceiveAddress());
                 name.setText("收件人：" + addressEx.getReceiveName());
                 phone.setText("电话：" + addressEx.getReceivePhone());
-            }else {
+            } else {
 
-                if (addressEx==null) {
+                if (addressEx == null) {
                     cart_address.setVisibility(View.GONE);
                     cart_no_address.setVisibility(View.VISIBLE);
                 }

@@ -303,7 +303,9 @@ public class CheckPhoneActivity extends BaseActivity {
                 } else {
                     RequestParams entity = new RequestParams(UrlUtils.N_resetPassword);
                     entity.addBodyParameter("passWord", MD5Utils.getMD5(pass));
-                    entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
+                    if (UserManager.getUser()!=null) {
+                        entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
+                    }
                     x.http().post(entity, new Callback.CommonCallback<String>() {
                         @Override
                         public void onSuccess(String result) {

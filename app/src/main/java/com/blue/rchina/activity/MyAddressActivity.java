@@ -274,10 +274,10 @@ public class MyAddressActivity extends BaseActivity {
         dialog.setMessage("加载中...");
         dialog.show();
 
-        RequestParams entity = new RequestParams(UrlUtils.N_setDefaultReceiveInfo);
+        RequestParams entity = new RequestParams(UrlUtils.N_updateReceiveInfo);
         entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
         entity.addBodyParameter("dataId", address.getReceiveId() + "");
-        entity.addBodyParameter("flag", "0");
+        entity.addBodyParameter("flag", flag+"");
         entity.addBodyParameter("arg1", address.getReceiveName());
         entity.addBodyParameter("arg2", address.getReceivePhone());
         entity.addBodyParameter("arg3", address.getReceiveAddress());
@@ -326,7 +326,7 @@ public class MyAddressActivity extends BaseActivity {
         dialog.setMessage("修改中...");
         dialog.show();
 
-        RequestParams entity = new RequestParams();
+        RequestParams entity = new RequestParams(UrlUtils.N_setDefaultReceiveInfo);
 
         entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
         entity.addBodyParameter("dataId", address.getReceiveId() + "");

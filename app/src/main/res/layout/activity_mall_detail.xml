@@ -129,32 +129,72 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:background="@color/white"
+            android:orientation="horizontal"
+            >
 
-            <TextView
-                android:id="@+id/pay_goods"
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_weight="1"
-                android:background="@drawable/bg_pay"
                 android:gravity="center"
-                android:padding="@dimen/dp10"
-                android:text="结算"
-                android:textSize="@dimen/sp16" />
+                android:id="@+id/kefu"
+                android:onClick="btn_kefu"
+                android:layout_gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/add_goods"
+                <ImageView
+                    style="@style/mall_small_img"
+                    android:src="@mipmap/kefu"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp10"
+                    android:text="客服"/>
+            </LinearLayout>
+
+
+
+            <LinearLayout
                 android:layout_width="0dp"
+                android:layout_weight="2"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/bg_tb"
-                android:gravity="center"
-                android:padding="@dimen/dp10"
-                android:text="加入购物车"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp16" />
+                android:layout_margin="@dimen/dp5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/pay_goods"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_tb_pay"
+                    android:gravity="center"
+                    android:padding="@dimen/dp10"
+                    android:text="直接购买"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp16" />
+
+                <TextView
+                    android:id="@+id/add_goods"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_tb_add"
+                    android:gravity="center"
+                    android:padding="@dimen/dp10"
+                    android:text="加入购物车"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp16" />
+
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
     </LinearLayout>
+
+    <include layout="@layout/no_data"/>
 </android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_nearby_mall"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.blue.rchina.activity.NearbyMallActivity"
+    android:orientation="vertical">
+
+    <include layout="@layout/top"/>
+
+    <RelativeLayout
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp5"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp8"
+            android:lines="1"
+            android:text="搜索"
+            android:textColor="@color/white"
+            android:textCursorDrawable="@null"
+            android:background="@drawable/circle_light_gray_dp5"/>
+        <ImageView
+            style="@style/mall_small_img"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/search_white"
+            android:layout_marginRight="@dimen/dp5"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="@dimen/dp35"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/top_mall"
+        android:layout_alignBottom="@+id/toolbar"
+        android:layout_margin="@dimen/dp5"
+        >
+
+        <ImageView
+            android:id="@+id/top_mall_right"
+            style="@style/normal_icon_style"
+            android:src="@mipmap/shopping_cart"
+            />
+
+        <TextView
+            android:layout_width="@dimen/dp15"
+            android:layout_height="@dimen/dp15"
+            android:layout_alignParentRight="true"
+            android:text="6"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp10"
+            android:gravity="center"
+            android:id="@+id/top_mall_count"
+            android:background="@drawable/circle_red"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_below="@+id/search">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/rec_left"
+            android:background="@color/white"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:padding="@dimen/dp5"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent"
+            android:id="@+id/rec_right"
+            android:background="@color/bg_color"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

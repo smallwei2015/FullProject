@@ -1,5 +1,6 @@
 package com.blue.rchina.activity;
 
+import android.Manifest;
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -26,14 +27,19 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.blue.rchina.R;
 import com.blue.rchina.base.BaseActivity;
-import com.blue.rchina.bean.CartGoods;
 import com.blue.rchina.bean.DataWrap;
 import com.blue.rchina.bean.Goods;
 import com.blue.rchina.bean.NetData;
 import com.blue.rchina.manager.UserManager;
 import com.blue.rchina.manager.xUtilsManager;
+import com.blue.rchina.utils.PhoneUtils;
+import com.blue.rchina.utils.RightUtils;
 import com.blue.rchina.utils.UIUtils;
 import com.blue.rchina.utils.UrlUtils;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionListener;
+import com.yanzhenjie.permission.Rationale;
+import com.yanzhenjie.permission.RationaleListener;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -60,34 +66,46 @@ public class MallDetailActivity extends BaseActivity {
     TextView pay;
     @ViewInject(R.id.add_goods)
     TextView add;
+    @ViewInject(R.id.kefu)
+    View kefu;
 
     private List<DataWrap> infos;
     private RecyclerView.Adapter<Holder> adapter;
-    public static final String qqNum="1781293168";
+    public static final String qqNum = "1781293168";
+
+    public static final String phone = "4006306658";
 
     //public DbManager db = x.getDb(BaseApplication.daoConfig);
 
     @Override
     public void initData() {
         super.initData();
-        infos=new ArrayList<>();
+        infos = new ArrayList<>();
 
         String dataId = getIntent().getStringExtra("dataId");
-        if (!TextUtils.isEmpty(dataId)){
+        if (!TextUtils.isEmpty(dataId)) {
+            isHideLoading(false);
             loadData(dataId);
-        }else {
+        } else {
             data = ((Goods) getIntent().getSerializableExtra("data"));
 
-            DataWrap first = new DataWrap();
-            first.setType(1);
-            List<String> firstData = new ArrayList<>();
-            firstData.add(data.getPicsrc());
+            if (data != null) {
+                DataWrap first = new DataWrap();
+                first.setType(1);
+                List<String> firstData = new ArrayList<>();
+                firstData.add(data.getPicsrc());
 
-            first.setData(firstData);
-            infos.add(first);
+                first.setData(firstData);
+                infos.add(first);
+
+
+                addDes();
+            }
+
         }
+    }
 
-
+    private void addDes() {
         DataWrap second = new DataWrap();
         second.setType(2);
         infos.add(second);
@@ -108,30 +126,36 @@ public class MallDetailActivity extends BaseActivity {
         infos.add(fifth);
 
         DataWrap sixth = new DataWrap();
-        sixth.setType(3);
-        sixth.setData("注意事项");
+        sixth.setType(4);
+        sixth.setData("商品详情");
         infos.add(sixth);
     }
 
     private void loadData(String dataId) {
         RequestParams entity = new RequestParams(UrlUtils.N_getGoodsInfoById);
-        entity.addBodyParameter("dataId",dataId);
+        entity.addBodyParameter("dataId", dataId);
         x.http().post(entity, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 NetData netData = JSON.parseObject(result, NetData.class);
-                if (netData.getResult()==200){
+                if (netData.getResult() == 200) {
                     Goods goods = JSON.parseObject(netData.getInfo(), Goods.class);
 
-                    DataWrap first = new DataWrap();
-                    first.setType(1);
-                    List<String> firstData = new ArrayList<>();
-                    firstData.add(goods.getPicsrc());
+                    data = goods;
 
-                    first.setData(firstData);
-                    infos.add(0,first);
+                    if (data != null) {
+                        DataWrap first = new DataWrap();
+                        first.setType(1);
+                        List<String> firstData = new ArrayList<>();
+                        firstData.add(goods.getPicsrc());
 
-                    adapter.notifyDataSetChanged();
+                        first.setData(firstData);
+                        infos.add(0, first);
+
+                        addDes();
+
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             }
 
@@ -147,7 +171,7 @@ public class MallDetailActivity extends BaseActivity {
 
             @Override
             public void onFinished() {
-
+                isHideLoading(true);
             }
         });
     }
@@ -157,18 +181,23 @@ public class MallDetailActivity extends BaseActivity {
         super.initView();
         //initTop(R.mipmap.arrow_left,"商品详情",R.mipmap.qq_white);
 
+
+            /*社区超市跳转不去显示添加购物车*/
+        if (getIntent().getBooleanExtra("isFromMall", false)) {
+            add.setVisibility(View.GONE);
+        }
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (UserManager.isLogin()) {
 
-                    if (data.getStockCount()>0) {
+                    if (data.getStockCount() > 0) {
                         payGoods();
 
-                    }else {
+                    } else {
                         UIUtils.showToast("当前库存量为0");
                     }
-                }else {
+                } else {
                     UserManager.toLogin();
                 }
             }
@@ -179,13 +208,13 @@ public class MallDetailActivity extends BaseActivity {
             public void onClick(View v) {
                 if (UserManager.isLogin()) {
 
-                    if (data.getStockCount()>0) {
+                    if (data.getStockCount() > 0) {
                         addGoods();
-                    }else {
+                    } else {
                         UIUtils.showToast("当前库存量为0");
                     }
 
-                }else {
+                } else {
                     UserManager.toLogin();
                 }
             }
@@ -197,36 +226,36 @@ public class MallDetailActivity extends BaseActivity {
             public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
                 LayoutInflater inflater = LayoutInflater.from(mActivity);
 
-                View view=null;
-                switch (viewType){
+                View view = null;
+                switch (viewType) {
                     case 1:
-                        view=inflater.inflate(R.layout.mall_detail_first,parent,false);
+                        view = inflater.inflate(R.layout.mall_detail_first, parent, false);
                         break;
                     case 2:
-                        view=inflater.inflate(R.layout.mall_detail_second,parent,false);
+                        view = inflater.inflate(R.layout.mall_detail_second, parent, false);
                         break;
                     case 3:
-                        view=inflater.inflate(R.layout.mall_detail_third,parent,false);
+                        view = inflater.inflate(R.layout.mall_detail_third, parent, false);
                         break;
                     case 4:
-                        view=inflater.inflate(R.layout.mall_detail_fourth,parent,false);
+                        view = inflater.inflate(R.layout.mall_detail_fourth, parent, false);
                         break;
                 }
 
-                return new Holder(view,viewType);
+                return new Holder(view, viewType);
             }
 
             @Override
             public void onBindViewHolder(final Holder holder, int position) {
                 final DataWrap dataWrap = infos.get(position);
 
-                switch (dataWrap.getType()){
+                switch (dataWrap.getType()) {
                     case 0:
 
                         break;
                     case 1:
 
-                        final List<ImageView> views=new ArrayList<>();
+                        final List<ImageView> views = new ArrayList<>();
                         final List<String> first = (List<String>) dataWrap.getData();
 
                         for (int i = 0; i < first.size(); i++) {
@@ -237,7 +266,7 @@ public class MallDetailActivity extends BaseActivity {
                             imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                             views.add(imageView);
                         }
-                        holder.text.setText(1+"/"+first.size());
+                        holder.text.setText(1 + "/" + first.size());
 
                         holder.pager.setAdapter(new PagerAdapter() {
                             @Override
@@ -251,7 +280,7 @@ public class MallDetailActivity extends BaseActivity {
 
                             @Override
                             public boolean isViewFromObject(View view, Object object) {
-                                return view==object;
+                                return view == object;
                             }
 
                             @Override
@@ -262,17 +291,17 @@ public class MallDetailActivity extends BaseActivity {
                                 child.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Intent intent=new Intent(mActivity,NewsKindImageActivity.class);
-                                        intent.putExtra("data",data);
+                                        Intent intent = new Intent(mActivity, NewsKindImageActivity.class);
+                                        intent.putExtra("data", data);
                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(mActivity,child, NewsKindImageActivity.TRA_NAME);
+                                            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(mActivity, child, NewsKindImageActivity.TRA_NAME);
                                             startActivity(intent, options.toBundle());
-                                        }else {
+                                        } else {
                                             startActivity(intent);
                                         }
                                     }
                                 });
-                                x.image().bind(child,path, xUtilsManager.getRectangleImageOption());
+                                x.image().bind(child, path, xUtilsManager.getRectangleImageOption());
 
                                 container.addView(child);
 
@@ -293,7 +322,7 @@ public class MallDetailActivity extends BaseActivity {
 
                             @Override
                             public void onPageSelected(int position) {
-                                holder.text.setText(position+1+"/"+first.size());
+                                holder.text.setText(position + 1 + "/" + first.size());
                             }
 
                             @Override
@@ -306,33 +335,48 @@ public class MallDetailActivity extends BaseActivity {
 
                     case 2:
                         holder.text.setText(data.getTitle());
-                        holder.price.setText("价格：￥"+data.getPrice());
+                        holder.price.setText("价格：¥" + data.getPrice());
 
+                        if (data.getIsFree()==1){
+                            holder.freight.setText("(免运费)");
+                        }else {
+                            holder.freight.setText(String.format("(运费¥%.2f)",data.getFreight()));
+                        }
                         break;
                     case 3:
 
                         String titleStr = (String) dataWrap.getData();
                         holder.title.setText(titleStr);
 
-                        if (position==2) {
+                        if (position == 2) {
                             holder.text.setText(data.getParams());
-                        }else if (position==3){
+                        } else if (position == 3) {
                             holder.text.setText(data.getDesc());
-                        }else if (position==4){
+                        } else if (position == 4) {
                             if (TextUtils.isEmpty(data.getDCTime())) {
                                 holder.text.setText("具体时间请联系客服");
-                            }else {
+                            } else {
                                 holder.text.setText(data.getDCTime());
                             }
-                        }else if (position==5){
+                        } else if (position == 5) {
                             if (TextUtils.isEmpty(data.getAttention())) {
                                 holder.text.setText("具体注意事项请联系客服");
-                            }else {
+                            } else {
                                 holder.text.setText("" + data.getAttention());
                             }
                         }
 
 
+                        break;
+                    case 4:
+                        holder.detail.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent=new Intent(mActivity,WebGoodsDetailActivity.class);
+                                intent.putExtra("goods",data);
+                                startActivity(intent);
+                            }
+                        });
                         break;
                 }
             }
@@ -356,37 +400,35 @@ public class MallDetailActivity extends BaseActivity {
     private void addGoods() {
 
 
-
-        final ProgressDialog dialog=new ProgressDialog(mActivity);
+        final ProgressDialog dialog = new ProgressDialog(mActivity);
         dialog.setMessage("加载中...");
 
         dialog.show();
 
         RequestParams entity = new RequestParams(UrlUtils.N_joinShopCart);
 
-        entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId()+"");
-        entity.addBodyParameter("dataId", data.getGoodsId()+"");
-        entity.addBodyParameter("num","1");
+        entity.addBodyParameter("appuserId", UserManager.getUser().getAppuserId() + "");
+        entity.addBodyParameter("dataId", data.getGoodsId() + "");
+        entity.addBodyParameter("num", "1");
 
         x.http().post(entity, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
 
 
-
                 NetData netData = JSON.parseObject(result, NetData.class);
 
                 Integer shopcarNum = JSON.parseObject(result).getInteger("shopcarNum");
 
-                if (netData.getResult()==200){
+                if (netData.getResult() == 200) {
                     Intent intent = new Intent();
-                    intent.setAction("");
-                    intent.putExtra("count",shopcarNum);
+                    intent.setAction("action_change_mall");
+                    intent.putExtra("count", shopcarNum);
                     sendBroadcast(intent);
 
                     UIUtils.showToast("成功添加到购物车");
 
-                }else {
+                } else {
                     UIUtils.showToast("添加失败");
                 }
             }
@@ -407,30 +449,19 @@ public class MallDetailActivity extends BaseActivity {
 
 
                 getWindow().getDecorView().setSystemUiVisibility(
-                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_FULLSCREEN
-                                |View.SYSTEM_UI_FLAG_LAYOUT_STABLE|View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_FULLSCREEN
+                                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
             }
         });
     }
 
     private void payGoods() {
-        Intent intent = new Intent(mActivity,OrderGenerateActivity.class);
 
-        List<CartGoods> cartGoodses = new ArrayList<CartGoods>();
-        CartGoods e = new CartGoods();
 
-        e.setGoodsId(data.getGoodsId());
-        e.setCount(1);
-        e.setDesc(data.getDesc());
-        e.setPicsrc(data.getPicsrc());
-        e.setPrice(data.getPrice());
-        e.setTitle(data.getTitle());
-
-        cartGoodses.add(e);
-
-        intent.putExtra("goods", (Serializable) cartGoodses);
-        intent.putExtra("flag",1);
+        Intent intent=new Intent(mActivity,DirectBuyActivity.class);
+        intent.putExtra("goods", (Serializable) data);
         startActivity(intent);
+
     }
 
     @Override
@@ -451,9 +482,9 @@ public class MallDetailActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        /*getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_FULLSCREEN
-                        |View.SYSTEM_UI_FLAG_LAYOUT_STABLE|View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);*/
+            /*getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_FULLSCREEN
+                            |View.SYSTEM_UI_FLAG_LAYOUT_STABLE|View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);*/
     }
 
 
@@ -474,10 +505,10 @@ public class MallDetailActivity extends BaseActivity {
     }
 
     public void btn_qq(View view) {
-        if (checkApkExist(this, "com.tencent.mobileqq")){
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mqqwpa://im/chat?chat_type=wpa&uin="+qqNum+"&version=1")));
-        }else{
-            Toast.makeText(this,"本机未安装QQ应用",Toast.LENGTH_SHORT).show();
+        if (checkApkExist(this, "com.tencent.mobileqq")) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mqqwpa://im/chat?chat_type=wpa&uin=" + qqNum + "&version=1")));
+        } else {
+            Toast.makeText(this, "本机未安装QQ应用", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -528,17 +559,67 @@ public class MallDetailActivity extends BaseActivity {
         // 启动分享GUI
         oks.show(this);
     }
-    class Holder extends RecyclerView.ViewHolder{
+
+    public void btn_kefu(View view) {
+        //btn_qq(view);
+        //PhoneUtils.callPhone(this, phone);
+        if (AndPermission.hasPermission(mActivity, Manifest.permission.CALL_PHONE)) {
+            PhoneUtils.callPhone(this, phone);
+        } else {
+            AndPermission.with(this)
+                    .requestCode(300)
+                    .permission(Manifest.permission.CALL_PHONE)
+                    .rationale(new RationaleListener() {
+                        @Override
+                        public void showRequestPermissionRationale(int requestCode, Rationale rationale) {
+                            AndPermission.defaultSettingDialog(mActivity, 3001).show();
+                        }
+                    }).callback(new PermissionListener() {
+                @Override
+                public void onSucceed(int requestCode, List<String> grantedPermissions) {
+                    // 和onActivityResult()的requestCode一样，用来区分多个不同的请求。
+                    PhoneUtils.callPhone(MallDetailActivity.this, phone);
+                }
+
+                @Override
+                public void onFailed(int requestCode, List<String> deniedPermissions) {
+                    //用户授权拒绝之后
+                    RightUtils.getAppDetailSettingIntent(mActivity);
+                }
+            }).start();
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case 3001:
+                if (AndPermission.hasPermission(mActivity, Manifest.permission.CALL_PHONE)) {
+                    PhoneUtils.callPhone(this, phone);
+                } else {
+                    //AndPermission.defaultSettingDialog(mActivity, 3001).show();
+                    RightUtils.getAppDetailSettingIntent(mActivity);
+                }
+
+                break;
+        }
+
+    }
+
+    class Holder extends RecyclerView.ViewHolder {
         View parent;
         ViewPager pager;
-        TextView text,price,title;
+        TextView text, price, title,freight,detail;
 
-        public Holder(View itemView,int type) {
+        public Holder(View itemView, int type) {
             super(itemView);
 
-            parent=itemView;
+            parent = itemView;
 
-            switch (type){
+            switch (type) {
                 case 0:
 
                     break;
@@ -549,10 +630,14 @@ public class MallDetailActivity extends BaseActivity {
                 case 2:
                     text = ((TextView) itemView.findViewById(R.id.mall_text));
                     price = ((TextView) itemView.findViewById(R.id.mall_price));
+                    freight= (TextView) itemView.findViewById(R.id.mall_freight);
                     break;
                 case 3:
                     text = ((TextView) itemView.findViewById(R.id.mall_text));
                     title = ((TextView) itemView.findViewById(R.id.mall_title));
+                    break;
+                case 4:
+                    detail= (TextView) itemView.findViewById(R.id.detail);
                     break;
             }
         }

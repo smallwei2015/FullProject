@@ -8,5 +8,12 @@
         <attr name="metaButtonBarStyle" format="reference" />
         <attr name="metaButtonBarButtonStyle" format="reference" />
     </declare-styleable>
+    <declare-styleable name="GoodsView">
+
+        <attr name="size" format="dimension"/>
+        <attr name="color" format="color"/>
+        <attr name="text" format="string"/>
+        <attr name="dividsize" format="dimension"/>
+    </declare-styleable>
 
 </resources>

@@ -83,6 +83,14 @@
                 android:layout_centerVertical="true"
                 />
 
+            <ImageView
+                android:id="@+id/top_rightsecond"
+                style="@style/normal_icon_style"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/search_white"
+                android:layout_toLeftOf="@+id/top_mall"
+                />
+
             <RelativeLayout
                 android:layout_width="@dimen/dp35"
                 android:layout_height="wrap_content"
